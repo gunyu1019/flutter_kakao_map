@@ -14,10 +14,13 @@ buildscript {
     }
 }
 
-allprojects {
+rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://devrepo.kakao.com/nexus/repository/kakaomap-releases/'
+        }
     }
 }
 
@@ -25,9 +28,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    if (project.android.hasProperty("namespace")) {
-        namespace = "kr.yhs.flutter_kakao_map"
-    }
+    namespace = "kr.yhs.flutter_kakao_map"
 
     compileSdk = 34
 
@@ -42,10 +43,13 @@ android {
 
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
-        test.java.srcDirs += "src/test/kotlin"
     }
 
     defaultConfig {
-        minSdk = 23
+        minSdkVersion 23
+    }
+
+    dependencies {
+        implementation 'com.kakao.maps.open:android:2.12.8'
     }
 }
