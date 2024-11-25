@@ -1,3 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.example.flutter_kakao_map">
+  package="kr.yhs.flutter_kakao_map">
 </manifest>

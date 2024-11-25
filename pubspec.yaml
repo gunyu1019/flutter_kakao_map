@@ -35,7 +35,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.flutter_kakao_map
+        package: kr.yhs.flutter_kakao_map
         pluginClass: FlutterKakaoMapPlugin
 
   # To add assets to your plugin package, add an assets section, like this:

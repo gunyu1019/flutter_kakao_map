@@ -1,6 +1,4 @@
-package com.example.flutter_kakao_map
-
-import androidx.annotation.NonNull
+package kr.yhs.flutter_kakao_map
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall

@@ -1,4 +1,4 @@
-package com.example.flutter_kakao_map
+package kr.yhs.flutter_kakao_map
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
