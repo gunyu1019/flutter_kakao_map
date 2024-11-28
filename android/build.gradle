@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath("com.android.tools.build:gradle:8.5.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -51,5 +51,6 @@ android {
 
     dependencies {
         implementation 'com.kakao.maps.open:android:2.12.8'
+        implementation files('libs/flutter.jar')
     }
 }
