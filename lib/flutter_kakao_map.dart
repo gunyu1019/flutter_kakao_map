@@ -1,8 +1,9 @@
+import 'dart:io';
 
-import 'flutter_kakao_map_platform_interface.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
-class FlutterKakaoMap {
-  Future<String?> getPlatformVersion() {
-    return FlutterKakaoMapPlatform.instance.getPlatformVersion();
-  }
-}
+part 'widget/map_widget.dart';

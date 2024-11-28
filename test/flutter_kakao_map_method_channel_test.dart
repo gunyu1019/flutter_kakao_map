@@ -1,11 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_kakao_map/flutter_kakao_map_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelFlutterKakaoMap platform = MethodChannelFlutterKakaoMap();
   const MethodChannel channel = MethodChannel('flutter_kakao_map');
 
   setUp(() {
