@@ -1,33 +1,44 @@
 package kr.yhs.flutter_kakao_map
 
+import com.kakao.vectormap.KakaoMapSdk
+import com.kakao.vectormap.MapLifeCycleCallback
+import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import kr.yhs.flutter_kakao_map.views.KakaoMapViewFactory
+import java.lang.Exception
 
 /** FlutterKakaoMapPlugin */
-class FlutterKakaoMapPlugin: FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister itd
-  /// when the Flutter Engine is detached from the Activity
-  private lateinit var channel : MethodChannel
+class FlutterKakaoMapPlugin: FlutterPlugin, ActivityAware {
+    private lateinit var pluginBinding: FlutterPluginBinding
+    private val context get() = pluginBinding.applicationContext
 
-  override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_kakao_map")
-    channel.setMethodCallHandler(this)
-  }
-
-  override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
+    override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        pluginBinding = binding
     }
-  }
 
-  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-    channel.setMethodCallHandler(null)
-  }
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) = Unit
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        val activity = binding.activity
+        val kakaoMapViewFactory = KakaoMapViewFactory(activity, pluginBinding.binaryMessenger)
+        pluginBinding.platformViewRegistry.registerViewFactory(
+            "plugin/kakao_map",
+            kakaoMapViewFactory
+        )
+
+        KakaoMapSdk.init(context, "KAKAO SDK CODE")
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() = Unit
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) = Unit
+
+    override fun onDetachedFromActivity() = Unit
 }
