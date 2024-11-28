@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_kakao_map/flutter_kakao_map.dart';
 
 void main() {
@@ -16,21 +14,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  @override
-  void initState() {
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: KakaoMap(),
-        ),
+    return const MaterialApp(
+      home:  SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: KakaoMap(),
       ),
     );
   }
