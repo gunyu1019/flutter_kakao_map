@@ -4,10 +4,10 @@ import com.kakao.vectormap.LatLng
 
 
 object ReferenceTypeConverter {
-    fun Any.asLatLng(): LatLng = asMap<Double>().let { map ->
+    fun Any.asLatLng(): LatLng = asMap<Double>().let { map: Map<String, Double> ->
         LatLng.from(
-            map["latitude"],
-            map["longitude"]
+            map["latitude"]!!,
+            map["longitude"]!!
         )
     }
 
