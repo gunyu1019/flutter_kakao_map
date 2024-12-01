@@ -43,14 +43,11 @@ data class KakaoMapOption (
     companion object {
         fun fromMessageable(
             onReady: ((KakaoMap) -> Unit)?
-            rawArgs: Map<String, Any?>
+            rawArgs: Map<String, Any>
         ): KakaoMapOption {
             return KakaoMapOption(
                 onReady=onReady,
-                initialPosition=LatLng.from(
-                    rawArgs["latitude"] as Double,
-                    rawArgs["longitude"] as Double
-                ),
+                initialPosition=rawArgs.asLatLng(),
                 zoomLevel = rawArgs["zoomLevel"] as Int?,
                 viewName = rawArgs["viewName"] as String?,
                 mapType = (
