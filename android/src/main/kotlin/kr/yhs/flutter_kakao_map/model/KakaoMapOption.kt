@@ -7,8 +7,8 @@ import com.kakao.vectormap.MapType
 import com.kakao.vectormap.MapViewInfo
 
 
-internal data class KakaoMapOption (
-    private val onReady: (KakaoMap) -> Unit,
+data class KakaoMapOption (
+    private var onReady: ((KakaoMap) -> Unit)?,
     private val initialPosition: LatLng? = null,
     private val zoomLevel: Int? = null,
     private val mapType: MapType? = null,
@@ -16,7 +16,8 @@ internal data class KakaoMapOption (
     private val visible: Boolean = true,
     private val tag: String? = null,
 ) : KakaoMapReadyCallback() {
-    override fun onMapReady(map: KakaoMap) = onReady(map);
+    // lateinit
+    override fun onMapReady(map: KakaoMap) = onReady?.invoke(map) ?: Unit
 
     override fun getZoomLevel(): Int = zoomLevel ?: super.getZoomLevel()
 
@@ -35,10 +36,14 @@ internal data class KakaoMapOption (
 
     override fun getTag(): String = tag ?: ""
 
+    fun setOnReady(method: (KakaoMap) -> Unit) {
+        onReady = method
+    }
+
     companion object {
         fun fromMessageable(
-            onReady: (KakaoMap) -> Unit
-            rawArgs: Map<String, Any>
+            onReady: ((KakaoMap) -> Unit)?
+            rawArgs: Map<String, Any?>
         ): KakaoMapOption {
             return KakaoMapOption(
                 onReady=onReady,
