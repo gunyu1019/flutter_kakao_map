@@ -6,18 +6,17 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
 import kotlin.Result
 import com.kakao.vectormap.KakaoMapSdk
+import kr.yhs.flutter_kakao_map.FlutterKakaoMapPlugin
 
 class SdkInitializer(
     private val context: Context,
-    private val messenger: BinaryMessenger
-): MethodChannel.MethodCallHandler {
-    private val channel: MethodChannel = MethodChannel(messenger, SDK_CHANNEL_NAME)
-    
+    private val channel: MethodChannel
+ ) {
     init {
-        channel.setMethodCallHandler(this)
+        channel.setMethodCallHandler(::handler)
     }
 
-    override fun onMethodCall(method: MethodCall, result: MethodChannel.Result) {
+    private fun handler(method: MethodCall, result: MethodChannel.Result) {
         if (method.method == "initalize") {
             val appKey: String? = method.argument("appKey")
 
@@ -29,9 +28,5 @@ class SdkInitializer(
             KakaoMapSdk.init(context, appKey)
             result.success(null)
         }
-    }
-
-    companion object {
-        private const val SDK_CHANNEL_NAME = "flutter_kakao_map_sdk"
     }
 }
