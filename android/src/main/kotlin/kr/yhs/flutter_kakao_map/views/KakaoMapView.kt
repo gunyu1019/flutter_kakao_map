@@ -1,12 +1,14 @@
 package kr.yhs.flutter_kakao_map.views
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.os.Bundle
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.KakaoMapSdk
@@ -25,55 +27,46 @@ class KakaoMapView(
     private val viewId: Int,
     private val creationParams: Map<String, Any?>?,
     private val channel: MethodChannel
-): PlatformView, MethodChannel.MethodCallHandler {
-    private val mapView = MapView(context)
-
-    override fun getView(): View {
-        channel.setMethodCallHandler(this)
-        return mapView
+): PlatformView, Application.ActivityLifecycleCallbacks {
+    private lateinit var mapView: MapView
+    
+    private fun handler(method: MethodCall, result: MethodChannel.Result) {
     }
+
+    init {
+        channel.setMethodCallHandler(::handler)
+    }
+
+    override fun getView(): View = mapView
 
     override fun dispose() {
-        // mapView.finish();
+        mapView = MapView(activity);
+        channel.setMethodCallHandler(null)
     }
 
-    override fun onMethodCall(method: MethodCall, result: MethodChannel.Result) {
-        if (method.method == "start") {
-            KakaoMapSdk.init(context, "4158a148fb2f4ec780b87e53b86c4b38")
+    /* Application.LifeCycleCallback Handler */
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
 
-            mapView.start(object : MapLifeCycleCallback() {
-                override fun onMapDestroy() {
+    override fun onActivityStarted(activity: Activity) {
+        mapView.start()
+    }
 
-                }
+    override fun onActivityResumed(activity: Activity) {
+        if (activity != this.activity) return
+        mapView.resume()
+    }
 
-                override fun onMapError(exception: Exception?) {
-                    Log.e("ERROR", exception?.message?:"ERROR")
-                }
-            }, object : KakaoMapReadyCallback() {
-                override fun onMapReady(map: KakaoMap) {
-                    Log.i("KakaoMap", "ready")
-                }
-            })
-            result.success(true)
-        } else if (method.method == "hashCode") {
+    override fun onActivityPaused(activity: Activity) {
+        if (activity != this.activity) return
+        mapView.pause()
+    }
 
-            var packageInfo: PackageInfo? = null
-            try {
-                packageInfo = activity.packageManager.getPackageInfo(activity.packageName, PackageManager.GET_SIGNATURES)
-            } catch (e: PackageManager.NameNotFoundException) {
-                e.printStackTrace()
-            }
-            if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
+    override fun onActivityStopped(activity: Activity) = Unit
 
-            for (signature in packageInfo!!.signatures) {
-                try {
-                    val md = MessageDigest.getInstance("SHA")
-                    md.update(signature.toByteArray())
-                    Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
-                } catch (e: NoSuchAlgorithmException) {
-                    Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
-                }
-            }
-        }
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
+
+    override fun onActivityDestroyed(activity: Activity) {
+        if (activity != this.activity) return
+        mapView.finish()
     }
 }
