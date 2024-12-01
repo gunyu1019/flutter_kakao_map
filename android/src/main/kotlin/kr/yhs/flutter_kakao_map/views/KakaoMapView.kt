@@ -22,6 +22,8 @@ import java.lang.Exception
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kr.yhs.flutter_kakao_map.model.KakaoMapOption
+import kr.yhs.flutter_kakao_map.controller.KakaoMapController
+import kr.yhs.flutter_kakao_map.controller.KakaoMapControllerSender
 
 class KakaoMapView(
     private val activity: Activity,
@@ -32,6 +34,7 @@ class KakaoMapView(
 ): PlatformView, Application.ActivityLifecycleCallbacks, MapLifeCycleCallback() {
     private lateinit var mapView: MapView
     private lateinit var kakaoMap: KakaoMap
+    private lateinit var controller: KakaoMapControllerSender
     
     private fun handler(method: MethodCall, result: MethodChannel.Result) {
     }
@@ -39,6 +42,7 @@ class KakaoMapView(
     init {
         option.setOnReady(::onMapReady)
         channel.setMethodCallHandler(::handler)
+        activity.registerActivityLifecycleCallbacks(this)
     }
 
     override fun getView(): View = mapView
@@ -46,18 +50,21 @@ class KakaoMapView(
     override fun dispose() {
         mapView = MapView(activity);
         channel.setMethodCallHandler(null)
+        activity.unregisterActivityLifecycleCallbacks(this)
     }
 
     fun onMapReady(map: KakaoMap) {
-
+        kakaoMap = map
+        controller = KakaoMapController(context, channel, kakaoMap)
+        controller.onMapReady()
     }
 
     override fun onMapDestroy() {
-
+        controller.onMapDestroyed()
     }
 
     override fun onMapError(exception: Exception) {
-
+        controller.onMapException()
     }
 
     /* Application.LifeCycleCallback Handler */
