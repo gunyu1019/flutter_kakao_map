@@ -14,6 +14,7 @@ import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.KakaoMapSdk
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import com.kakao.vectormap.MapReadyCallback
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
@@ -29,6 +30,7 @@ class KakaoMapView(
     private val channel: MethodChannel
 ): PlatformView, Application.ActivityLifecycleCallbacks {
     private lateinit var mapView: MapView
+    private lateinit var kakaoMap: KakaoMap
     
     private fun handler(method: MethodCall, result: MethodChannel.Result) {
     }
@@ -48,7 +50,11 @@ class KakaoMapView(
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
 
     override fun onActivityStarted(activity: Activity) {
-        mapView.start()
+        mapView.start(object : MapLifeCycleCallback {
+
+        }, object : KakaoMapReadyCallback {
+            override fun onMapReady() 
+        })
     }
 
     override fun onActivityResumed(activity: Activity) {

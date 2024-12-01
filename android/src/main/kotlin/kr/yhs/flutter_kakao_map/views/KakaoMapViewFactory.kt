@@ -16,12 +16,12 @@ class KakaoMapViewFactory(
 
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         val channel = MethodChannel(messenger, FlutterKakaoMapPlugin.createViewChannelName(viewId))
-        val creationParams = args as Map<String, Any?>?
+        val convertedArgs = args as Map<String, Any?>?
         return KakaoMapView(
             activity = activity,
             context = context,
             viewId = viewId,
-            creationParams = creationParams,
+            creationParams = convertedArgs,
             channel = channel
         )
     }
