@@ -12,15 +12,22 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import kr.yhs.flutter_kakao_map.views.KakaoMapViewFactory
+import kr.yhs.flutter_kakao_map.SDK.SdkInitializer
 import java.lang.Exception
 
 /** FlutterKakaoMapPlugin */
 class FlutterKakaoMapPlugin: FlutterPlugin, ActivityAware {
     private lateinit var pluginBinding: FlutterPluginBinding
+    private lateinit var sdkInitalizer: SdkInitializer
+    
     private val context get() = pluginBinding.applicationContext
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         pluginBinding = binding
+
+        // Initalize SDK
+        val channel = MethodChannel(binding.binaryMessenger, SDK_CHANNEL_NAME)
+        sdkInitalizer = SdkInitializer(context, channel)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) = Unit
@@ -32,8 +39,6 @@ class FlutterKakaoMapPlugin: FlutterPlugin, ActivityAware {
             "plugin/kakao_map",
             kakaoMapViewFactory
         )
-
-        KakaoMapSdk.init(context, "KAKAO SDK CODE")
     }
 
     override fun onDetachedFromActivityForConfigChanges() = Unit
@@ -41,4 +46,12 @@ class FlutterKakaoMapPlugin: FlutterPlugin, ActivityAware {
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) = Unit
 
     override fun onDetachedFromActivity() = Unit
+    
+    companion object {
+        private const val BASE_CHANNEL_NAME = "flutter_kakao_map"
+        private const val SDK_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_sdk"
+        private const val VIEW_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_view"
+
+        internal fun createViewChannelName(viewId: Int) = "${VIEW_CHANNEL_NAME}#${viewId}"
+    }
 }

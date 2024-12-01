@@ -7,6 +7,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kr.yhs.flutter_kakao_map.FlutterKakaoMapPlugin
 
 class KakaoMapViewFactory(
     private val activity: Activity,
@@ -14,7 +15,7 @@ class KakaoMapViewFactory(
 ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-        val channel = MethodChannel(messenger, "flutter_kakao_map_view#${viewId}")
+        val channel = MethodChannel(messenger, FlutterKakaoMapPlugin.createViewChannelName(viewId))
         val creationParams = args as Map<String, Any?>?
         return KakaoMapView(
             activity = activity,
