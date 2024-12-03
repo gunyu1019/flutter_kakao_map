@@ -5,6 +5,8 @@ import android.content.Context
 import io.flutter.plugin.common.MethodChannel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.camera.CameraPosition
+import com.kakao.vectormap.camera.CameraUpdate
+import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 
 class KakaoMapController(
@@ -36,4 +38,7 @@ class KakaoMapController(
         channel.invokeMethod("onMapDestroyed", null)
     }
     
+    fun dispose() {
+        channel.setMethodCallHandler(null)
+    }
 }

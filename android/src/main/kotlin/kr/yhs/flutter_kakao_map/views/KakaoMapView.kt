@@ -35,22 +35,18 @@ class KakaoMapView(
     private lateinit var mapView: MapView
     private lateinit var kakaoMap: KakaoMap
     private lateinit var controller: KakaoMapControllerSender
-    
-    private fun handler(method: MethodCall, result: MethodChannel.Result) {
-    }
 
     init {
         option.setOnReady(::onMapReady)
-        channel.setMethodCallHandler(::handler)
         activity.registerActivityLifecycleCallbacks(this)
     }
 
     override fun getView(): View = mapView
 
     override fun dispose() {
-        mapView = MapView(activity);
-        channel.setMethodCallHandler(null)
+        mapView = MapView(activity)
         activity.unregisterActivityLifecycleCallbacks(this)
+        (controller as KakaoMapController).dispose()
     }
 
     fun onMapReady(map: KakaoMap) {
