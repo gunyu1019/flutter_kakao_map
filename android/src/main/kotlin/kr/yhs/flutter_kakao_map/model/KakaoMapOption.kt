@@ -5,6 +5,8 @@ import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapType
 import com.kakao.vectormap.MapViewInfo
+import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
+
 
 
 data class KakaoMapOption (
@@ -42,7 +44,7 @@ data class KakaoMapOption (
 
     companion object {
         fun fromMessageable(
-            onReady: ((KakaoMap) -> Unit)?
+            onReady: ((KakaoMap) -> Unit)?,
             rawArgs: Map<String, Any>
         ): KakaoMapOption {
             return KakaoMapOption(

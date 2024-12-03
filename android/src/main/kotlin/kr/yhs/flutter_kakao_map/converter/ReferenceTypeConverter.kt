@@ -2,7 +2,7 @@ package kr.yhs.flutter_kakao_map.converter
 
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraPosition
-import kotlin.Double
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 
 
 object ReferenceTypeConverter {
@@ -32,7 +32,7 @@ object ReferenceTypeConverter {
     fun CameraPosition.toMessageable(): Map<String, Any> = mapOf(
         "latitude" to position.latitude,
         "longitude" to position.longitude,
-        "zoomLevel" to zoomLevel
+        "zoomLevel" to zoomLevel,
         "tiltAngle" to tiltAngle,
         "rotationAngle" to rotationAngle,
         "height" to height
