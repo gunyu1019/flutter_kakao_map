@@ -45,7 +45,7 @@ data class KakaoMapOption (
     companion object {
         fun fromMessageable(
             onReady: ((KakaoMap) -> Unit)?,
-            rawArgs: Map<String, Any>
+            rawArgs: Map<String, Any?>
         ): KakaoMapOption {
             return KakaoMapOption(
                 onReady=onReady,

@@ -9,6 +9,8 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import kr.yhs.flutter_kakao_map.FlutterKakaoMapPlugin
 import kr.yhs.flutter_kakao_map.model.KakaoMapOption
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
+
 
 class KakaoMapViewFactory(
     private val activity: Activity,
@@ -17,7 +19,7 @@ class KakaoMapViewFactory(
 
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         val channel = MethodChannel(messenger, FlutterKakaoMapPlugin.createViewChannelName(viewId))
-        val convertedArgs = args as Map<String, Any?>
+        val convertedArgs = args!!.asMap<Any?>()
         val option = KakaoMapOption.fromMessageable(null, convertedArgs)
         return KakaoMapView(
             activity = activity,
