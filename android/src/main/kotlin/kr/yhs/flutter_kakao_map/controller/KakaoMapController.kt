@@ -5,6 +5,7 @@ import android.content.Context
 import io.flutter.plugin.common.MethodChannel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.camera.CameraPosition
+import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 
 class KakaoMapController(
     private val context: Context,
@@ -12,11 +13,11 @@ class KakaoMapController(
     private val kakaoMap: KakaoMap
 ): KakaoMapControllerHandler, KakaoMapControllerSender {
     init {
-
+        channel.setMethodCallHandler(::handle)
     }
 
-    override fun getCameraPosition() { 
-        val position: CameraPosition? = kakaoMap.getCameraPosition()
+    override fun getCameraPosition(onSuccess: (cameraPosition: Map<String, Any>) -> Unit) { 
+        kakaoMap.getCameraPosition()?.toMessageable().let { onSuccess }
     }
 
     override fun moveCamera() { 
