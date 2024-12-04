@@ -12,5 +12,9 @@ interface KakaoMapControllerHandler {
 
     fun getCameraPosition(onSuccess: (cameraPosition: Map<String, Any>) -> Unit)
 
-    fun moveCamera()
+    fun moveCamera(
+        cameraUpdate: Map<String, Any>,
+        cameraAnimation: Map<String, Any>?,
+        onSuccess: (cameraPosition: Map<String, Any>) -> Unit
+    )
 }
