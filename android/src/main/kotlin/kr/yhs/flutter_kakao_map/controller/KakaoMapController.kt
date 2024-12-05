@@ -9,6 +9,7 @@ import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraPosition
+import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimation
 
 class KakaoMapController(
     private val context: Context,
@@ -29,7 +30,7 @@ class KakaoMapController(
         onSuccess: (cameraPosition: Map<String, Any>) -> Unit
     ) { 
         val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraUpdate.asCameraPosition())
-        kakaoMap.moveCamera(cameraUpdate)
+        kakaoMap.moveCamera(cameraUpdate, cameraAnimation?.asCameraAnimation())
     }
 
     override fun onMapReady() {
