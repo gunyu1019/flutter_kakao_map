@@ -23,10 +23,10 @@ object ReferenceTypeConverter {
         CameraPosition.from(
             map["latitude"] as Double,
             map["longitude"] as Double,
-            map["zoomLevel"] as Int,
-            map["tiltAngle"] as Double,
-            map["rotationAngle"] as Double,
-            map["height"] as Double,
+            map["zoomLevel"] as Int? ?: -1,
+            map["tiltAngle"] as Double? ?: -1.0,
+            map["rotationAngle"] as Double? ?: -1.0,
+            map["height"] as Double? ?: -1.0,
         )
     }
 
