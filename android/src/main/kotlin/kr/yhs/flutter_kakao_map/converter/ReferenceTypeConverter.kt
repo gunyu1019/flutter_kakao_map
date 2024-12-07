@@ -19,7 +19,7 @@ object ReferenceTypeConverter {
         "longitude" to longitude
     )
 
-    fun Any.asCameraPosition(): CameraPosition = asMap().let { map: Map<String, Any> ->
+    fun Any.asCameraPosition(): CameraPosition = asMap<Any>().let { map: Map<String, Any> ->
         CameraPosition.from(
             map["latitude"] as Double,
             map["longitude"] as Double,
@@ -39,7 +39,7 @@ object ReferenceTypeConverter {
         "height" to height
     )
 
-    fun Any.asCameraAnimation(): CameraAnimation = asMap().let { map: Map<String, Any?> ->
+    fun Any.asCameraAnimation(): CameraAnimation = asMap<Any>().let { map: Map<String, Any?> ->
         CameraAnimation.from(
             map["duration"] as Int,
             map["autoElevation"] as Boolean? ?: false, 
