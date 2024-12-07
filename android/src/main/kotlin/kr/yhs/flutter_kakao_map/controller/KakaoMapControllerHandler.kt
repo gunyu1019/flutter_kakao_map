@@ -15,6 +15,14 @@ interface KakaoMapControllerHandler {
     fun moveCamera(
         cameraUpdate: Map<String, Any>,
         cameraAnimation: Map<String, Any>?,
-        onSuccess: (cameraPosition: Map<String, Any>) -> Unit
+        onSuccess: () -> Unit
     )
+
+    fun moveCamera(
+        points: List<Map<String, Any>>,
+        padding: Int?,
+        maxZoomLevel: Int?,
+        cameraAnimation: Map<String, Any>?,
+        onSuccess: () -> Unit
+    ) // For CameraUpdateFactory.fitMapPoints
 }
