@@ -18,8 +18,8 @@ class KakaoMapOption {
   });
 
   /* Default Type */
-  static const defaultPosition = LatLng(37.402005, 127.108621);
-  static const defaultZoomLevel = 15;
-  static const defaultMapType = MapType.normal;
-  static const defaultVisible = true;
+  static const LatLng defaultPosition = LatLng(37.402005, 127.108621);
+  static const int defaultZoomLevel = 15;
+  static const MapType defaultMapType = MapType.normal;
+  static const bool defaultVisible = true;
 }
