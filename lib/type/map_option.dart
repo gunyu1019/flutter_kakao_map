@@ -1,7 +1,7 @@
 part of '../flutter_kakao_map.dart';
 
 class KakaoMapOption {
-  final int initialPosition;
+  final LatLng position;
   final int zoomLevel;
   final MapType mapType;
   final String? viewName;
@@ -9,7 +9,7 @@ class KakaoMapOption {
   final String? tag;
 
   const KakaoMapOption({
-    this.initialPosition,
+    this.position = defaultPosition,
     this.zoomLevel = defaultZoomLevel,
     this.mapType = defaultMapType,
     this.viewName,
@@ -18,6 +18,7 @@ class KakaoMapOption {
   });
 
   /* Default Type */
+  static const defaultPosition = LatLng(37.402005, 127.108621);
   static const defaultZoomLevel = 15;
   static const defaultMapType = MapType.normal;
   static const defaultVisible = true;

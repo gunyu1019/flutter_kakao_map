@@ -8,5 +8,6 @@ import 'package:flutter/services.dart';
 
 part 'type/enums.dart';
 part 'type/map_option.dart';
+part 'type/geolocation/latlng.dart';
 
 part 'widget/map_widget.dart';
