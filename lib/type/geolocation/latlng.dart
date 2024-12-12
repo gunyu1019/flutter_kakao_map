@@ -9,4 +9,11 @@ class LatLng {
     this.latitude,
     this.longitude
   );
+
+  Map<String, dynamic> toMessageable() {
+    return {
+      "latitiude": latitude,
+      "longitude": longitude
+    };
+  }
 }
