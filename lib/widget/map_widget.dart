@@ -22,7 +22,7 @@ class _KakaoMapState extends State<KakaoMap> {
   Widget build(BuildContext context) {
 
     if (Platform.isAndroid) {
-      Map<String, dynamic> creationParams = widget.option?.toMessageable() ?? {};
+      Map<String, dynamic> creationParams = widget.option?.toMessageable() ?? (const KakaoMapOption()).toMessageable();
       return PlatformViewLink(
           surfaceFactory: (context, controller) {
             return AndroidViewSurface(
