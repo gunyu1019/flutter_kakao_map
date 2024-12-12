@@ -1,7 +1,12 @@
 part of '../flutter_kakao_map.dart';
 
 class KakaoMap extends StatefulWidget {
-  const KakaoMap({super.key});
+  final KakaoMapOption? option;
+
+  const KakaoMap({
+    super.key,
+    this.option
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -17,7 +22,7 @@ class _KakaoMapState extends State<KakaoMap> {
   Widget build(BuildContext context) {
 
     if (Platform.isAndroid) {
-      Map<String, dynamic> creationParams = <String, dynamic>{};
+      Map<String, dynamic> creationParams = widget.option?.toMessageable() ?? {};
       return PlatformViewLink(
           surfaceFactory: (context, controller) {
             return AndroidViewSurface(

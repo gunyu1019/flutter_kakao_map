@@ -22,4 +22,16 @@ class KakaoMapOption {
   static const int defaultZoomLevel = 15;
   static const MapType defaultMapType = MapType.normal;
   static const bool defaultVisible = true;
+
+  Map<String, dynamic> toMessageable() {
+    Map<String, dynamic> payload = {
+      "zoomLevel": zoomLevel,
+      "mapType": mapType.value,
+      "viewName": viewName,
+      "visible": visible,
+      "tag": tag,
+    };
+    payload.addAll(position.toMessageable());
+    return payload;
+  }
 }
