@@ -6,6 +6,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+/* chnnael */
+part 'channel/channel_type.dart';
+part 'channel/channel_wrapper.dart';
+
 /* initalizer */
 part 'initializer/sdk_initalizer.dart';
 part 'initializer/sdk_initiializer_implement.dart';
