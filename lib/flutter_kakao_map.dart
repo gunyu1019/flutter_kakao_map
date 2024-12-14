@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,11 @@ import 'package:flutter/services.dart';
 /* chnnael */
 part 'channel/channel_type.dart';
 part 'channel/channel_wrapper.dart';
+
+/* controller */
+part 'controller/controller.dart';
+part 'controller/handler.dart';
+part 'controller/sender.dart';
 
 /* initalizer */
 part 'initializer/sdk_initalizer.dart';
