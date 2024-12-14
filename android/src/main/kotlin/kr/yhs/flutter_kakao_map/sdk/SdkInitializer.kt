@@ -1,4 +1,4 @@
-package kr.yhs.flutter_kakao_map.sdk
+package kr.yhs.flutter_kakao_map.SDK
 
 import android.content.Context
 import android.content.pm.PackageInfo

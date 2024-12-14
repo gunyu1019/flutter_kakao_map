@@ -1,4 +1,4 @@
-package kr.yhs.flutter_kakao_map.sdk
+package kr.yhs.flutter_kakao_map.SDK
 
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
