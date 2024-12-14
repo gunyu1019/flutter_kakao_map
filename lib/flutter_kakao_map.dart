@@ -21,3 +21,4 @@ part 'models/geolocation/latlng.dart';
 
 /* widget */
 part 'widget/map_widget.dart';
+part 'widget/platform_view.dart';
