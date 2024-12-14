@@ -18,9 +18,11 @@ jobs:
           echo "KAKAO_API_KEY=$KAKAO_API_KEY" >> assets/config/.env
         env:
           KAKAO_API_KEY: ${{secrets.KAKAO_API_KEY}}
+        working-directory: ${{ env.working-directory }}
       - name: Install Flutter SDK
         run: |
           /usr/bin/git clone https://github.com/flutter/flutter.git .flutter -b stable 
+        working-directory: ${{ env.working-directory }}
       - name: Setup Flutter
         run: |
           .flutter/bin/flutter precache --android
@@ -32,14 +34,17 @@ jobs:
       - name: Install dependencies
         run: |
           .flutter/bin/flutter pub get
+        working-directory: ${{ env.working-directory }}
       - name: Build Application(APK)
         run: |
           .flutter/bin/flutter build apk --release 
+        working-directory: ${{ env.working-directory }}
       - name: Upload application pacakge.
         uses: actions/upload-artifact@v4
         with:
           name: application
           path: build/app/outputs/apk/release/app-release.apk
+        working-directory: ${{ env.working-directory }}
   deploy:
     needs: build
     runs-on: ubuntu-latest
