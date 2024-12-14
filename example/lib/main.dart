@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -20,6 +22,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late KakaoMapController controller;
+  String status = "Not Loaded";
+
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
@@ -34,6 +39,7 @@ class _MyAppState extends State<MyApp> {
         height: screenHeight,
         child: Column(
           children: [
+            const Padding(padding: EdgeInsets.all(10.0)),
             FutureBuilder(
                 future: KakaoMapSdk.instance.hashKey(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -41,11 +47,20 @@ class _MyAppState extends State<MyApp> {
                       ? Text(snapshot.data ?? "로딩 실패", style: textStyle)
                       : const Text("로딩 중", style: textStyle));
                 }),
-            Text("Status: ", style: textStyle),
+            Text("Status: ${status}", style: textStyle),
             SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.8,
-                child: const KakaoMap())
+                child: KakaoMap(
+                  onMapReady: (KakaoMapController controller) {
+                    this.controller = controller;
+                  },
+                  onMapError: (Map<String, dynamic> exception) {
+                    setState(() {
+                      this.status = json.encode(exception);
+                    });
+                  },
+                ))
           ],
         ),
       ),
