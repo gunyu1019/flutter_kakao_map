@@ -27,9 +27,11 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           children: [
             FutureBuilder(future: KakaoMapSdk.instance.hashKey(), builder: (BuildContext context, AsyncSnapshot snapshot) {
-              snapshot.hasData ?
-              Text(snapshot.data ?? "로딩 실패") :
-              const Text("로딩 중");
+              return (
+                snapshot.hasData ?
+                Text(snapshot.data ?? "로딩 실패") :
+                const Text("로딩 중")
+              );
             }),
             const KakaoMap()
           ],
