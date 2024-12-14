@@ -7,5 +7,5 @@ interface KakaoMapControllerSender {
 
     fun onMapDestroyed()
 
-    fun onMapError()
+    fun onMapError(exception: Exception)
 }
