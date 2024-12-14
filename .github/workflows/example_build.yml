@@ -1,0 +1,59 @@
+name: Example Test Build
+
+on:
+  release:
+    types: [ published ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Access secret key 
+        run: |
+          echo "KAKAO_API_KEY=$KAKAO_API_KEY" >> example/assets/config/.env
+        env:
+          KAKAO_API_KEY: ${{secrets.KAKAO_API_KEY}}
+      - name: Install Flutter SDK
+        run: |
+          /usr/bin/git clone https://github.com/flutter/flutter.git .flutter -b stable 
+      - name: Setup Flutter
+        run: |
+          .flutter/bin/flutter precache --android
+      - name: Setup Java 18 (Amazon Corretto)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '18'
+      - name: Install dependencies
+        run: |
+          .flutter/bin/flutter pub get
+      - name: Build Application(APK)
+        run: |
+          .flutter/bin/flutter build apk --release 
+      - name: Upload application pacakge.
+        uses: actions/upload-artifact@v4
+        with:
+          name: application
+          path: build/app/outputs/apk/release/app-release.apk
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    environment:
+      name: android-apk
+      url: ${{ fromJSON(steps.deployment.outputs.assets)[0].browser_download_url }}
+    steps:
+      - name: Download application package.
+        uses: actions/download-artifact@v4
+        with:
+          name: application
+          path: ./
+      - name: Upload application pacakge to release
+        id: deployment
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+             ./app-release.apk
