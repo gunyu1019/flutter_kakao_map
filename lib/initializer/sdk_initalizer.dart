@@ -3,7 +3,9 @@ part of '../flutter_kakao_map.dart';
 abstract class KakaoMapSdk {
   static final instance = KakaoMapSdkImplement();
 
-  Future<void> initialize(String token);
+  Future<void> initialize(String appKey);
 
-  Future<String> hashKey();
+  Future<bool> isInitialize();
+
+  Future<String?> hashKey();
 }
