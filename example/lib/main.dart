@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_kakao_map/flutter_kakao_map.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: 'assets/config/.env');
+  KakaoMapSdk.instance.initialize(dotenv.env['KAKAO_API_KEY']!);
+
   runApp(const MyApp());
 }
 
