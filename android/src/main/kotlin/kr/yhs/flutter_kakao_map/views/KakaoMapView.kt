@@ -34,12 +34,21 @@ class KakaoMapView(
 ): PlatformView, Application.ActivityLifecycleCallbacks, MapLifeCycleCallback() {
     private val mapView = MapView(activity)
     private lateinit var kakaoMap: KakaoMap
-    private lateinit var controller: KakaoMapControllerSender
+    private var controller: KakaoMapControllerSender? = null
 
     init {
         option.setOnReady(::onMapReady)
-        mapView.start(this, option)
+        channel.setMethodCallHandler(this::handle)
         activity.registerActivityLifecycleCallbacks(this)
+    }
+
+    // Temporary Handler
+    fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
+        "start" -> {
+            mapView.start(this, option)
+            result.success(null)
+        }
+        else -> result.success(null)
     }
 
     override fun getView(): View = mapView
@@ -52,15 +61,15 @@ class KakaoMapView(
     fun onMapReady(map: KakaoMap) {
         kakaoMap = map
         controller = KakaoMapController(context, channel, kakaoMap)
-        controller.onMapReady()
+        controller?.onMapReady()
     }
 
     override fun onMapDestroy() {
-        controller.onMapDestroyed()
+        controller?.onMapDestroyed()
     }
 
     override fun onMapError(exception: Exception) {
-        controller.onMapException()
+        controller?.onMapException()
     }
 
     /* Application.LifeCycleCallback Handler */
