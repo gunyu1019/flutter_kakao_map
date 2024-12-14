@@ -38,17 +38,8 @@ class KakaoMapView(
 
     init {
         option.setOnReady(::onMapReady)
-        channel.setMethodCallHandler(this::handle)
+        mapView.start(this, option)
         activity.registerActivityLifecycleCallbacks(this)
-    }
-
-    // Temporary Handler
-    fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
-        "start" -> {
-            mapView.start(this, option)
-            result.success(null)
-        }
-        else -> result.success(null)
     }
 
     override fun getView(): View = mapView

@@ -18,9 +18,9 @@ class KakaoMapController(
     private val channel: MethodChannel,
     private val kakaoMap: KakaoMap
 ): KakaoMapControllerHandler, KakaoMapControllerSender {
-    // init {
-    //     channel.setMethodCallHandler(::handle)
-    // }
+    init {
+        channel.setMethodCallHandler(::handle)
+    }
 
     override fun getCameraPosition(onSuccess: (cameraPosition: Map<String, Any>) -> Unit) { 
         kakaoMap.getCameraPosition()?.toMessageable().let { onSuccess }
