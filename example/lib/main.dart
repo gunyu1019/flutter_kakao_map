@@ -20,11 +20,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home:  SizedBox(
+    return MaterialApp(
+      home: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: KakaoMap(),
+        child: Column(
+          children: [
+            FutureBuilder(future: KakaoMapSdk.instance.hashKey(), builder: (BuildContext context, AsyncSnapshot snapshot) {
+              snapshot.hasData ?
+              Text(snapshot.data ?? "로딩 실패") :
+              const Text("로딩 중");
+            }),
+            const KakaoMap()
+          ],
+        ),
       ),
     );
   }
