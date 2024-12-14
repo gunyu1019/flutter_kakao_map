@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
                       ? Text(snapshot.data ?? "로딩 실패", style: textStyle)
                       : const Text("로딩 중", style: textStyle));
                 }),
+            Text("Status: ", style: textStyle),
             SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.8,
