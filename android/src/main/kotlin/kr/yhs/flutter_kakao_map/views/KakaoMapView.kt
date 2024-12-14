@@ -32,12 +32,11 @@ class KakaoMapView(
     private val option: KakaoMapOption,
     private val channel: MethodChannel
 ): PlatformView, Application.ActivityLifecycleCallbacks, MapLifeCycleCallback() {
-    private lateinit var mapView: MapView
+    private val mapView = MapView(activity)
     private lateinit var kakaoMap: KakaoMap
     private lateinit var controller: KakaoMapControllerSender
 
     init {
-        mapView = MapView(activity)
         option.setOnReady(::onMapReady)
         mapView.start(this, option)
         activity.registerActivityLifecycleCallbacks(this)
@@ -86,5 +85,6 @@ class KakaoMapView(
     override fun onActivityDestroyed(activity: Activity) {
         if (activity != this.activity) return
         mapView.finish()
+        activity.unregisterActivityLifecycleCallbacks(this)
     }
 }
