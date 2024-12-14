@@ -5,6 +5,9 @@ enum ChannelType {
   view("${_baseChannelId}_view");
 
   final String id;
+  
+  MethodChannel get channel => MethodChannel(id);
+  MethodChannel channelWithId(String id) => MethodChannel("${this.id}#${id}");
 
   const ChannelType(this.id);
 
