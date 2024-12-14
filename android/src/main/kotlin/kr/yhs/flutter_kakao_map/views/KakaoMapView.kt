@@ -60,7 +60,7 @@ class KakaoMapView(
     }
 
     override fun onMapError(exception: Exception) {
-        controller?.onMapException()
+        controller?.onMapError()
     }
 
     /* Application.LifeCycleCallback Handler */

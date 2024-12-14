@@ -68,8 +68,8 @@ class KakaoMapController(
         channel.invokeMethod("onMapDestroyed", null)
     }
 
-    override fun onMapException() {
-        channel.invokeMethod("onMapDestroyed", null)
+    override fun onMapError() {
+        channel.invokeMethod("onMapError", null)
     }
     
     fun dispose() {
