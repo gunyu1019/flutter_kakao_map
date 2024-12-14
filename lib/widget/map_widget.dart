@@ -5,7 +5,7 @@ class KakaoMap extends StatefulWidget {
 
   final void Function(KakaoMapController controller) onMapReady;
   final void Function()? onMapDestroyed;
-  final void Function(Exception exception)? onMapError;
+  final void Function(Map<String, dynamic> exception)? onMapError;
 
   const KakaoMap({
     super.key,
@@ -45,8 +45,8 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   }
   
   @override
-  void onMapError() {
-    widget.onMapError?.call();
+  void onMapError(Map<String, dynamic> exception) {
+    widget.onMapError?.call(exception);
   }
   
   @override
