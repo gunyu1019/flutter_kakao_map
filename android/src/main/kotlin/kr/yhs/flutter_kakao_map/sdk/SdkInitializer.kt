@@ -1,32 +1,65 @@
-package kr.yhs.flutter_kakao_map.SDK
+package kr.yhs.flutter_kakao_map.sdk
 
 import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.util.Base64
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
 import kotlin.Result
 import com.kakao.vectormap.KakaoMapSdk
+import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.FlutterKakaoMapPlugin
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 class SdkInitializer(
     private val context: Context,
     private val channel: MethodChannel
- ) {
+ ): SdkInitializerHandler {
     init {
-        channel.setMethodCallHandler(::handler)
+        channel.setMethodCallHandler(::handle)
     }
 
-    private fun handler(method: MethodCall, result: MethodChannel.Result) {
-        if (method.method == "initalize") {
-            val appKey: String? = method.argument("appKey")
+    override fun isInitialize(result: MethodChannel.Result) {
+        KakaoMapSdk.isInitialized().let(result::success)
+    }
 
-            if (appKey == null) {
-                result.error("TypeError", "Unknown argument: appKey", null);
-                return
-            }
-
-            KakaoMapSdk.init(context, appKey)
+    override fun hashKey(result: MethodChannel.Result) {
+        var packageInfo: PackageInfo? = null
+        try {
+            packageInfo = context.packageManager.getPackageInfo(context.packageName, 64)
+        } catch (e: PackageManager.NameNotFoundException) {
             result.success(null)
         }
+        if (packageInfo == null) {
+            result.success(null) // Authentication failure. PackageInfo is null.
+            return
+        }
+
+        val signatures = packageInfo.signatures
+        if (signatures.size < 1) {
+            result.success(null) // Authentication failure. Signature is invalid.
+            return
+        }
+        val signature = signatures[0]
+
+        lateinit var md: MessageDigest
+        try {
+            md = MessageDigest.getInstance("SHA")
+        } catch (e: NoSuchAlgorithmException) {
+            result.success(null)
+            return
+        }
+        
+        md.update(signature.toByteArray())
+        Base64.encodeToString(md.digest(), Base64.DEFAULT).trim().let(result::success)
+        return
+    }
+    
+    override fun initialize(appKey: String, result: MethodChannel.Result) {
+        KakaoMapSdk.init(context, appKey)
+        result.success(null)
     }
 }
