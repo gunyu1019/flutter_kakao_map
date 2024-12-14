@@ -9,9 +9,7 @@ class KakaoMap extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() {
-    return _KakaoMapState();
-  }
+  State<StatefulWidget> createState() => _KakaoMapState();
 }
 
 class _KakaoMapState extends State<KakaoMap> {
@@ -20,42 +18,15 @@ class _KakaoMapState extends State<KakaoMap> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> rawParams = widget.option?.toMessageable() ?? (const KakaoMapOption()).toMessageable();
+    return _createPlatformView(
+      viewType: VIEW_TYPE,
+      onPlatformViewCreated: onPlatformViewCreated,
+      creationParams: rawParams
+    );
+  }
 
-    if (Platform.isAndroid) {
-      Map<String, dynamic> creationParams = widget.option?.toMessageable() ?? (const KakaoMapOption()).toMessageable();
-      return PlatformViewLink(
-          surfaceFactory: (context, controller) {
-            return AndroidViewSurface(
-                controller: controller as AndroidViewController,
-                hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-                gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{});
-          },
-          onCreatePlatformView: (params) {
-            return PlatformViewsService.initSurfaceAndroidView(
-              id: params.id,
-              viewType: VIEW_TYPE,
-              layoutDirection: TextDirection.ltr,
-              creationParams: creationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-              onFocus: () {
-                params.onFocusChanged(true);
-              },
-            )
-              ..addOnPlatformViewCreatedListener((viewId) {
-                params.onPlatformViewCreated(viewId);
+  void onPlatformViewCreated(int viewId) {
 
-                channel = MethodChannel("flutter_kakao_map_view#${viewId}");
-                // channel.invokeMethod("hashCode");
-                channel.invokeMethod("start");
-              })
-              ..create();
-          },
-          viewType: VIEW_TYPE);
-    } else if (Platform.isIOS) {
-      // TODO
-      throw UnimplementedError("TODO");
-    } else {
-      throw PlatformException(code: "unsupportedPlatform");
-    }
   }
 }
