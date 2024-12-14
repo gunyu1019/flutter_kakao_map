@@ -43,8 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: application
-          path: build/app/outputs/apk/release/app-release.apk
-        working-directory: ${{ env.working-directory }}
+          path: example/build/app/outputs/apk/release/app-release.apk
   deploy:
     needs: build
     runs-on: ubuntu-latest
