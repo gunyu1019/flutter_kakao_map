@@ -37,14 +37,15 @@ class KakaoMapView(
     private lateinit var controller: KakaoMapControllerSender
 
     init {
+        mapView = MapView(activity)
         option.setOnReady(::onMapReady)
+        mapView.start(this, option)
         activity.registerActivityLifecycleCallbacks(this)
     }
 
     override fun getView(): View = mapView
 
     override fun dispose() {
-        mapView = MapView(activity)
         activity.unregisterActivityLifecycleCallbacks(this)
         (controller as KakaoMapController).dispose()
     }
@@ -66,9 +67,7 @@ class KakaoMapView(
     /* Application.LifeCycleCallback Handler */
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
 
-    override fun onActivityStarted(activity: Activity) {
-        mapView.start(this, option)
-    }
+    override fun onActivityStarted(activity: Activity) = Unit
 
     override fun onActivityResumed(activity: Activity) {
         if (activity != this.activity) return
