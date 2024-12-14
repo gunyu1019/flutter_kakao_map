@@ -27,6 +27,7 @@ class _KakaoMapState extends State<KakaoMap> {
   }
 
   void onPlatformViewCreated(int viewId) {
-
+    channel = ChannelType.view.channelWithId(viewId as String);
+    channel.invokeMethod("start");
   }
 }
