@@ -26,6 +26,7 @@ jobs:
       - name: Setup Flutter
         run: |
           .flutter/bin/flutter precache --android
+        working-directory: ${{ env.working-directory }}
       - name: Setup Java 18 (Amazon Corretto)
         uses: actions/setup-java@v4
         with:
