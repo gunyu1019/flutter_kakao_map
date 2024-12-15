@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
                       : const Text("로딩 중", style: textStyle));
                 }),
             Text("Status: $status", style: textStyle),
-            SizedBox(
+            /* SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.8,
                 child: KakaoMap(
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
                       status = json.encode(exception);
                     });
                   },
-                ))
+                )) */
           ],
         ),
       ),
