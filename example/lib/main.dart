@@ -50,25 +50,20 @@ class _MyAppState extends State<MyApp> {
                 }),
             Row(
               children: [
-                Checkbox(value: load, onChanged: (v) {
-                  setState(() {
-                    load = v!;
-                  });
-                }),
+                Checkbox(
+                    value: load,
+                    onChanged: (v) {
+                      setState(() {
+                        load = v!;
+                      });
+                    }),
                 Text("Status: $status", style: textStyle),
               ],
             ),
-            if (load)
             SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.9,
-                child: KakaoMap(onMapReady: onMapReady)
-            )
-            else 
-            SizedBox(
-                width: screenWidth,
-                height: screenHeight * 0.9
-            )
+                child: load ? KakaoMap(onMapReady: onMapReady) : null)
           ],
         ),
       ),
