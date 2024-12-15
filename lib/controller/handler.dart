@@ -13,6 +13,8 @@ mixin KakaoMapControllerHandler {
       case "onMapError": 
         onMapError(method.arguments['exception']);
         break;
+      default:
+        break;
     }
   }
 
