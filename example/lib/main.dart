@@ -48,25 +48,18 @@ class _MyAppState extends State<MyApp> {
                       : const Text("로딩 중", style: textStyle));
                 }),
             Text("Status: $status", style: textStyle),
-            /* SizedBox(
+            SizedBox(
                 width: screenWidth,
-                height: screenHeight * 0.8,
-                child: KakaoMap(
-                  onMapReady: (KakaoMapController controller) {
-                    this.controller = controller;
-                    setState(() {
-                      status = "Ready";
-                    });
-                  },
-                  onMapError: (Map<String, dynamic> exception) {
-                    setState(() {
-                      status = json.encode(exception);
-                    });
-                  },
-                )) */
+                height: screenHeight * 0.9,
+                child: KakaoMap(onMapReady: onMapReady)
+            )
           ],
         ),
       ),
     );
+  }
+
+  void onMapReady(KakaoMapController controller) {
+    controller = controller;
   }
 }
