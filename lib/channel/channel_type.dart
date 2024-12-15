@@ -7,7 +7,7 @@ enum ChannelType {
   final String id;
   
   MethodChannel get channel => MethodChannel(id);
-  MethodChannel channelWithId(String id) => MethodChannel("${this.id}#${id}");
+  MethodChannel channelWithId(int id) => MethodChannel("${this.id}#${id}");
 
   const ChannelType(this.id);
 

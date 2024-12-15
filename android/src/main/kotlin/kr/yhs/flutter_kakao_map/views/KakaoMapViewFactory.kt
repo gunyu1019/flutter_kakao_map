@@ -20,6 +20,8 @@ class KakaoMapViewFactory(
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         val channel = MethodChannel(messenger, FlutterKakaoMapPlugin.createViewChannelName(viewId))
         val convertedArgs = args!!.asMap<Any?>()
+
+        // late init => OnMapReady method 
         val option = KakaoMapOption.fromMessageable(null, convertedArgs)
         return KakaoMapView(
             activity = activity,

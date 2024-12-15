@@ -24,7 +24,7 @@ class KakaoMapOption {
   static const bool defaultVisible = true;
 
   Map<String, dynamic> toMessageable() {
-    Map<String, dynamic> payload = {
+    final payload = <String, dynamic>{
       "zoomLevel": zoomLevel,
       "mapType": mapType.value,
       "viewName": viewName,
