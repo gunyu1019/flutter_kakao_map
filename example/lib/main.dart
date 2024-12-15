@@ -12,10 +12,14 @@ void main() async {
 
   await dotenv.load(fileName: 'assets/config/.env');
   await KakaoMapSdk.instance.initialize(dotenv.env['KAKAO_API_KEY']!);
-
-  
     
   DebugOverlay.enabled = true;
+
+  final hashKey = await KakaoMapSdk.instance.hashKey();
+  MyApp.logBucket.add(LogEvent(
+    level: LogLevel.info,
+    message: "HashKey: $hashKey",
+  ));
 
   // Uncaught Exceptions.
   PlatformDispatcher.instance.onError = (exception, stackTrace) {
@@ -73,14 +77,7 @@ class _MyAppState extends State<MyApp> {
         height: screenHeight,
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.all(10.0)),
-            FutureBuilder(
-                future: KakaoMapSdk.instance.hashKey(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return (snapshot.hasData
-                      ? Text(snapshot.data ?? "로딩 실패", style: textStyle)
-                      : const Text("로딩 중", style: textStyle));
-                }),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Checkbox(
@@ -96,11 +93,24 @@ class _MyAppState extends State<MyApp> {
             SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.9,
-                child: load ? KakaoMap(onMapReady: onMapReady) : null)
+                child: load ? kakaoMapDebug() : null)
           ],
         ),
       ),
     );
+  }
+
+  StatefulWidget? kakaoMapDebug() {
+    try {
+      return KakaoMap(onMapReady: onMapReady);
+    } on Exception catch (e) {
+      MyApp.logBucket.add(LogEvent(
+        level: LogLevel.fatal,
+        message: "Exception caused KakaoMap View",
+        error: e,
+      ));
+      return null;
+    }
   }
 
   void onMapReady(KakaoMapController controller) {
