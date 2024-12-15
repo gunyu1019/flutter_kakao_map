@@ -20,6 +20,7 @@ void main() async {
     level: LogLevel.info,
     message: "HashKey: $hashKey",
   ));
+  print(hashKey);
 
   // Uncaught Exceptions.
   PlatformDispatcher.instance.onError = (exception, stackTrace) {
@@ -72,31 +73,33 @@ class _MyAppState extends State<MyApp> {
       builder: DebugOverlay.builder(
         logBucket: MyApp.logBucket
       ),
-      home: SizedBox(
-        width: screenWidth,
-        height: screenHeight,
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Checkbox(
-                    value: load,
-                    onChanged: (v) {
-                      setState(() {
-                        load = v!;
-                      });
-                    }),
-                Text("Status: $status", style: textStyle),
-              ],
-            ),
-            SizedBox(
-                width: screenWidth,
-                height: screenHeight * 0.9,
-                child: load ? kakaoMapDebug() : null)
-          ],
+      home: Scaffold(
+        body: SizedBox(
+          width: screenWidth,
+          height: screenHeight,
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Checkbox(
+                      value: load,
+                      onChanged: (v) {
+                        setState(() {
+                          load = v!;
+                        });
+                      }),
+                  Text("Status: $status", style: textStyle),
+                ],
+              ),
+              SizedBox(
+                  width: screenWidth,
+                  height: screenHeight * 0.9,
+                  child: load ? kakaoMapDebug() : null)
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 
