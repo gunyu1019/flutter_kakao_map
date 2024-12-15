@@ -54,6 +54,9 @@ class _MyAppState extends State<MyApp> {
                 child: KakaoMap(
                   onMapReady: (KakaoMapController controller) {
                     this.controller = controller;
+                    setState(() {
+                      this.status = "Ready";
+                    });
                   },
                   onMapError: (Map<String, dynamic> exception) {
                     setState(() {
