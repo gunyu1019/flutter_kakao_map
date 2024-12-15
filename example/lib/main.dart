@@ -24,6 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late KakaoMapController controller;
   String status = "Not Loaded";
+  bool load = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +48,26 @@ class _MyAppState extends State<MyApp> {
                       ? Text(snapshot.data ?? "로딩 실패", style: textStyle)
                       : const Text("로딩 중", style: textStyle));
                 }),
-            Text("Status: $status", style: textStyle),
+            Row(
+              children: [
+                Checkbox(value: load, onChanged: (v) {
+                  setState(() {
+                    load = v!;
+                  });
+                }),
+                Text("Status: $status", style: textStyle),
+              ],
+            ),
+            if (load)
             SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.9,
                 child: KakaoMap(onMapReady: onMapReady)
+            )
+            else 
+            SizedBox(
+                width: screenWidth,
+                height: screenHeight * 0.9
             )
           ],
         ),
