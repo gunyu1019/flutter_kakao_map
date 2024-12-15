@@ -49,7 +49,11 @@ data class KakaoMapOption (
         ): KakaoMapOption {
             return KakaoMapOption(
                 onReady=onReady,
-                initialPosition=rawArgs.asLatLng(),
+                initialPosition=(
+                    if (rawArgs.containsKey("latitude") && rawArgs.containsKey("longitude"))
+                    rawArgs.asLatLng()
+                    else null
+                ),
                 zoomLevel = rawArgs["zoomLevel"] as Int?,
                 viewName = rawArgs["viewName"] as String?,
                 mapType = (
