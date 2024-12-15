@@ -35,6 +35,16 @@ class _MyAppState extends State<MyApp> {
     var screenHeight = mediaQueryData.size.height;
 
     return MaterialApp(
+      builder: (context, widget) {
+        ErrorWidget.builder = (errorDetails) {
+          Widget error = Text('$errorDetails');
+          if (widget is Scaffold || widget is Navigator) {
+            error = Scaffold(body: SafeArea(child: error));
+          }
+          return error;
+        };
+        return widget!;
+      },
       home: SizedBox(
         width: screenWidth,
         height: screenHeight,
