@@ -70,7 +70,6 @@ class KakaoMapController(
 
     override fun onMapError(exception: Exception) {
         channel.invokeMethod("onMapError", mapOf(
-            // "stackTrace" to exception.printStackTrace(),
             "errorCode" to exception.toString(),
             "message" to exception.message,
         ))

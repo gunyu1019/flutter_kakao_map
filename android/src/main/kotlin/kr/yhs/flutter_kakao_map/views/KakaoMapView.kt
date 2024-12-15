@@ -46,13 +46,13 @@ class KakaoMapView(
 
     override fun dispose() {
         activity.unregisterActivityLifecycleCallbacks(this)
-        // (controller as KakaoMapController).dispose()
+        (controller as KakaoMapController).dispose()
     }
 
     fun onMapReady(map: KakaoMap) {
         kakaoMap = map
-        // controller = KakaoMapController(context, channel, kakaoMap)
-        // controller.onMapReady()
+        controller = KakaoMapController(context, channel, kakaoMap)
+        controller.onMapReady()
     }
 
     override fun onMapDestroy() {
@@ -60,7 +60,7 @@ class KakaoMapView(
     }
 
     override fun onMapError(exception: Exception) {
-        // controller.onMapError(exception)
+        controller.onMapError(exception)
     }
 
     /* Application.LifeCycleCallback Handler */
