@@ -20,6 +20,7 @@ class KakaoMap extends StatefulWidget {
 }
 
 class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
+  // ignore: constant_identifier_names
   static const VIEW_TYPE = "plugin/kakao_map";
   late final MethodChannel channel;
   late final KakaoMapController controller;

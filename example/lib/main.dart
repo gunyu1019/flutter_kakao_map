@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
                       ? Text(snapshot.data ?? "로딩 실패", style: textStyle)
                       : const Text("로딩 중", style: textStyle));
                 }),
-            Text("Status: ${status}", style: textStyle),
+            Text("Status: $status", style: textStyle),
             SizedBox(
                 width: screenWidth,
                 height: screenHeight * 0.8,
@@ -55,12 +55,12 @@ class _MyAppState extends State<MyApp> {
                   onMapReady: (KakaoMapController controller) {
                     this.controller = controller;
                     setState(() {
-                      this.status = "Ready";
+                      status = "Ready";
                     });
                   },
                   onMapError: (Map<String, dynamic> exception) {
                     setState(() {
-                      this.status = json.encode(exception);
+                      status = json.encode(exception);
                     });
                   },
                 ))
