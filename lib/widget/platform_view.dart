@@ -28,7 +28,7 @@ StatefulWidget _createPlatformView({
             )
               ..addOnPlatformViewCreatedListener((viewId) {
                 params.onPlatformViewCreated(viewId);
-                onPlatformViewCreated!(viewId);
+                onPlatformViewCreated?.call(viewId);
               })
               ..create();
           },
