@@ -19,11 +19,11 @@ class KakaoMap extends StatefulWidget {
   State<StatefulWidget> createState() => _KakaoMapState();
 }
 
-class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
+class _KakaoMapState extends State<KakaoMap> {
   // ignore: constant_identifier_names
   static const VIEW_TYPE = "plugin/kakao_map";
-  late final MethodChannel channel;
-  late final KakaoMapController controller;
+  // late final MethodChannel channel;
+  // late final KakaoMapController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +36,23 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   }
 
   void onPlatformViewCreated(int viewId) {
-    channel = ChannelType.view.channelWithId(viewId);
+    // channel = ChannelType.view.channelWithId(viewId);
     // controller = KakaoMapController(channel);
     // channel.setMethodCallHandler(handle);
   }
   
-  @override
-  void onMapDestroyed() {
-    widget.onMapDestroyed?.call();
-  }
+  // @override
+  // void onMapDestroyed() {
+  //   widget.onMapDestroyed?.call();
+  // }
   
-  @override
-  void onMapError(Map<String, dynamic> exception) {
-    widget.onMapError?.call(exception);
-  }
+  // @override
+  // void onMapError(Map<String, dynamic> exception) {
+  //   widget.onMapError?.call(exception);
+  // }
   
-  @override
-  void onMapReady() {
-    widget.onMapReady.call(controller);
-  }
+  // @override
+  // void onMapReady() {
+  //   widget.onMapReady.call(controller);
+  // }
 }
