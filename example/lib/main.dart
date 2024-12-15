@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_debug_overlay/flutter_debug_overlay.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_kakao_map/flutter_kakao_map.dart';
@@ -11,11 +13,39 @@ void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
   await KakaoMapSdk.instance.initialize(dotenv.env['KAKAO_API_KEY']!);
 
+  
+    
+  DebugOverlay.enabled = true;
+
+  // Uncaught Exceptions.
+  PlatformDispatcher.instance.onError = (exception, stackTrace) {
+    MyApp.logBucket.add(LogEvent(
+      level: LogLevel.fatal,
+      message: "Unhandled Exception",
+      error: exception,
+      stackTrace: stackTrace,
+    ));
+    return false;
+  };
+
+  // Rendering Exceptions.
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    MyApp.logBucket.add(LogEvent(
+      level: LogLevel.fatal,
+      message: details.exceptionAsString(),
+      error: details.toDiagnosticsNode().toStringDeep(),
+      stackTrace: details.stack,
+    ));
+  };
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static final LogBucket logBucket = LogBucket();
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -35,16 +65,9 @@ class _MyAppState extends State<MyApp> {
     var screenHeight = mediaQueryData.size.height;
 
     return MaterialApp(
-      builder: (context, widget) {
-        ErrorWidget.builder = (errorDetails) {
-          Widget error = Text('$errorDetails');
-          if (widget is Scaffold || widget is Navigator) {
-            error = Scaffold(body: SafeArea(child: error));
-          }
-          return error;
-        };
-        return widget!;
-      },
+      builder: DebugOverlay.builder(
+        logBucket: MyApp.logBucket
+      ),
       home: SizedBox(
         width: screenWidth,
         height: screenHeight,
