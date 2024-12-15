@@ -7,11 +7,14 @@ import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 
 
 object ReferenceTypeConverter {
-    fun Any.asLatLng(): LatLng = asMap<Double>().let { map: Map<String, Double> ->
-        LatLng.from(
-            map["latitude"]!!,
-            map["longitude"]!!
-        )
+    fun Any.asLatLng(): LatLng? = asMap<Double?>().let { map: Map<String, Double?> ->
+        if (map.containsKey("latitude") && map.containsKey("longitude"))
+            LatLng.from(
+                map["latitude"]!!,
+                map["longitude"]!!
+            )
+        else 
+            null
     }
 
     fun LatLng.toMessageable(): Map<String, Double> = mapOf(
