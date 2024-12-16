@@ -6,7 +6,7 @@ class KakaoAuthException implements Exception {
 
   KakaoAuthException(this.code, this.message);
 
-  KakaoAuthException.fromMessageable(Map<String, dynamic> payload)
+  KakaoAuthException.fromMessageable(dynamic payload)
       : this(payload['errorCode']!, payload['message']);
 
   @override

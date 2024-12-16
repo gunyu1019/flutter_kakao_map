@@ -14,7 +14,7 @@ class KakaoMapController with KakaoMapControllerHandler {
   }
   
   @override
-  void onMapError(Map<String, dynamic> exception) {
+  void onMapError(dynamic exception) {
     final String className = exception['className'];
     switch (className) {
       case 'MapAuthException':

@@ -23,5 +23,5 @@ mixin KakaoMapControllerHandler {
 
   void onMapDestroy();
   
-  void onMapError(Map<String, dynamic> exception);
+  void onMapError(dynamic exception);
 }
