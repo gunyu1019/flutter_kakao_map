@@ -74,9 +74,7 @@ class KakaoMapController(
     }
 
     override fun onMapError(exception: Exception) {
-        Log.i("flutter", "exception-catch-point-1")
         if (exception is MapAuthException) {
-            Log.i("flutter", "exception-catch-point-2 ${exception.errorCode}")
             channel.invokeMethod("onMapError", mapOf(
                 "className" to "MapAuthException",
                 "errorCode" to exception.errorCode,

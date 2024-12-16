@@ -11,7 +11,7 @@ mixin KakaoMapControllerHandler {
         onMapDestroy();
         break;
       case "onMapError": 
-        onMapError(method.arguments['exception']);
+        onMapError(method.arguments);
         break;
       default:
         break;
