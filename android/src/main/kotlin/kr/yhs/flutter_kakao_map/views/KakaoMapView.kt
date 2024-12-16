@@ -28,16 +28,15 @@ import kr.yhs.flutter_kakao_map.controller.KakaoMapControllerSender
 class KakaoMapView(
     private val activity: Activity,
     private val context: Context,
+    private val controller: KakaoMapController,
     private val viewId: Int,
     private val option: KakaoMapOption,
     private val channel: MethodChannel
 ): PlatformView, Application.ActivityLifecycleCallbacks {
     private val mapView = MapView(activity)
     private lateinit var kakaoMap: KakaoMap
-    private val controller: KakaoMapControllerSender = KakaoMapController(context, channel)
 
     init {
-        option.setOnReady(::onMapReady)
         mapView.start(controller, option)
         activity.registerActivityLifecycleCallbacks(this)
     }
@@ -46,20 +45,7 @@ class KakaoMapView(
 
     override fun dispose() {
         activity.unregisterActivityLifecycleCallbacks(this)
-        (controller as KakaoMapController).dispose()
-    }
-
-    fun onMapReady(map: KakaoMap) {
-        kakaoMap = map
-        controller.onMapReady(map)
-    }
-
-    override fun onMapDestroy() {
-        controller.onMapDestroyed()
-    }
-
-    override fun onMapError(exception: Exception) {
-        controller.onMapError(exception)
+        controller.dispose()
     }
 
     /* Application.LifeCycleCallback Handler */

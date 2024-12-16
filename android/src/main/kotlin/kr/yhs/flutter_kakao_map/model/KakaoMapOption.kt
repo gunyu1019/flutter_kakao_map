@@ -10,7 +10,7 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
 
 
 data class KakaoMapOption (
-    private var onReady: ((KakaoMap) -> Unit)?,
+    private var onReady: ((KakaoMap) -> Unit),
     private val initialPosition: LatLng? = null,
     private val zoomLevel: Int? = null,
     private val mapType: MapType? = null,
@@ -19,7 +19,7 @@ data class KakaoMapOption (
     private val tag: String? = null,
 ) : KakaoMapReadyCallback() {
     // lateinit
-    override fun onMapReady(map: KakaoMap) = onReady?.invoke(map) ?: Unit
+    override fun onMapReady(map: KakaoMap) = onReady.invoke(map)
 
     override fun getZoomLevel(): Int = zoomLevel ?: super.getZoomLevel()
 
@@ -44,7 +44,7 @@ data class KakaoMapOption (
 
     companion object {
         fun fromMessageable(
-            onReady: ((KakaoMap) -> Unit)?,
+            onReady: ((KakaoMap) -> Unit),
             rawArgs: Map<String, Any?>
         ): KakaoMapOption {
             return KakaoMapOption(

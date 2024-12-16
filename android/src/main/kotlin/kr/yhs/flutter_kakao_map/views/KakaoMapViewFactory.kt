@@ -10,6 +10,7 @@ import io.flutter.plugin.platform.PlatformViewFactory
 import kr.yhs.flutter_kakao_map.FlutterKakaoMapPlugin
 import kr.yhs.flutter_kakao_map.model.KakaoMapOption
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakao_map.controller.KakaoMapController
 
 
 class KakaoMapViewFactory(
@@ -22,10 +23,12 @@ class KakaoMapViewFactory(
         val convertedArgs = args!!.asMap<Any?>()
 
         // late init => OnMapReady method 
-        val option = KakaoMapOption.fromMessageable(null, convertedArgs)
+        val controller = KakaoMapController(context, channel)
+        val option = KakaoMapOption.fromMessageable(controller::onMapReady, convertedArgs)
         return KakaoMapView(
             activity = activity,
             context = context,
+            controller = controller,
             viewId = viewId,
             option=option,
             channel = channel
