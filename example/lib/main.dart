@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                   width: screenWidth,
                   height: screenHeight * 0.9,
-                  child: load ? kakaoMapDebug() : null)
+                  child: load ? KakaoMap(onMapReady: onMapReady, onMapError: onMapError) : null)
             ],
           ),
         ),
@@ -103,20 +103,17 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  StatefulWidget? kakaoMapDebug() {
-    try {
-      return KakaoMap(onMapReady: onMapReady);
-    } on Exception catch (e) {
-      MyApp.logBucket.add(LogEvent(
-        level: LogLevel.fatal,
-        message: "Exception caused KakaoMap View",
-        error: e,
-      ));
-      return null;
-    }
-  }
-
   void onMapReady(KakaoMapController controller) {
     controller = controller;
+    print("Ready");
+    setState(() {
+      status = "Ready";
+    });
+  }
+
+  void onMapError(Exception exception) {
+    setState(() {
+      status = exception.toString();
+    });
   }
 }
