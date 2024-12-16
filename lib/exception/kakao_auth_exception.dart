@@ -1,7 +1,7 @@
 part of '../flutter_kakao_map.dart';
 
 class KakaoAuthException implements Exception {
-  final String code;
+  final int code;
   final String? message;
 
   KakaoAuthException(this.code, this.message);
