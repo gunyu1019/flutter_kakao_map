@@ -2,6 +2,7 @@
 package kr.yhs.flutter_kakao_map.controller
 
 import android.content.Context
+import android.util.Log
 import io.flutter.plugin.common.MethodChannel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
@@ -73,7 +74,9 @@ class KakaoMapController(
     }
 
     override fun onMapError(exception: Exception) {
+        Log.i("flutter", "exception-catch-point-1")
         if (exception is MapAuthException) {
+            Log.i("flutter", "exception-catch-point-2 ${exception.errorCode}")
             channel.invokeMethod("onMapError", mapOf(
                 "className" to "MapAuthException",
                 "errorCode" to exception.errorCode,
