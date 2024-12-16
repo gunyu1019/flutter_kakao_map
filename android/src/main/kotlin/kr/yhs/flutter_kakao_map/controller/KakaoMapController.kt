@@ -8,6 +8,7 @@ import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraUpdateFactory
+import com.kakao.vectormap.MapAuthException
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraPosition
@@ -69,8 +70,16 @@ class KakaoMapController(
     }
 
     override fun onMapError(exception: Exception) {
+        if (exception is MapAuthException) {
+            channel.invokeMethod("onMapError", mapOf(
+                "className" to "MapAuthException",
+                "errorCode" to exception.errorCode,
+                "message" to exception.message,
+            ))
+            return
+        }
         channel.invokeMethod("onMapError", mapOf(
-            "errorCode" to exception.toString(),
+            "className" to exception::javaClass.name,
             "message" to exception.message,
         ))
     }
