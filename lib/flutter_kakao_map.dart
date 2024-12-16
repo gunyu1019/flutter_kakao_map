@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,9 @@ part 'channel/channel_wrapper.dart';
 part 'controller/controller.dart';
 part 'controller/handler.dart';
 part 'controller/sender.dart';
+
+/* exception */
+part 'exception/kakao_auth_exception.dart';
 
 /* initalizer */
 part 'initializer/sdk_initalizer.dart';
