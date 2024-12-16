@@ -1,7 +1,38 @@
 part of '../flutter_kakao_map.dart';
 
-class KakaoMapController {
+class KakaoMapController with KakaoMapControllerHandler {
   final MethodChannel channel;
+  final KakaoMap widget;
 
-  const KakaoMapController(this.channel);
+  KakaoMapController(this.channel, this.widget) {
+    channel.setMethodCallHandler(handle);
+  }
+  
+  @override
+  void onMapDestroyed() {
+    widget.onMapDestroyed?.call();
+  }
+  
+  @override
+  void onMapError(Map<String, dynamic> exception) {
+    final String className = exception['className'];
+    switch (className) {
+      case 'MapAuthException':
+        widget.onMapError?.call(
+          KakaoAuthException.fromMessageable(exception)
+        );
+        break;
+      default:
+        widget.onMapError?.call(
+          Exception("${exception['className']}(${exception['message']})")
+        );
+        break;
+    }
+    
+  }
+  
+  @override
+  void onMapReady() {
+    widget.onMapReady.call(this);
+  }
 }
