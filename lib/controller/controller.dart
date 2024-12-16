@@ -9,8 +9,8 @@ class KakaoMapController with KakaoMapControllerHandler {
   }
   
   @override
-  void onMapDestroyed() {
-    widget.onMapDestroyed?.call();
+  void onMapDestroy() {
+    widget.onMapDestroy?.call();
   }
   
   @override

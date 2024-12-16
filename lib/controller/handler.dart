@@ -7,8 +7,8 @@ mixin KakaoMapControllerHandler {
       case "onMapReady": 
         onMapReady();
         break;
-      case "onMapDestroyed": 
-        onMapDestroyed();
+      case "onMapDestroy": 
+        onMapDestroy();
         break;
       case "onMapError": 
         onMapError(method.arguments['exception']);
@@ -20,7 +20,7 @@ mixin KakaoMapControllerHandler {
 
   void onMapReady();
 
-  void onMapDestroyed();
+  void onMapDestroy();
   
   void onMapError(Map<String, dynamic> exception);
 }

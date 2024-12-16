@@ -4,14 +4,14 @@ class KakaoMap extends StatefulWidget {
   final KakaoMapOption? option;
 
   final void Function(KakaoMapController controller) onMapReady;
-  final void Function()? onMapDestroyed;
+  final void Function()? onMapDestroy;
   final void Function(Exception exception)? onMapError;
 
   const KakaoMap({
     super.key,
     required this.onMapReady,
     this.option,
-    this.onMapDestroyed,
+    this.onMapDestroy,
     this.onMapError
   });
 

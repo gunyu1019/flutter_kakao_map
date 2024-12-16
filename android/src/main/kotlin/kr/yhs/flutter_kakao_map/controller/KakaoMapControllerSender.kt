@@ -6,7 +6,7 @@ import com.kakao.vectormap.KakaoMap
 interface KakaoMapControllerSender {
     fun onMapReady(kakaoMap: KakaoMap)
 
-    fun onMapDestroyed()
+    fun onMapDestroy()
 
     fun onMapError(exception: Exception)
 }

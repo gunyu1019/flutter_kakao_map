@@ -31,14 +31,14 @@ class KakaoMapView(
     private val viewId: Int,
     private val option: KakaoMapOption,
     private val channel: MethodChannel
-): PlatformView, Application.ActivityLifecycleCallbacks, MapLifeCycleCallback() {
+): PlatformView, Application.ActivityLifecycleCallbacks {
     private val mapView = MapView(activity)
     private lateinit var kakaoMap: KakaoMap
     private val controller: KakaoMapControllerSender = KakaoMapController(context, channel)
 
     init {
         option.setOnReady(::onMapReady)
-        mapView.start(this, option)
+        mapView.start(controller, option)
         activity.registerActivityLifecycleCallbacks(this)
     }
 

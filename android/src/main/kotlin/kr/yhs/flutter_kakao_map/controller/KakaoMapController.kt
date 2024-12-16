@@ -9,6 +9,7 @@ import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.MapAuthException
+import com.kakao.vectormap.MapLifeCycleCallback
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraPosition
@@ -17,7 +18,7 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimati
 class KakaoMapController(
     private val context: Context,
     private val channel: MethodChannel,
-): KakaoMapControllerHandler, KakaoMapControllerSender {
+): KakaoMapControllerHandler, KakaoMapControllerSender, MapLifeCycleCallback() {
     private lateinit var kakaoMap: KakaoMap
 
     init {
@@ -67,8 +68,8 @@ class KakaoMapController(
         channel.invokeMethod("onMapReady", null)
     }
 
-    override fun onMapDestroyed() { 
-        channel.invokeMethod("onMapDestroyed", null)
+    override fun onMapDestroy() { 
+        channel.invokeMethod("onMapDestroy", null)
     }
 
     override fun onMapError(exception: Exception) {
