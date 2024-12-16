@@ -17,8 +17,9 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimati
 class KakaoMapController(
     private val context: Context,
     private val channel: MethodChannel,
-    private val kakaoMap: KakaoMap
 ): KakaoMapControllerHandler, KakaoMapControllerSender {
+    private lateinit var kakaoMap: KakaoMap
+
     init {
         channel.setMethodCallHandler(::handle)
     }
@@ -61,7 +62,8 @@ class KakaoMapController(
         }
     }
 
-    override fun onMapReady() {
+    override fun onMapReady(kakaoMap: KakaoMap) {
+        this.kakaoMap = kakaoMap
         channel.invokeMethod("onMapReady", null)
     }
 
