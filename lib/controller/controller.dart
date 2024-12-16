@@ -15,7 +15,10 @@ class KakaoMapController with KakaoMapControllerHandler {
   
   @override
   void onMapError(dynamic exception) {
+    print("onMapError Controller called-1");
     final String className = exception['className'];
+    print(exception);
+    print("onMapError Controller called-2");
     switch (className) {
       case 'MapAuthException':
         widget.onMapError?.call(
