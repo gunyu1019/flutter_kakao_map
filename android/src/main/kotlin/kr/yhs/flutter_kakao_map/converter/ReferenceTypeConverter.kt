@@ -3,14 +3,16 @@ package kr.yhs.flutter_kakao_map.converter
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraAnimation
+import com.kakao.vectormap.camera.CameraUpdate
+import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 
 
 object ReferenceTypeConverter {
-    fun Any.asLatLng(): LatLng = asMap<Double>().let { map: Map<String, Double> ->
+    fun Any.asLatLng(): LatLng = asMap<Double>().let { rawPayload: Map<String, Double> ->
         LatLng.from(
-            map["latitude"]!!,
-            map["longitude"]!!
+            rawPayload["latitude"]!!,
+            rawPayload["longitude"]!!
         )
     }
 
@@ -19,14 +21,14 @@ object ReferenceTypeConverter {
         "longitude" to longitude
     )
 
-    fun Any.asCameraPosition(): CameraPosition = asMap<Any>().let { map: Map<String, Any> ->
+    fun Any.asCameraPosition(): CameraPosition = asMap<Any>().let { rawPayload: Map<String, Any> ->
         CameraPosition.from(
-            map["latitude"] as Double,
-            map["longitude"] as Double,
-            map["zoomLevel"] as Int? ?: -1,
-            map["tiltAngle"] as Double? ?: -1.0,
-            map["rotationAngle"] as Double? ?: -1.0,
-            map["height"] as Double? ?: -1.0,
+            rawPayload["latitude"] as Double,
+            rawPayload["longitude"] as Double,
+            rawPayload["zoomLevel"] as Int? ?: -1,
+            rawPayload["tiltAngle"] as Double? ?: -1.0,
+            rawPayload["rotationAngle"] as Double? ?: -1.0,
+            rawPayload["height"] as Double? ?: -1.0,
         )
     }
 
@@ -39,11 +41,19 @@ object ReferenceTypeConverter {
         "height" to height
     )
 
-    fun Any.asCameraAnimation(): CameraAnimation = asMap<Any>().let { map: Map<String, Any?> ->
+    fun Any.asCameraAnimation(): CameraAnimation = asMap<Any>().let { rawPayload: Map<String, Any?> ->
         CameraAnimation.from(
-            map["duration"] as Int,
-            map["autoElevation"] as Boolean? ?: false, 
-            map["isConsecutive"] as Boolean? ?: false
+            rawPayload["duration"] as Int,
+            rawPayload["autoElevation"] as Boolean? ?: false, 
+            rawPayload["isConsecutive"] as Boolean? ?: false
         )
+    }
+
+    fun Any.asCameraUpdate(): CameraUpdate = asMap<Any>().let { rawPayload: Map<String, Any> ->
+        val type = rawPayload.getOrDefault("type", -1) as Int
+        when(type) {
+            CameraUpdateFactory.NewCenterPoint -> CameraUpdateFactory.newCenterPosition(rawPayload.asLatLng(), rawPayload.getOrDefault("zoomLevel", -1) as Int)
+            else -> throw NotImplementedError("Wrong CameraUpdate type")
+        }
     }
 }
