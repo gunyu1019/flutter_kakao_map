@@ -1,6 +1,8 @@
 package kr.yhs.flutter_kakao_map.controller
 
 import com.kakao.vectormap.camera.CameraPosition
+import com.kakao.vectormap.camera.CameraUpdate
+import com.kakao.vectormap.camera.CameraAnimation
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
 
@@ -13,16 +15,8 @@ interface KakaoMapControllerHandler {
     fun getCameraPosition(onSuccess: (cameraPosition: Map<String, Any>) -> Unit)
 
     fun moveCamera(
-        cameraUpdate: Map<String, Any>,
-        cameraAnimation: Map<String, Any>?,
+        cameraUpdate: CameraUpdate,
+        cameraAnimation: CameraAnimation?,
         onSuccess: () -> Unit
     )
-
-    fun moveCamera(
-        points: List<Map<String, Any>>,
-        padding: Int?,
-        maxZoomLevel: Int?,
-        cameraAnimation: Map<String, Any>?,
-        onSuccess: () -> Unit
-    ) // For CameraUpdateFactory.fitMapPoints
 }

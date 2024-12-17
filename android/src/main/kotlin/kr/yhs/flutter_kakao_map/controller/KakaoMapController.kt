@@ -9,6 +9,7 @@ import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraUpdateFactory
+import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.MapAuthException
 import com.kakao.vectormap.MapLifeCycleCallback
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
@@ -30,38 +31,12 @@ class KakaoMapController(
         kakaoMap.getCameraPosition()?.toMessageable().let { onSuccess }
     }
 
-    private fun baseMoveCamera(
+    override fun moveCamera(
         cameraUpdate: CameraUpdate,
-        cameraAnimation: Map<String, Any>?,
-        onSuccess: () -> Unit
-    ) {
-        kakaoMap.moveCamera(cameraUpdate, cameraAnimation?.asCameraAnimation())
-    }
-
-    override fun moveCamera(
-        cameraUpdate: Map<String, Any>,
-        cameraAnimation: Map<String, Any>?,
+        cameraAnimation: CameraAnimation?,
         onSuccess: () -> Unit
     ) { 
-        CameraUpdateFactory.newCameraPosition(cameraUpdate.asCameraPosition()).let { newCameraUpdate ->
-            baseMoveCamera(newCameraUpdate, cameraAnimation, onSuccess)
-        }
-    }
-
-    override fun moveCamera(
-        points: List<Map<String, Any>>,
-        padding: Int?,
-        maxZoomLevel: Int?,
-        cameraAnimation: Map<String, Any>?,
-        onSuccess: () -> Unit
-    ) { 
-        CameraUpdateFactory.fitMapPoints(
-            points.map { point -> point.asLatLng() }.toTypedArray(), 
-            padding ?: 0, 
-            maxZoomLevel ?: -1
-        ).let { newCameraUpdate ->
-            baseMoveCamera(newCameraUpdate, cameraAnimation, onSuccess)
-        }
+        kakaoMap.moveCamera(cameraUpdate, cameraAnimation)
     }
 
     override fun onMapReady(kakaoMap: KakaoMap) {
