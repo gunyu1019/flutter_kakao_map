@@ -51,8 +51,13 @@ object ReferenceTypeConverter {
 
     fun Any.asCameraUpdate(): CameraUpdate = asMap<Any>().let { rawPayload: Map<String, Any> ->
         val type = rawPayload.getOrDefault("type", -1) as Int
+        val zoomLevel = rawPayload.getOrDefault("zoomLevel", -1) as Int
         when(type) {
-            CameraUpdateFactory.NewCenterPoint -> CameraUpdateFactory.newCenterPosition(rawPayload.asLatLng(), rawPayload.getOrDefault("zoomLevel", -1) as Int)
+            CameraUpdateFactory.NewCenterPoint -> CameraUpdateFactory.newCenterPosition(rawPayload.asLatLng(), zoomLevel)
+            CameraUpdateFactory.NewCameraPos -> CameraUpdateFactory.newCameraPosition(rawPayload.asCameraPosition())
+            CameraUpdateFactory.ZoomTo -> CameraUpdateFactory.zoomTo(zoomLevel)
+            CameraUpdateFactory.ZoomIn -> CameraUpdateFactory.zoomIn()
+            CameraUpdateFactory.ZoomOut -> CameraUpdateFactory.zoomOut()
             else -> throw NotImplementedError("Wrong CameraUpdate type")
         }
     }
