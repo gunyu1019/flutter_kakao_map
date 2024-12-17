@@ -1,13 +1,21 @@
 part of '../flutter_kakao_map.dart';
 
-class KakaoMapController with KakaoMapControllerHandler {
+class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSender {
   final MethodChannel channel;
   final KakaoMap widget;
 
   KakaoMapController(this.channel, this.widget) {
     channel.setMethodCallHandler(handle);
   }
-  
+
+  /* Sender */
+  @override
+  Future<CameraPosition> getCameraPosition() async {
+    final rawCameraPosition = await channel.invokeMethod("getCameraPosition");
+    return CameraPosition.fromMessageable(rawCameraPosition);
+  }
+
+  /* Handler */
   @override
   void onMapDestroy() {
     widget.onMapDestroy?.call();
