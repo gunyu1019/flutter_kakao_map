@@ -10,10 +10,19 @@ class LatLng {
     this.longitude
   );
 
+  factory LatLng.fromMessageable(dynamic payload) 
+    => LatLng(
+      payload['latitiude'],
+      payload['longitude']
+    );
+
   Map<String, dynamic> toMessageable() {
     return {
       "latitiude": latitude,
       "longitude": longitude
     };
   }
+
+  @override
+  String toString() => "$runtimeType: ${toMessageable().map}";
 }
