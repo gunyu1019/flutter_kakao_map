@@ -16,7 +16,7 @@ class CameraAnimation {
       "duration": duration,
       "autoElevation": autoElevation,
       "isConsecutive": isConsecutive,
-    }
+    };
   }
 
   @override
