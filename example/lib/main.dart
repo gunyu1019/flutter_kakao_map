@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
 
   void onMapReady(KakaoMapController controller) {
     controller = controller;
-    controller.moveCamera(CameraUpdate.rotate(90));
+    controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273), -1), animation: const CameraAnimation(5000));
     controller.getCameraPosition().then((result) {
       setState(() {
         status = result.toString();
@@ -116,6 +116,6 @@ class _MyAppState extends State<MyApp> {
   void onMapError(Exception exception) {
     setState(() {
       status = exception.toString();
-    });
+    })
   }
 }
