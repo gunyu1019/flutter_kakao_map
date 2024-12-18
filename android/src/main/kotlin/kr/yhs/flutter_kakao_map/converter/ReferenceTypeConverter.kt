@@ -6,6 +6,8 @@ import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asDouble
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
 
 
 object ReferenceTypeConverter {
@@ -50,14 +52,23 @@ object ReferenceTypeConverter {
     }
 
     fun Any.asCameraUpdate(): CameraUpdate = asMap<Any>().let { rawPayload: Map<String, Any> ->
-        val type = rawPayload.getOrDefault("type", -1) as Int
-        val zoomLevel = rawPayload.getOrDefault("zoomLevel", -1) as Int
+        val type = rawPayload["type"]!!.asInt()
+        val zoomLevel = rawPayload.getOrDefault("zoomLevel", -1).asInt()
+        val angle = rawPayload.getOrDefault("angle", -1.0).asDouble()
+
         when(type) {
             CameraUpdateFactory.NewCenterPoint -> CameraUpdateFactory.newCenterPosition(rawPayload.asLatLng(), zoomLevel)
             CameraUpdateFactory.NewCameraPos -> CameraUpdateFactory.newCameraPosition(rawPayload.asCameraPosition())
             CameraUpdateFactory.ZoomTo -> CameraUpdateFactory.zoomTo(zoomLevel)
             CameraUpdateFactory.ZoomIn -> CameraUpdateFactory.zoomIn()
             CameraUpdateFactory.ZoomOut -> CameraUpdateFactory.zoomOut()
+            CameraUpdateFactory.Rotate -> CameraUpdateFactory.rotateTo(angle)
+            CameraUpdateFactory.Tilt -> CameraUpdateFactory.tiltTo(angle)
+            CameraUpdateFactory.FitMapPoints -> {
+                val points = (rawPayload["points"] as List<Map<String, Any>>)
+                val padding = rawPayload.getOrDefault("padding", 0).asInt()
+                CameraUpdateFactory.fitMapPoints(points.map { point -> point.asLatLng() }.toTypedArray(), padding, zoomLevel)
+            }
             else -> throw NotImplementedError("Wrong CameraUpdate type")
         }
     }
