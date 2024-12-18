@@ -3,25 +3,56 @@ part of '../../flutter_kakao_map.dart';
 
 class CameraUpdate {
   final CameraUpdateType type;
-  final LatLng? position = null;
-  final int zoomLevel = -1;
+  final LatLng? position;
+  final int zoomLevel;
 
   // CameraUpdateType.newCameraPos
-  final CameraPosition? cameraPosition = null;
+  final CameraPosition? cameraPosition;
 
   // For CameraUpdateType.rotate, CameraUpdateType.tilt
-  final double angle = -1.0;
+  final double angle;
 
   // For CameraUpdateType.fitMapPoints
-  final List<LatLng>? fitPoints = null;
-  final int? padding = null;
+  final List<LatLng>? fitPoints;
+  final int? padding;
 
-  const CameraUpdate(this.type);
+  CameraUpdate._(this.type, {
+    this.position,
+    this.zoomLevel = -1,
+    this.cameraPosition,
+    this.angle = -1.0,
+    this.fitPoints,
+    this.padding,
+  });
+
+  factory CameraUpdate.newCenterPosition(LatLng position, int? zoomLevel)
+    => CameraUpdate._(CameraUpdateType.newCenterPoint, position: position, zoomLevel: zoomLevel ?? -1);
+
+  factory CameraUpdate.newCameraPos(CameraPosition cameraPosition)
+    => CameraUpdate._(CameraUpdateType.newCameraPos, cameraPosition: cameraPosition);
+
+  factory CameraUpdate.zoomTo(int zoomLevel)
+    => CameraUpdate._(CameraUpdateType.zoomTo, zoomLevel: zoomLevel);
+
+  factory CameraUpdate.zoomIn(int zoomLevel)
+    => CameraUpdate._(CameraUpdateType.zoomIn);
+
+  factory CameraUpdate.zoomOut(int zoomLevel)
+    => CameraUpdate._(CameraUpdateType.zoomOut);
+
+  factory CameraUpdate.rotate(double angle)
+    => CameraUpdate._(CameraUpdateType.rotate, angle: angle);
+
+  factory CameraUpdate.tilt(double angle)
+    => CameraUpdate._(CameraUpdateType.tilt, angle: angle);
+
+  factory CameraUpdate.fitMapPoints(List<LatLng> fitPoints, int? padding, int? zoomLevel)
+    => CameraUpdate._(CameraUpdateType.tilt, fitPoints: fitPoints, padding: padding, zoomLevel: zoomLevel ?? -1);
 
   Map<String, dynamic> toMessageable() {
     Map<String, dynamic> payload = {
       "type": type.value
-    }
+    };
     switch(type) {
       case CameraUpdateType.newCameraPos:
         payload['position'] = cameraPosition!.toMessageable();
@@ -41,7 +72,7 @@ class CameraUpdate {
         break;
       case CameraUpdateType.fitMapPoints:
         payload['points'] = fitPoints!.map((latlng) { latlng.toMessageable(); });
-        payload['padding'] = padding;
+        payload['padding'] = padding ?? 0;
         payload['zoomLevel'] = zoomLevel;
         break;
     }
