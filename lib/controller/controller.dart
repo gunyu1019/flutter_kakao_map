@@ -15,6 +15,14 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
     return CameraPosition.fromMessageable(rawCameraPosition);
   }
 
+  @override
+  Future<void> moveCamera(CameraUpdate camera, CameraAnimation? animation) async {
+    await channel.invokeMethod("moveCamera", {
+      "cameraUpdate": camera,
+      "cameraAnimation": animation
+    });
+  }
+
   /* Handler */
   @override
   void onMapDestroy() {
