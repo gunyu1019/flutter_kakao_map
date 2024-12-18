@@ -105,6 +105,7 @@ class _MyAppState extends State<MyApp> {
 
   void onMapReady(KakaoMapController controller) {
     controller = controller;
+    controller.moveCamera(CameraUpdate.rotate(90));
     controller.getCameraPosition().then((result) {
       setState(() {
         status = result.toString();
