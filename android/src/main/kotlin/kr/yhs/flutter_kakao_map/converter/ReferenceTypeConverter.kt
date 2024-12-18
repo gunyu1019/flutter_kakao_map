@@ -65,6 +65,7 @@ object ReferenceTypeConverter {
             CameraUpdateFactory.Rotate -> CameraUpdateFactory.rotateTo(angle)
             CameraUpdateFactory.Tilt -> CameraUpdateFactory.tiltTo(angle)
             CameraUpdateFactory.FitMapPoints -> {
+                @Suppress("UNCHECKED_CAST")
                 val points = (rawPayload["points"] as List<Map<String, Any>>)
                 val padding = rawPayload.getOrDefault("padding", 0).asInt()
                 CameraUpdateFactory.fitMapPoints(points.map { point -> point.asLatLng() }.toTypedArray(), padding, zoomLevel)
