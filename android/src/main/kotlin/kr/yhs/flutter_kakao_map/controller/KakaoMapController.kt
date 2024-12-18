@@ -34,9 +34,10 @@ class KakaoMapController(
     override fun moveCamera(
         cameraUpdate: CameraUpdate,
         cameraAnimation: CameraAnimation?,
-        onSuccess: () -> Unit
+        onSuccess: (Any?) -> Unit
     ) { 
         kakaoMap.moveCamera(cameraUpdate, cameraAnimation)
+        onSuccess(null)
     }
 
     override fun onMapReady(kakaoMap: KakaoMap) {
