@@ -12,6 +12,7 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
   @override
   Future<CameraPosition> getCameraPosition() async {
     final rawCameraPosition = await channel.invokeMethod("getCameraPosition");
+    print(rawCameraPosition);
     return CameraPosition.fromMessageable(rawCameraPosition);
   }
 
