@@ -36,7 +36,11 @@ class KakaoMapController(
         cameraAnimation: CameraAnimation?,
         onSuccess: (Any?) -> Unit
     ) { 
-        kakaoMap.moveCamera(cameraUpdate, cameraAnimation)
+        if (cameraAnimation != null) {
+            kakaoMap.moveCamera(cameraUpdate, cameraAnimation)
+        } else {
+            kakaoMap.moveCamera(cameraUpdate)
+        }
         onSuccess(null)
     }
 
