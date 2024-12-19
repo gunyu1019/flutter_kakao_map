@@ -116,6 +116,6 @@ class _MyAppState extends State<MyApp> {
   void onMapError(Exception exception) {
     setState(() {
       status = exception.toString();
-    })
+    });
   }
 }
