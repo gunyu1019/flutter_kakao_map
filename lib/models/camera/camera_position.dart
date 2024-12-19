@@ -27,7 +27,7 @@ class CameraPosition {
 
   Map<String, dynamic> toMessageable() {
     return {
-      "latitiude": position.latitude,
+      "latitude": position.latitude,
       "longitude": position.longitude,
       "zoomLevel": zoomLevel,
       "tiltAngle": tiltAngle ?? -1.0,
