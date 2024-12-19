@@ -25,7 +25,7 @@ class CameraUpdate {
     this.padding,
   });
 
-  factory CameraUpdate.newCenterPosition(LatLng position, int? zoomLevel)
+  factory CameraUpdate.newCenterPosition(LatLng position, {int? zoomLevel})
     => CameraUpdate._(CameraUpdateType.newCenterPoint, position: position, zoomLevel: zoomLevel ?? -1);
 
   factory CameraUpdate.newCameraPos(CameraPosition cameraPosition)
@@ -34,10 +34,10 @@ class CameraUpdate {
   factory CameraUpdate.zoomTo(int zoomLevel)
     => CameraUpdate._(CameraUpdateType.zoomTo, zoomLevel: zoomLevel);
 
-  factory CameraUpdate.zoomIn(int zoomLevel)
+  factory CameraUpdate.zoomIn()
     => CameraUpdate._(CameraUpdateType.zoomIn);
 
-  factory CameraUpdate.zoomOut(int zoomLevel)
+  factory CameraUpdate.zoomOut()
     => CameraUpdate._(CameraUpdateType.zoomOut);
 
   factory CameraUpdate.rotate(double angle)
@@ -54,12 +54,12 @@ class CameraUpdate {
       "type": type.value
     };
     switch(type) {
-      case CameraUpdateType.newCameraPos:
-        payload['position'] = cameraPosition!.toMessageable();
+      case CameraUpdateType.newCenterPoint:
+        payload['position'] = position!.toMessageable();
       case CameraUpdateType.zoomTo:
         payload['zoomLevel'] = zoomLevel;
         break;
-      case CameraUpdateType.newCenterPoint:
+      case CameraUpdateType.newCameraPos:
         payload.addAll(cameraPosition!.toMessageable());
         break;
       case CameraUpdateType.newCameraAngle: // Nothing payload.
