@@ -16,7 +16,7 @@ StatefulWidget _createPlatformView({
                 gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{});
           },
           onCreatePlatformView: (params) {
-            return PlatformViewsService.initSurfaceAndroidView(
+            return PlatformViewsService.initAndroidView(
               id: params.id,
               viewType: viewType,
               layoutDirection: TextDirection.ltr,
