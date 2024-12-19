@@ -28,8 +28,11 @@ class KakaoMapController(
     }
 
     override fun getCameraPosition(onSuccess: (cameraPosition: Map<String, Any>) -> Unit) { 
-        kakaoMap.getCameraPosition()?.toMessageable().let { onSuccess }
-        Log.i("flutter", (kakaoMap.getCameraPosition()?.toMessageable()).toString())
+        kakaoMap.getCameraPosition(object : KakaoMap.OnCameraPositionListener {
+            override fun onCameraPosition(cameraPosition: CameraPosition) {
+                cameraPosition.toMessageable().let(onSuccess)
+            }
+        });
     }
 
     override fun moveCamera(
