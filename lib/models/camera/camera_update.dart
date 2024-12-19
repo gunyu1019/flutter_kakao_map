@@ -55,7 +55,7 @@ class CameraUpdate {
     };
     switch(type) {
       case CameraUpdateType.newCenterPoint:
-        payload['position'] = position!.toMessageable();
+        payload.addAll(position!.toMessageable());
       case CameraUpdateType.zoomTo:
         payload['zoomLevel'] = zoomLevel;
         break;
