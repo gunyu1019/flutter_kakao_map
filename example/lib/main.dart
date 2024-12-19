@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -18,9 +17,8 @@ void main() async {
   final hashKey = await KakaoMapSdk.instance.hashKey();
   MyApp.logBucket.add(LogEvent(
     level: LogLevel.info,
-    message: "HashKey: $hashKey",
+    message: "HashKey( $hashKey ) to add Kakao Developers.",
   ));
-  print(hashKey);
 
   // Uncaught Exceptions.
   PlatformDispatcher.instance.onError = (exception, stackTrace) {
@@ -58,13 +56,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late KakaoMapController controller;
-  String status = "Not Loaded";
-  bool load = false;
+  LatLng? position = null;
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-        fontSize: 14.0, color: Colors.blue, decoration: TextDecoration.none);
+    const textStyle = TextStyle(fontSize: 14.0, color: Colors.blue, decoration: TextDecoration.none);
     var mediaQueryData = MediaQuery.of(context);
     var screenWidth = mediaQueryData.size.width;
     var screenHeight = mediaQueryData.size.height;
@@ -80,22 +76,12 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Checkbox(
-                      value: load,
-                      onChanged: (v) {
-                        setState(() {
-                          load = v!;
-                        });
-                      }),
-                  Text("Status: $status", style: textStyle),
-                ],
-              ),
               SizedBox(
                   width: screenWidth,
-                  height: screenHeight * 0.9,
-                  child: load ? KakaoMap(onMapReady: onMapReady, onMapError: onMapError) : null)
+                  height: screenHeight * 0.8,
+                  child: KakaoMap(onMapReady: onMapReady, onMapError: onMapError)
+              ),
+              Text("경도: ${position?.latitude}, 위도: ${position?.longitude}", style: textStyle)
             ],
           ),
         ),
@@ -108,14 +94,16 @@ class _MyAppState extends State<MyApp> {
     controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
     controller.getCameraPosition().then((result) {
       setState(() {
-        status = result.toString();
+        position = result.position;
       });
     });
   }
 
   void onMapError(Exception exception) {
-    setState(() {
-      status = exception.toString();
-    });
+    MyApp.logBucket.add(LogEvent(
+      level: LogLevel.fatal,
+      message: "KakaoMap.onMapError caused!",
+      error: exception,
+    ));
   }
 }
