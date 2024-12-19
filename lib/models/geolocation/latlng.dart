@@ -12,13 +12,13 @@ class LatLng {
 
   factory LatLng.fromMessageable(dynamic payload) 
     => LatLng(
-      payload['latitiude'],
+      payload['latitude'],
       payload['longitude']
     );
 
   Map<String, dynamic> toMessageable() {
     return {
-      "latitiude": latitude,
+      "latitude": latitude,
       "longitude": longitude
     };
   }
