@@ -56,7 +56,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late KakaoMapController controller;
-  LatLng? position = null;
+  LatLng? position;
+  List<bool> isSelected = [false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,7 @@ class _MyAppState extends State<MyApp> {
           width: screenWidth,
           height: screenHeight,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
               SizedBox(
@@ -81,7 +83,33 @@ class _MyAppState extends State<MyApp> {
                   height: screenHeight * 0.8,
                   child: KakaoMap(onMapReady: onMapReady, onMapError: onMapError)
               ),
-              Text("경도: ${position?.latitude}, 위도: ${position?.longitude}", style: textStyle)
+              Text("경도: ${position?.latitude}, 위도: ${position?.longitude}", style: textStyle),
+              ToggleButtons(
+                isSelected: isSelected, onPressed: (int index) {
+                  setState(() {
+                    for (int buttonIndex = 0; buttonIndex < isSelected.length; buttonIndex++) {
+                      if (buttonIndex == index) {
+                        isSelected[buttonIndex] = true;
+                      } else {
+                        isSelected[buttonIndex] = false;
+                      }
+                    }
+
+                    switch(index) {
+                      case 0:
+                        controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
+                        break;
+                      case 1:
+                       controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
+                       break;
+                    }
+                  });
+                },
+                children: const <Widget>[
+                  Text("강원대학교"),
+                  Text("판교아지트"),
+                ]
+              )
             ],
           ),
         ),
@@ -91,7 +119,6 @@ class _MyAppState extends State<MyApp> {
 
   void onMapReady(KakaoMapController controller) {
     controller = controller;
-    controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
     controller.getCameraPosition().then((result) {
       setState(() {
         position = result.position;
