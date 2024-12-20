@@ -118,7 +118,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onMapReady(KakaoMapController controller) {
-    controller = controller;
+    this.controller = controller;
+    MyApp.logBucket.add(LogEvent(
+      level: LogLevel.info,
+      message: "KakaoMap.onMapReay called!",
+    ));
     controller.getCameraPosition().then((result) {
       setState(() {
         position = result.position;
