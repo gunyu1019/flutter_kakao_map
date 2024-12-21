@@ -51,7 +51,9 @@ class FlutterKakaoMapPlugin: FlutterPlugin, ActivityAware {
         private const val BASE_CHANNEL_NAME = "flutter_kakao_map"
         private const val SDK_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_sdk"
         private const val VIEW_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_view"
+        private const val EVENT_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_event"
 
         internal fun createViewChannelName(viewId: Int) = "${VIEW_CHANNEL_NAME}#${viewId}"
+        internal fun createEventChannelName(viewId: Int) = "${EVENT_CHANNEL_NAME}#${viewId}"
     }
 }

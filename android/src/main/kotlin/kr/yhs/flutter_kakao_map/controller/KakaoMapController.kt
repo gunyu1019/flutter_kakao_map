@@ -27,6 +27,7 @@ class KakaoMapController(
     private lateinit var kakaoMap: KakaoMap
 
     // listener
+    // TODO: other channel. 
     private val cameraListener = CameraListener(channel)
 
     init {
