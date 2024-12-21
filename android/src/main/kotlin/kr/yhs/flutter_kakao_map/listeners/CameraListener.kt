@@ -18,7 +18,7 @@ class CameraListener(
     }
     
     override fun onCameraMoveEnd(kakaoMap: KakaoMap, cameraPosition: CameraPosition, gestureType: GestureType) {
-        channel.invokeMethod("onCameraMoveStart", mapOf(
+        channel.invokeMethod("onCameraMoveEnd", mapOf(
             "gesture" to gestureType.value,
             "position" to cameraPosition.toMessageable()
         ))
