@@ -42,8 +42,8 @@ ENV PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
 ENV PATH="$PATH:$ANDROID_SDK_ROOT/platform-tools"
 
 # Install and Configuration Android/Kotlin
-ARG ANDROID_PLATFORM_VERSION="35"
-ARG ANDROID_BUILD_TOOLS_VERSION="35.0.2"
+ARG ANDROID_PLATFORM_VERSION="android-34"
+ARG ANDROID_BUILD_TOOLS_VERSION="34.0.0"
 ARG WORKSPACE="/workspaces/flutter_kakao_map"
 
 RUN sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "platform-tools" "platforms;${ANDROID_PLATFORM_VERSION}" "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
@@ -52,7 +52,8 @@ RUN flutter precache
 
 # Configuration Kotlin
 WORKDIR ${WORKSPACE}/android
+RUN mkdir ${WORKSPACE}/android/libs/
 RUN cp $FLUTTER_SDK/bin/cache/artifacts/engine/android-x64/flutter.jar ${WORKSPACE}/android/libs/
-RUN sed -i "s/\/\/ implementation files('libs\/flutter.jar')/implementation files('libs\/flutter.jar')/g" build.gradle
-RUN gradle wrapper
-RUN gradlew syncRelease
+# RUN sed -i "s/\/\/ implementation files('libs\/flutter.jar')/implementation files('libs\/flutter.jar')/g" build.gradle
+# RUN gradle wrapper
+# RUN gradlew syncRelease
