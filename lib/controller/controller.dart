@@ -17,7 +17,7 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
   }
 
   @override
-  Future<void> moveCamera(CameraUpdate camera, {CameraAnimation? animation}) async {
+  Future<void> moveCamera(CameraUpdate camera, [CameraAnimation? animation]) async {
     await channel.invokeMethod("moveCamera", {
       "cameraUpdate": camera.toMessageable(),
       "cameraAnimation": animation?.toMessageable()

@@ -6,10 +6,10 @@ class CameraAnimation {
   final bool autoElevation;
   final bool isConsecutive;
 
-  const CameraAnimation(this.duration, {
+  const CameraAnimation(this.duration, [
     this.autoElevation = false,
     this.isConsecutive = false
-  });
+  ]);
 
   Map<String, dynamic> toMessageable() {
     return {
