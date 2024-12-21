@@ -37,9 +37,10 @@ class SdkInitializer(
             result.success(null) // Authentication failure. PackageInfo is null.
             return
         }
-
+        
+        @Suppress("Deprecation")
         val signatures = packageInfo.signatures
-        if (signatures.size < 1) {
+        if (signatures == null || signatures.size < 1) {
             result.success(null) // Authentication failure. Signature is invalid.
             return
         }
