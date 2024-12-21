@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-enum GestrueType {
+enum GestureType {
   oneFingerDoubleTap(value: 1),
   twoFingerSingleTap(value: 2),
   pan(value: 5),
@@ -14,5 +14,5 @@ enum GestrueType {
   
   final int value;
   
-  const GestrueType({required this.value});
+  const GestureType({required this.value});
 }
