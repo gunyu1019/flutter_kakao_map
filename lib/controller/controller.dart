@@ -13,7 +13,6 @@ class KakaoMapController
   @override
   Future<CameraPosition> getCameraPosition() async {
     final rawCameraPosition = await channel.invokeMethod("getCameraPosition");
-    print(rawCameraPosition);
     return CameraPosition.fromMessageable(rawCameraPosition);
   }
 
@@ -29,7 +28,17 @@ class KakaoMapController
   /* Handler */
   @override
   void onMapDestroy() {
-    widget.onMapDestroy?.call();
+    widget.onMapLifecycle?.onMapDestroy?.call();
+  }
+
+  @override
+  void onMapResumed() {
+    widget.onMapLifecycle?.onMapResumed?.call();
+  }
+
+  @override
+  void onMapPaused() {
+    widget.onMapLifecycle?.onMapPaused?.call();
   }
 
   @override
