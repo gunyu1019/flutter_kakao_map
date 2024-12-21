@@ -21,17 +21,19 @@ import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 import kr.yhs.flutter_kakao_map.listener.CameraListener
 
 class KakaoMapController(
+    private val viewId: Int,
     private val context: Context,
     private val channel: MethodChannel,
+    private val eventChannel: MethodChannel,
 ): KakaoMapControllerHandler, KakaoMapControllerSender, MapLifeCycleCallback() {
     private lateinit var kakaoMap: KakaoMap
 
     // listener
-    // TODO: other channel. 
-    private val cameraListener = CameraListener(channel)
+    private val cameraListener = CameraListener(eventChannel)
 
     init {
         channel.setMethodCallHandler(::handle)
+        eventChannel.setMethodCallHandler(::handle)
     }
     
     /* Handler */

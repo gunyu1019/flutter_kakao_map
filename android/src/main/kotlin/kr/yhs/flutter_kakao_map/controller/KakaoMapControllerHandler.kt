@@ -28,6 +28,12 @@ interface KakaoMapControllerHandler {
             val enable = arguments["enable"]!!.asBoolean()
             setGestureEnable(gestureType, enable, result::success)
         }
+        "setEventHandler" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            val event = KakaoMapEvent.values().filter { arguments["event"]!! == it.id }.first()
+            val enable = arguments["enable"]!!.asBoolean()
+            setEventHandler(event, enable, result::success)
+        }
         else -> result.notImplemented()
     }
 
