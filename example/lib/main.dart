@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
 
                     switch(index) {
                       case 0:
-                        controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
+                        controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.395763313860826, 127.11048591050786)), animation: const CameraAnimation(5000));
                         break;
                       case 1:
                        controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
