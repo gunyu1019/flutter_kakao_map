@@ -1,6 +1,7 @@
 part of '../flutter_kakao_map.dart';
 
-class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSender {
+class KakaoMapController
+    with KakaoMapControllerHandler, KakaoMapControllerSender {
   final MethodChannel channel;
   final KakaoMap widget;
 
@@ -17,7 +18,8 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
   }
 
   @override
-  Future<void> moveCamera(CameraUpdate camera, [CameraAnimation? animation]) async {
+  Future<void> moveCamera(CameraUpdate camera,
+      {CameraAnimation? animation}) async {
     await channel.invokeMethod("moveCamera", {
       "cameraUpdate": camera.toMessageable(),
       "cameraAnimation": animation?.toMessageable()
@@ -29,25 +31,21 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
   void onMapDestroy() {
     widget.onMapDestroy?.call();
   }
-  
+
   @override
   void onMapError(dynamic exception) {
     final String className = exception['className'];
     switch (className) {
       case 'MapAuthException':
-        widget.onMapError?.call(
-          KakaoAuthException.fromMessageable(exception)
-        );
+        widget.onMapError?.call(KakaoAuthException.fromMessageable(exception));
         break;
       default:
         widget.onMapError?.call(
-          Exception("${exception['className']}(${exception['message']})")
-        );
+            Exception("${exception['className']}(${exception['message']})"));
         break;
     }
-    
   }
-  
+
   @override
   void onMapReady() {
     widget.onMapReady.call(this);
