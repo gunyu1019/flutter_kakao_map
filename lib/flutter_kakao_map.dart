@@ -28,9 +28,12 @@ part 'models/map_lifecycle.dart';
 part 'models/camera/camera_animation.dart';
 part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
+part 'models/geolocation/latlng.dart';
+
+/* model(enumerate) */
 part 'models/enums/map_type.dart';
 part 'models/enums/camera_update_type.dart';
-part 'models/geolocation/latlng.dart';
+part 'models/enums/gesture_type.dart';
 
 /* widget */
 part 'widget/map_widget.dart';
