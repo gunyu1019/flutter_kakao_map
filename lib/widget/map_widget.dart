@@ -4,7 +4,7 @@ class KakaoMap extends StatefulWidget {
   final KakaoMapOption? option;
 
   final void Function(KakaoMapController controller) onMapReady;
-  final void Function()? onMapDestroy;
+  final KakaoMapLifecycle? onMapLifecycle;
   final void Function(Exception exception)? onMapError;
 
   final bool forceGesture;
@@ -14,7 +14,7 @@ class KakaoMap extends StatefulWidget {
       required this.onMapReady,
       this.option,
       this.forceGesture = true,
-      this.onMapDestroy,
+      this.onMapLifecycle,
       this.onMapError});
 
   @override
