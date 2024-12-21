@@ -25,7 +25,7 @@ ENV PATH="$PATH:$JAVA_HOME/bin"
 RUN wget https://github.com/gradle/gradle-distributions/releases/download/v8.10.2/gradle-8.10.2-bin.zip
 RUN unzip gradle-8.10.2-bin.zip
 RUN mv gradle-8.10.2 gradle
-ENV PATH="$PATH:$JAVA_HOME/gradle/bin"
+ENV PATH="$PATH:/home/vscode/gradle/bin"
 
 # Install and Configuration Android (SDK-manager)
 ARG COMMAND_LINE_TOOLS_VERSION="11076708"
