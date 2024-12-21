@@ -8,5 +8,9 @@ interface KakaoMapControllerSender {
 
     fun onMapDestroy()
 
+    fun onMapResumed()
+
+    fun onMapPaused()
+
     fun onMapError(exception: Exception)
 }

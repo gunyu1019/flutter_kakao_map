@@ -26,7 +26,8 @@ class KakaoMapController(
     init {
         channel.setMethodCallHandler(::handle)
     }
-
+    
+    /* Handler */
     override fun getCameraPosition(onSuccess: (cameraPosition: Map<String, Any>) -> Unit) { 
         kakaoMap.getCameraPosition(object : KakaoMap.OnCameraPositionListener {
             override fun onCameraPosition(cameraPosition: CameraPosition) {
@@ -48,6 +49,7 @@ class KakaoMapController(
         onSuccess(null)
     }
 
+    /* Sender */
     override fun onMapReady(kakaoMap: KakaoMap) {
         this.kakaoMap = kakaoMap
         channel.invokeMethod("onMapReady", null)
@@ -55,6 +57,14 @@ class KakaoMapController(
 
     override fun onMapDestroy() { 
         channel.invokeMethod("onMapDestroy", null)
+    }
+
+    override fun onMapResumed() {
+        channel.invokeMethod("onMapResumed", null)
+    }
+
+    override fun onMapPaused() {
+        channel.invokeMethod("onMapPaused", null)
     }
 
     override fun onMapError(exception: Exception) {
