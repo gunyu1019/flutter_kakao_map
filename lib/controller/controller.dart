@@ -1,12 +1,18 @@
 part of '../flutter_kakao_map.dart';
 
-class KakaoMapController
-    with KakaoMapControllerHandler, KakaoMapControllerSender {
+class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSender {
+  final int _viewId;
   final MethodChannel channel;
   final KakaoMap widget;
 
-  KakaoMapController(this.channel, this.widget) {
+  late KakaoMapEventController eventController;
+
+  KakaoMapController(this._viewId, this.channel, this.widget) {
     channel.setMethodCallHandler(handle);
+
+    // Event Channel
+    final eventChannel = ChannelType.event.channelWithId(_viewId);
+    eventController = KakaoMapEventController(eventChannel);
   }
 
   /* Sender */
