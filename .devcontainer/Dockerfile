@@ -1,5 +1,5 @@
-ARG VARIANT="jammy"
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-${VARIANT}
+ARG VARIANT="ubuntu22.04"
+FROM mcr.microsoft.com/vscode/devcontainers/base-${VARIANT}
 
 USER root
 
@@ -10,10 +10,15 @@ USER codespace
 
 ARG COMMAND_LINE_TOOLS_VERSION = "11076708"
 
-# Install And Configuration Flutter
+# Install and Configuration Flutter
 WORKDIR /home/codespace
 RUN mkdir /home/codespace/opt && cd /home/codespace/opt
 RUN git clone https://github.com/flutter/flutter.git -b stable
+
+ENV FLUTTER_SDK /home/codespace/opt/flutter
+ENV PATH $PATH:$FLUTTER_SDK/bin
+
+# Install and Configuration Android-SDK
 RUN wget https://dl.google.com/android/repository/commandlinetools-linux-${COMMAND_LINE_TOOLS_VERSION}_latest.zip
 RUN unzip commandlinetools-linux-${COMMAND_LINE_TOOLS_VERSION}_latest.zip
 RUN mkdir android-sdk
@@ -21,13 +26,11 @@ RUN mkdir android-sdk/platform-tools android-sdk/cmdline-tools
 RUN mv cmdline-tools android-sdk/cmdline-tools/latest
 RUN rm commandlinetools-linux-${COMMAND_LINE_TOOLS_VERSION}_latest.zip
 
-ENV FLUTTER_SDK /home/codespace/opt/flutter
-ENV PATH $PATH:$FLUTTER_SDK/bin
 ENV ANDROID_SDK_ROOT /home/codespace/opt/android-sdk
 ENV PATH $PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
 ENV PATH $PATH:$ANDROID_SDK_ROOT/platform-tools
 
-# Install And Configuration Android/Kotlin
+# Install and Configuration Android/Kotlin
 ARG ANDROID_PLATFORM_VERSION = "35"
 ARG ANDROID_BUILD_TOOLS_VERSION = "35.0.2"
 ARG WORKSPACE = "/workspaces/flutter_kakao_map"
