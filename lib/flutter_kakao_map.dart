@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 
 /* chnnael */
 part 'channel/channel_type.dart';
-part 'channel/channel_wrapper.dart';
 
 /* controller */
 part 'controller/controller.dart';
