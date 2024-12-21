@@ -25,6 +25,9 @@ class KakaoMapController(
 ): KakaoMapControllerHandler, KakaoMapControllerSender, MapLifeCycleCallback() {
     private lateinit var kakaoMap: KakaoMap
 
+    // listener
+    private val cameraListener = CameraListener(channel)
+
     init {
         channel.setMethodCallHandler(::handle)
     }
@@ -67,10 +70,12 @@ class KakaoMapController(
     ) {
         when(eventType) {
             KakaoMapEvent.CameraMoveStart -> {
-
+                if (enable) kakaoMap.setOnCameraMoveStartListener(cameraListener)
+                else kakaoMap.setOnCameraMoveStartListener(null)
             }
             KakaoMapEvent.CameraMoveEnd -> {
-                
+                if (enable) kakaoMap.setOnCameraMoveEndListener(cameraListener)
+                else kakaoMap.setOnCameraMoveEndListener(null)
             }
         }
     }
