@@ -23,9 +23,4 @@ class CameraListener(
             "position" to cameraPosition.toMessageable()
         ))
     }
-
-    companion object {
-        const ON_CAMERA_MOVE_START_EVENT = KakaoMapEvent.CameraMoveStart
-        const ON_CAMERA_MOVE_END_EVENT = KakaoMapEvent.CameraMoveEnd
-    }
 }
