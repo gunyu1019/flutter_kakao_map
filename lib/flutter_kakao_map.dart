@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,10 @@ part 'channel/channel_type.dart';
 part 'controller/controller.dart';
 part 'controller/handler.dart';
 part 'controller/sender.dart';
+
+part 'controller/event/event_controller.dart';
+part 'controller/event/handler.dart';
+part 'controller/event/sender.dart';
 
 /* exception */
 part 'exception/kakao_auth_exception.dart';
@@ -30,6 +35,7 @@ part 'models/camera/camera_update.dart';
 part 'models/geolocation/latlng.dart';
 
 /* model(enumerate) */
+part 'models/enums/event_type.dart';
 part 'models/enums/map_type.dart';
 part 'models/enums/camera_update_type.dart';
 part 'models/enums/gesture_type.dart';
