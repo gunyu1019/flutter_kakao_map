@@ -24,6 +24,7 @@ part 'initializer/sdk_initiializer_implement.dart';
 
 /* models */
 part 'models/map_option.dart';
+part 'models/map_lifecycle.dart';
 part 'models/camera/camera_animation.dart';
 part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
