@@ -47,6 +47,6 @@ class _KakaoMapState extends State<KakaoMap> {
 
   void onPlatformViewCreated(int viewId) {
     channel = ChannelType.view.channelWithId(viewId);
-    controller = KakaoMapController(channel, widget);
+    controller = KakaoMapController(viewId, channel, widget);
   }
 }
