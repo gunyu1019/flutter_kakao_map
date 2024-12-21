@@ -2,6 +2,7 @@ part of '../flutter_kakao_map.dart';
 
 StatefulWidget _createPlatformView({
   required String viewType,
+  required Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers,
   Function(int)? onPlatformViewCreated,
   Map<String, dynamic> creationParams = const {},
   MessageCodec creationParamsCodec = const StandardMessageCodec(),
@@ -11,8 +12,8 @@ StatefulWidget _createPlatformView({
         surfaceFactory: (context, controller) => AndroidViewSurface(
             controller: controller as AndroidViewController,
             hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-            gestureRecognizers: const <Factory<
-                OneSequenceGestureRecognizer>>{}),
+            gestureRecognizers: gestureRecognizers
+        ),
         onCreatePlatformView: (params) {
           return PlatformViewsService.initSurfaceAndroidView(
             id: params.id,

@@ -7,13 +7,15 @@ class KakaoMap extends StatefulWidget {
   final void Function()? onMapDestroy;
   final void Function(Exception exception)? onMapError;
 
-  const KakaoMap({
-    super.key,
-    required this.onMapReady,
-    this.option,
-    this.onMapDestroy,
-    this.onMapError
-  });
+  final bool forceGesture;
+
+  const KakaoMap(
+      {super.key,
+      required this.onMapReady,
+      this.option,
+      this.forceGesture = true,
+      this.onMapDestroy,
+      this.onMapError});
 
   @override
   State<StatefulWidget> createState() => _KakaoMapState();
@@ -27,12 +29,20 @@ class _KakaoMapState extends State<KakaoMap> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> rawParams = widget.option?.toMessageable() ?? (const KakaoMapOption()).toMessageable();
+    Map<String, dynamic> rawParams = widget.option?.toMessageable() ??
+        (const KakaoMapOption()).toMessageable();
+
+    // GestureRecognizer
+    final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {};
+    if (widget.forceGesture) {
+      gestureRecognizers.add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()));
+    }
+
     return _createPlatformView(
-      viewType: VIEW_TYPE,
-      onPlatformViewCreated: onPlatformViewCreated,
-      creationParams: rawParams
-    );
+        viewType: VIEW_TYPE,
+        gestureRecognizers: gestureRecognizers,
+        onPlatformViewCreated: onPlatformViewCreated,
+        creationParams: rawParams);
   }
 
   void onPlatformViewCreated(int viewId) {
