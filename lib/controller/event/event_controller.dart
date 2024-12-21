@@ -17,7 +17,7 @@ class KakaoMapEventController with KakaoMapEventControllerHandler, KakaoMapEvent
     bool enable
   ) async {
     await channel.invokeMethod("setEventHandler", {
-      "eventType": type.id,
+      "event": type.id,
       "enable": enable
     });
   }
