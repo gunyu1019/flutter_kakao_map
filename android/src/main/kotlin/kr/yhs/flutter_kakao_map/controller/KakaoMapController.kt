@@ -12,6 +12,7 @@ import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.MapAuthException
 import com.kakao.vectormap.MapLifeCycleCallback
+import com.kakao.vectormap.GestureType
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraPosition
@@ -46,6 +47,15 @@ class KakaoMapController(
         } else {
             kakaoMap.moveCamera(cameraUpdate)
         }
+        onSuccess(null)
+    }
+
+    override fun setGestureEnable(
+        gestureType: GestureType,
+        enable: Boolean,
+        onSuccess: (Any?) -> Unit
+    ) {
+        kakaoMap.setGestureEnable(gestureType, enable)
         onSuccess(null)
     }
 

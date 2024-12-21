@@ -27,7 +27,10 @@ class KakaoMapController
 
   @override
   Future<void> setGestureEnable(GestureType gestrueType, bool enable) async {
-    await channel.invokeMethod('setGestureEnable', enable);
+    await channel.invokeMethod('setGestureEnable', {
+      "gestureType": gestrueType.value,
+      "enable": enable
+    });
   }
 
   /* Handler */

@@ -1,5 +1,6 @@
 package kr.yhs.flutter_kakao_map.controller
 
+import com.kakao.vectormap.GestureType
 import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraAnimation
@@ -8,6 +9,8 @@ import io.flutter.plugin.common.MethodCall
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimation
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraUpdate
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 
 interface KakaoMapControllerHandler {
     fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
@@ -18,6 +21,12 @@ interface KakaoMapControllerHandler {
             val camera = arguments?.get("cameraUpdate")!!.asCameraUpdate()
             moveCamera(camera, animation, result::success)
         }
+        "setGestureEnable" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            val gestureType = GestureType.getEnum(arguments["gestureType"]!!.asInt())
+            val enable = arguments["enable"]!!.asBoolean()
+            setGestureEnable(gestureType, enable, result::success)
+        }
         else -> result.notImplemented()
     }
 
@@ -26,6 +35,12 @@ interface KakaoMapControllerHandler {
     fun moveCamera(
         cameraUpdate: CameraUpdate,
         cameraAnimation: CameraAnimation?,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun setGestureEnable(
+        gestureType: GestureType,
+        enable: Boolean,
         onSuccess: (Any?) -> Unit
     )
 }
