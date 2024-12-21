@@ -8,7 +8,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 USER codespace
 
-ARG COMMAND_LINE_TOOLS_VERSION = "11076708"
+ARG COMMAND_LINE_TOOLS_VERSION="11076708"
 
 # Install and Configuration Flutter
 WORKDIR /home/codespace
@@ -31,9 +31,9 @@ ENV PATH $PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
 ENV PATH $PATH:$ANDROID_SDK_ROOT/platform-tools
 
 # Install and Configuration Android/Kotlin
-ARG ANDROID_PLATFORM_VERSION = "35"
-ARG ANDROID_BUILD_TOOLS_VERSION = "35.0.2"
-ARG WORKSPACE = "/workspaces/flutter_kakao_map"
+ARG ANDROID_PLATFORM_VERSION="35"
+ARG ANDROID_BUILD_TOOLS_VERSION="35.0.2"
+ARG WORKSPACE="/workspaces/flutter_kakao_map"
 
 RUN sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "platform-tools" "platforms;${ANDROID_PLATFORM_VERSION}" "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
 RUN flutter config --android-sdk ${ANDROID_SDK_ROOT}
