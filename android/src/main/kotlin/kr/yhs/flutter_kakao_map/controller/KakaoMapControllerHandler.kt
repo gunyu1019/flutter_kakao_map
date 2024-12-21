@@ -11,6 +11,7 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraUpdate
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
+import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 
 interface KakaoMapControllerHandler {
     fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
@@ -43,4 +44,10 @@ interface KakaoMapControllerHandler {
         enable: Boolean,
         onSuccess: (Any?) -> Unit
     )
+
+    fun setEventHandler(
+        eventType: KakaoMapEvent,
+        enable: Boolean,
+        onSuccess: (Any?) -> Unit
+    );
 }

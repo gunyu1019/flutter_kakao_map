@@ -17,6 +17,7 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraPosition
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimation
+import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 
 class KakaoMapController(
     private val context: Context,
@@ -57,6 +58,21 @@ class KakaoMapController(
     ) {
         kakaoMap.setGestureEnable(gestureType, enable)
         onSuccess(null)
+    }
+
+    override fun setEventHandler(
+        eventType: KakaoMapEvent,
+        enable: Boolean,
+        onSuccess: (Any?) -> Unit
+    ) {
+        when(eventType) {
+            KakaoMapEvent.CameraMoveStart -> {
+
+            }
+            KakaoMapEvent.CameraMoveEnd -> {
+                
+            }
+        }
     }
 
     /* Sender */
