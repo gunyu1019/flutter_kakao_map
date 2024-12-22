@@ -55,6 +55,14 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
     channel = ChannelType.view.channelWithId(viewId);
     channel.setMethodCallHandler(handle);
     controller = KakaoMapController(channel);
+    _setEventHandler();
+  }
+
+  void _setEventHandler() {
+    int bitMask = 0;
+    if (widget.onCameraMoveStartHandler != null) bitMask = bitMask | EventType.onCameraMoveStart.id;
+    if (widget.onCameraMoveEndHandler != null) bitMask = bitMask | EventType.onCameraMoveEnd.id;
+    channel.invokeMethod("setEventHandler", bitMask);
   }
 
   /* Handler */
