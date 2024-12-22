@@ -56,17 +56,8 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
   }
 
   @override
-  void onMapError(dynamic exception) {
-    final String className = exception['className'];
-    switch (className) {
-      case 'MapAuthException':
-        widget.onMapError?.call(KakaoAuthException.fromMessageable(exception));
-        break;
-      default:
-        widget.onMapError?.call(
-            Exception("${exception['className']}(${exception['message']})"));
-        break;
-    }
+  void onMapError(Exception exception) {
+    widget.onMapError?.call(exception); 
   }
 
   @override

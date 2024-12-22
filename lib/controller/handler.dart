@@ -17,7 +17,15 @@ mixin KakaoMapControllerHandler {
         onMapResumed();
         break;
       case "onMapError": 
-        onMapError(method.arguments);
+        final String className = method.arguments['className'];
+        switch (className) {
+          case 'MapAuthException':
+            onMapError(KakaoAuthException.fromMessageable(method.arguments));
+            break;
+          default:
+            onMapError(Exception("${method.arguments['className']}(${method.arguments['message']})"));
+            break;
+        }
         break;
       default:
         break;
@@ -32,5 +40,5 @@ mixin KakaoMapControllerHandler {
 
   void onMapPaused();
   
-  void onMapError(dynamic exception);
+  void onMapError(Exception exception);
 }
