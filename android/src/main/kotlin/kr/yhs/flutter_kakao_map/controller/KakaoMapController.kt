@@ -19,21 +19,20 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraPositio
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimation
 import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 import kr.yhs.flutter_kakao_map.listener.CameraListener
+import kr.yhs.flutter_kakao_map.controller.KakaoMapController
 
 class KakaoMapController(
     private val viewId: Int,
     private val context: Context,
     private val channel: MethodChannel,
-    private val eventChannel: MethodChannel,
 ): KakaoMapControllerHandler, KakaoMapControllerSender, MapLifeCycleCallback() {
     private lateinit var kakaoMap: KakaoMap
 
     // listener
-    private val cameraListener = CameraListener(eventChannel)
+    private val cameraListener = CameraListener(channel)
 
     init {
         channel.setMethodCallHandler(::handle)
-        eventChannel.setMethodCallHandler(::handle)
     }
     
     /* Handler */
@@ -67,20 +66,12 @@ class KakaoMapController(
         onSuccess(null)
     }
 
-    override fun setEventHandler(
-        eventType: KakaoMapEvent,
-        enable: Boolean,
-        onSuccess: (Any?) -> Unit
-    ) {
-        when(eventType) {
-            KakaoMapEvent.CameraMoveStart -> {
-                if (enable) kakaoMap.setOnCameraMoveStartListener(cameraListener)
-                else kakaoMap.setOnCameraMoveStartListener(null)
-            }
-            KakaoMapEvent.CameraMoveEnd -> {
-                if (enable) kakaoMap.setOnCameraMoveEndListener(cameraListener)
-                else kakaoMap.setOnCameraMoveEndListener(null)
-            }
+    override fun setEventHandler(event: Int) {
+        if(KakaoMapEvent.CameraMoveStart.compare(event)) {
+            kakaoMap.setOnCameraMoveStartListener(cameraListener)
+        }
+        if(KakaoMapEvent.CameraMoveEnd.compare(event)) {
+            kakaoMap.setOnCameraMoveEndListener(cameraListener)
         }
     }
 
