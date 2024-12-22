@@ -27,6 +27,23 @@ mixin KakaoMapControllerHandler {
             break;
         }
         break;
+      case "onCameraMoveStart":
+        final arguments = method.arguments;
+        final gesture = GestureType.values.firstWhere(
+          (el) => arguments['gesture'] as int == el.value,
+          orElse: () => GestureType.unknown
+        );
+        onCameraMoveStart(gesture);
+        break;
+      case "onCameraMoveEnd":
+        final arguments = method.arguments;
+        final position = CameraPosition.fromMessageable(arguments['position']);
+        final gesture = GestureType.values.firstWhere(
+          (el) => arguments['gesture'] as int == el.value,
+          orElse: () => GestureType.unknown
+        );
+        onCameraMoveEnd(position, gesture);
+        break;
       default:
         break;
     }
@@ -41,4 +58,8 @@ mixin KakaoMapControllerHandler {
   void onMapPaused();
   
   void onMapError(Exception exception);
+
+  void onCameraMoveStart(GestureType gestureType);
+
+  void onCameraMoveEnd(CameraPosition position,GestureType gestureType);
 }

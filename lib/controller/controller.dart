@@ -1,19 +1,9 @@
 part of '../flutter_kakao_map.dart';
 
-class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSender {
-  final int _viewId;
+class KakaoMapController with KakaoMapControllerSender {
   final MethodChannel channel;
-  final KakaoMap widget;
 
-  late KakaoMapEventController eventController;
-
-  KakaoMapController(this._viewId, this.channel, this.widget) {
-    channel.setMethodCallHandler(handle);
-
-    // Event Channel
-    final eventChannel = ChannelType.event.channelWithId(_viewId);
-    eventController = KakaoMapEventController(eventChannel);
-  }
+  KakaoMapController(this.channel);
 
   /* Sender */
   @override
@@ -37,31 +27,5 @@ class KakaoMapController with KakaoMapControllerHandler, KakaoMapControllerSende
       "gestureType": gestrueType.value,
       "enable": enable
     });
-  }
-
-  /* Handler */
-  @override
-  void onMapDestroy() {
-    widget.onMapLifecycle?.onMapDestroy?.call();
-  }
-
-  @override
-  void onMapResumed() {
-    widget.onMapLifecycle?.onMapResumed?.call();
-  }
-
-  @override
-  void onMapPaused() {
-    widget.onMapLifecycle?.onMapPaused?.call();
-  }
-
-  @override
-  void onMapError(Exception exception) {
-    widget.onMapError?.call(exception); 
-  }
-
-  @override
-  void onMapReady() {
-    widget.onMapReady.call(this);
   }
 }

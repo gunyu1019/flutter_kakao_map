@@ -6,6 +6,8 @@ class KakaoMap extends StatefulWidget {
   final void Function(KakaoMapController controller) onMapReady;
   final KakaoMapLifecycle? onMapLifecycle;
   final void Function(Exception exception)? onMapError;
+  final void Function(GestureType gestureType)? onCameraMoveStartHandler;
+  final void Function(CameraPosition position, GestureType gestureType)? onCameraMoveEndHandler;
 
   final bool forceGesture;
 
@@ -15,13 +17,16 @@ class KakaoMap extends StatefulWidget {
       this.option,
       this.forceGesture = true,
       this.onMapLifecycle,
-      this.onMapError});
+      this.onCameraMoveStartHandler,
+      this.onCameraMoveEndHandler,
+      this.onMapError
+    });
 
   @override
   State<StatefulWidget> createState() => _KakaoMapState();
 }
 
-class _KakaoMapState extends State<KakaoMap> {
+class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   // ignore: constant_identifier_names
   static const VIEW_TYPE = "plugin/kakao_map";
   late final MethodChannel channel;
@@ -35,7 +40,8 @@ class _KakaoMapState extends State<KakaoMap> {
     // GestureRecognizer
     final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {};
     if (widget.forceGesture) {
-      gestureRecognizers.add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()));
+      gestureRecognizers
+          .add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()));
     }
 
     return _createPlatformView(
@@ -47,6 +53,43 @@ class _KakaoMapState extends State<KakaoMap> {
 
   void onPlatformViewCreated(int viewId) {
     channel = ChannelType.view.channelWithId(viewId);
-    controller = KakaoMapController(viewId, channel, widget);
+    channel.setMethodCallHandler(handle);
+    controller = KakaoMapController(channel);
+  }
+
+  /* Handler */
+  @override
+  void onMapDestroy() {
+    widget.onMapLifecycle?.onMapDestroy?.call();
+  }
+
+  @override
+  void onMapResumed() {
+    widget.onMapLifecycle?.onMapResumed?.call();
+  }
+
+  @override
+  void onMapPaused() {
+    widget.onMapLifecycle?.onMapPaused?.call();
+  }
+
+  @override
+  void onMapError(Exception exception) {
+    widget.onMapError?.call(exception);
+  }
+
+  @override
+  void onMapReady() {
+    widget.onMapReady.call(controller);
+  }
+
+  @override
+  void onCameraMoveStart(GestureType gestureType) {
+    widget.onCameraMoveStartHandler?.call(gestureType);
+  }
+
+  @override
+  void onCameraMoveEnd(CameraPosition position, GestureType gestureType) {
+    widget.onCameraMoveEndHandler?.call(position, gestureType);
   }
 }
