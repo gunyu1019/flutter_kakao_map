@@ -1,8 +1,8 @@
 part of '../../flutter_kakao_map.dart';
 
-class Point {
+class KPoint {
   final double x;
   final double y;
 
-  const Point(this.x, this.y);
+  const KPoint(this.x, this.y);
 }
