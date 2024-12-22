@@ -10,7 +10,7 @@ class LabelTextStyle {
   final int stroke;
   final int strokeColor;
 
-  LabelTextStyle({
+  const LabelTextStyle({
     this.aspectRatio = 0,
     this.characterSpace = 0,
     this.color = -16777216,
