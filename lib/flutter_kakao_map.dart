@@ -24,16 +24,24 @@ part 'initializer/sdk_initiializer_implement.dart';
 /* models */
 part 'models/map_option.dart';
 part 'models/map_lifecycle.dart';
+part 'models/base/point.dart';
 part 'models/camera/camera_animation.dart';
 part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
 part 'models/geolocation/latlng.dart';
+
+part 'models/label/label_option.dart';
+part 'models/label/label_style.dart';
+part 'models/label/label_text_style.dart';
+part 'models/label/label_transition.dart';
 
 /* model(enumerate) */
 part 'models/enums/event_type.dart';
 part 'models/enums/map_type.dart';
 part 'models/enums/camera_update_type.dart';
 part 'models/enums/gesture_type.dart';
+
+part 'models/enums/label/transition.dart';
 
 /* widget */
 part 'widget/map_widget.dart';
