@@ -1,7 +1,7 @@
 part of '../../flutter_kakao_map.dart';
 
 
-class KakaoMapEventController with KakaoMapEventControllerHandler, KakaoMapEventControllerSender {
+class KakaoMapEventController with KakaoMapEventControllerHandler {
   final MethodChannel channel;
 
   void Function(GestureType gestureType)? onCameraMoveStartHandler;
@@ -11,7 +11,6 @@ class KakaoMapEventController with KakaoMapEventControllerHandler, KakaoMapEvent
     channel.setMethodCallHandler(handle);
   }
 
-  @override
   Future<void> setEventHandler(
     EventType type,
     bool enable

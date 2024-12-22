@@ -16,8 +16,7 @@ part 'controller/handler.dart';
 part 'controller/sender.dart';
 
 part 'controller/event/event_controller.dart';
-part 'controller/event/handler.dart';
-part 'controller/event/sender.dart';
+part 'controller/event/handler.dart';\
 
 /* exception */
 part 'exception/kakao_auth_exception.dart';
