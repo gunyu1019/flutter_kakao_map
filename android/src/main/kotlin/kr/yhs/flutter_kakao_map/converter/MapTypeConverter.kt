@@ -10,7 +10,7 @@ import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asDouble
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
 
 
-object ReferenceTypeConverter {
+object MapTypeConverter {
     fun Any.asLatLng(): LatLng = asMap<Double>().let { rawPayload: Map<String, Double> ->
         LatLng.from(
             rawPayload["latitude"]!!,

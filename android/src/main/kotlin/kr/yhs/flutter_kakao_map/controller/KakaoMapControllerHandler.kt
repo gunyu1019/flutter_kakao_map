@@ -6,8 +6,8 @@ import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraAnimation
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
-import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraAnimation
-import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asCameraUpdate
+import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asCameraAnimation
+import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asCameraUpdate
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean

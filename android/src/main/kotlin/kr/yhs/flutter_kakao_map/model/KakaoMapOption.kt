@@ -5,7 +5,7 @@ import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapType
 import com.kakao.vectormap.MapViewInfo
-import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asLatLng
+import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asLatLng
 
 
 
