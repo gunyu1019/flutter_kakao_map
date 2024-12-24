@@ -13,12 +13,6 @@ import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.MapAuthException
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.GestureType
-import com.kakao.vectormap.label.LabelManager
-import com.kakao.vectormap.label.LabelOptions
-import com.kakao.vectormap.label.LabelLayer
-import com.kakao.vectormap.label.CompetitionType
-import com.kakao.vectormap.label.CompetitionUnit
-import com.kakao.vectormap.label.OrderingType
 import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asCameraPosition
