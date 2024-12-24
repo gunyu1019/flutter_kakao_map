@@ -9,4 +9,12 @@ class PoiTransition {
 
   bool isEnterenceTransition() => enterence != Transition.none;
   bool isExitTransition() => exit != Transition.none;
+
+  Map<String, dynamic> toMessageable() {
+    final payload = <String, dynamic>{
+      "enterence": enterence.value,
+      "exit": exit.value
+    };
+    return payload;
+  }
 }
