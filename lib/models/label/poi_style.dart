@@ -1,15 +1,15 @@
 part of '../../flutter_kakao_map.dart';
 
 class PoiStyle {
-  final bool applyDpScale;
-  final KPoint anchor;
-  final double padding;
-  final PoiTransition iconTransition;
-  final int textGravity;
-  final KImage? icon;
-  final PoiTextStyle textStyle;
-  final PoiTransition textTransition;
-  final int zoomLevel;
+  bool applyDpScale;
+  KPoint anchor;
+  double padding;
+  PoiTransition iconTransition;
+  int textGravity;
+  KImage? icon;
+  PoiTextStyle textStyle;
+  PoiTransition textTransition;
+  int zoomLevel;
 
   PoiStyle({
     this.applyDpScale = true,
