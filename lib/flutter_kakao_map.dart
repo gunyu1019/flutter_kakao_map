@@ -31,6 +31,7 @@ part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
 part 'models/geolocation/latlng.dart';
 
+part 'models/label/label_layer.dart';
 part 'models/label/poi_option.dart';
 part 'models/label/poi_style.dart';
 part 'models/label/poi_text_style.dart';
@@ -43,7 +44,11 @@ part 'models/enums/camera_update_type.dart';
 part 'models/enums/gesture_type.dart';
 part 'models/enums/image_type.dart';
 
+part 'models/enums/label/competition_type.dart';
+part 'models/enums/label/competition_unit.dart';
+part 'models/enums/label/ordering_type.dart';
 part 'models/enums/label/transition.dart';
+part 'models/enums/label/transform_method.dart';
 
 /* widget */
 part 'widget/map_widget.dart';

@@ -1,14 +1,14 @@
 part of '../../flutter_kakao_map.dart';
 
 class PoiOption {
-  final LatLng position;
-  final bool clickable;
-  final String? text;
-  final int rank;
-  final String tag;
-  final List<PoiStyle> styles;
-  final TransformMethod? transform;
-  final bool visable;
+  LatLng position;
+  bool clickable;
+  String? text;
+  int rank;
+  String tag;
+  List<PoiStyle> styles;
+  TransformMethod? transform;
+  bool visable;
 
   PoiOption(this.position, {
     this.clickable = false,
