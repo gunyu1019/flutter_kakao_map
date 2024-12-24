@@ -7,7 +7,7 @@ class PoiStyle {
   PoiTransition iconTransition;
   int textGravity;
   KImage? icon;
-  PoiTextStyle textStyle;
+  List<PoiTextStyle> textStyle;
   PoiTransition textTransition;
   int zoomLevel;
 
@@ -18,7 +18,7 @@ class PoiStyle {
     this.icon,
     this.iconTransition = const PoiTransition(),
     this.textGravity = 8,
-    this.textStyle = const PoiTextStyle(),
+    this.textStyle = const [],
     this.textTransition = const PoiTransition(),
     this.zoomLevel = 0
   });
@@ -31,7 +31,7 @@ class PoiStyle {
       "icon": icon.toMessageable(),
       "iconTransition": iconTransition.toMessageable(),
       "textGravity": textGravity,
-      "textStyle": textStyle.toMessageable(),
+      "textStyle": textStyle.map((e) => e.toMessageable()),
       "zoomLevel": zoomLevel
     };
     return payload;
