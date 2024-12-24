@@ -6,4 +6,12 @@ mixin KakaoMapControllerSender {
   Future<void> moveCamera(CameraUpdate camera, {CameraAnimation? animation});
   
   Future<void> setGestureEnable(GestureType gestrueType, bool enable);
+
+  // Future<Poi> addPoi();
+
+  // Future<Poi> addLabelLayer();
+  
+  // Future<Poi> getLabelLayer();
+
+  // Future<Poi> removeLabelLayer();
 }
