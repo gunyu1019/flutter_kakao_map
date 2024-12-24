@@ -15,4 +15,17 @@ class KImage {
   factory KImage.fromFile(Uint8List data) => KImage._(ImageType.data, data: data);
 
   factory KImage.fromPath(String path) => KImage._(ImageType.file, path: path);
+  
+  Map<String, dynamic> toMessageable() {
+    final payload = <String, dynamic>{
+      "type": type.value,
+    };
+
+    if (type == ImageType.data) {
+      payload['data'] = data;
+    } else {
+      payload['path'] = path;
+    }
+    return payload;
+  }
 }
