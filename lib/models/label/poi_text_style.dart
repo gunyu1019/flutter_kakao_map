@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-class LabelTextStyle {
+class PoiTextStyle {
   final double aspectRatio;
   final double characterSpace;
   final int color;
@@ -10,7 +10,7 @@ class LabelTextStyle {
   final int stroke;
   final int strokeColor;
 
-  const LabelTextStyle({
+  const PoiTextStyle({
     this.aspectRatio = 0,
     this.characterSpace = 0,
     this.color = -16777216,

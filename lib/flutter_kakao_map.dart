@@ -31,10 +31,10 @@ part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
 part 'models/geolocation/latlng.dart';
 
-part 'models/label/label_option.dart';
-part 'models/label/label_style.dart';
-part 'models/label/label_text_style.dart';
-part 'models/label/label_transition.dart';
+part 'models/label/poi_option.dart';
+part 'models/label/poi_style.dart';
+part 'models/label/poi_text_style.dart';
+part 'models/label/poi_transition.dart';
 
 /* model(enumerate) */
 part 'models/enums/event_type.dart';

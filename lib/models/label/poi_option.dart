@@ -1,15 +1,15 @@
 part of '../../flutter_kakao_map.dart';
 
-class LabelOption {
+class PoiOption {
   final LatLng position;
   final bool clickable;
   final String? text;
   final int rank;
   final String tag;
-  final List<LabelStyle> styles;
+  final List<PoiStyle> styles;
   final bool visable;
 
-  LabelOption(this.position, {
+  PoiOption(this.position, {
     this.clickable = false,
     this.text,
     this.tag = "",
