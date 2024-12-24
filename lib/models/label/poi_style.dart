@@ -22,4 +22,18 @@ class PoiStyle {
     this.textTransition = const PoiTransition(),
     this.zoomLevel = 0
   });
+  
+  Map<String, dynamic> toMessageable() {
+    final payload = <String, dynamic>{
+      "applyDpScale": applyDpScale,
+      "anchor": anchor.toMessageable(),
+      "padding": padding,
+      "icon": icon.toMessageable(),
+      "iconTransition": iconTransition.toMessageable(),
+      "textGravity": textGravity,
+      "textStyle": textStyle.toMessageable(),
+      "zoomLevel": zoomLevel
+    };
+    return payload;
+  }
 }
