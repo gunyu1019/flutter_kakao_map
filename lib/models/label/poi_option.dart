@@ -7,6 +7,7 @@ class PoiOption {
   final int rank;
   final String tag;
   final List<PoiStyle> styles;
+  final TransformMethod? transform;
   final bool visable;
 
   PoiOption(this.position, {
@@ -15,6 +16,7 @@ class PoiOption {
     this.tag = "",
     this.rank = 0,
     this.styles = const [],
+    this.transform,
     this.visable = true
   });
 }
