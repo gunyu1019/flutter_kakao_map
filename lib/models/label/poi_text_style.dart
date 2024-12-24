@@ -20,4 +20,18 @@ class PoiTextStyle {
     this.stroke = 0,
     this.strokeColor = 0
   });
+
+  Map<String, dynamic> toMessageable() {
+    final payload = <String, dynamic>{
+      "aspectRatio": aspectRatio,
+      "characterSpace": characterSpace,
+      "color": color,
+      "font": font,
+      "lineSpace": lineSpace,
+      "size": size,
+      "stroke": stroke,
+      "strokeColor": strokeColor
+    };
+    return payload;
+  }
 }
