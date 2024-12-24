@@ -28,7 +28,7 @@ class PoiStyle {
       "applyDpScale": applyDpScale,
       "anchor": anchor.toMessageable(),
       "padding": padding,
-      "icon": icon.toMessageable(),
+      "icon": icon?.toMessageable(),
       "iconTransition": iconTransition.toMessageable(),
       "textGravity": textGravity,
       "textStyle": textStyle.map((e) => e.toMessageable()),
