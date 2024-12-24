@@ -13,10 +13,10 @@ import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.MapAuthException
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.GestureType
-import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.toMessageable
-import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asLatLng
-import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asCameraPosition
-import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.asCameraAnimation
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.toMessageable
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asCameraPosition
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asCameraAnimation
 import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 import kr.yhs.flutter_kakao_map.listener.CameraListener
 import kr.yhs.flutter_kakao_map.controller.KakaoMapController

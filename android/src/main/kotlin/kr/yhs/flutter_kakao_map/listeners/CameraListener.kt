@@ -4,7 +4,7 @@ import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.GestureType
 import com.kakao.vectormap.camera.CameraPosition
 import io.flutter.plugin.common.MethodChannel
-import kr.yhs.flutter_kakao_map.converter.MapTypeConverter.toMessageable
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 
 
