@@ -132,6 +132,13 @@ class _MyAppState extends State<MyApp> {
         position = result.position;
       });
     });
+
+    controller.defaultLabelLayer.addPoi(
+      PoiOption(
+        const LatLng(37.867489, 127.745273),
+        text: "강원대학교 LABEL TEST"
+      )
+    );
   }
 
   void onMapError(Exception exception) {
