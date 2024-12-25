@@ -28,7 +28,7 @@ class LabelController extends OverlayController {
   });
 
   Future<void> _createLabelLayer() async {
-    await channel.invokeMethod("createLabelLayer", {
+    await invokeMethod("createLabelLayer", {
       "layerId": id,
       "competitionType": competitionType.value,
       "competitionUnit": competitionUnit.value,
@@ -41,7 +41,7 @@ class LabelController extends OverlayController {
   }
 
   Future<void> addPoi(PoiOption poi) async {
-    await channel.invokeMethod("addPoi", {
+    await invokeMethod("addPoi", {
       "layerId": id,
       "poi": poi.toMessageable()
     });
