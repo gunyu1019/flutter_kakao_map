@@ -20,12 +20,4 @@ class KakaoMapController with KakaoMapControllerSender {
       "cameraAnimation": animation?.toMessageable()
     });
   }
-
-  @override
-  Future<void> setGestureEnable(GestureType gestrueType, bool enable) async {
-    await channel.invokeMethod('setGestureEnable', {
-      "gestureType": gestrueType.value,
-      "enable": enable
-    });
-  }
 }
