@@ -13,10 +13,10 @@ import java.io.ByteArrayInputStream
 
 object ReferenceTypeConverter {
     fun Any.asBitmap(): Bitmap = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        if (rawPayload["type"] == "data") {
+        if (rawPayload["type"] == 2) {
             val inputStream = ByteArrayInputStream(rawPayload["data"] as ByteArray)
             BitmapFactory.decodeStream(inputStream)
-        } else if (rawPayload["type"] == "asset") {
+        } else if (rawPayload["type"] == 0) {
             val path = rawPayload["path"]!!.asString()
             BitmapFactory.decodeStream(FlutterKakaoMapPlugin.getAsset(path))
         } else {
