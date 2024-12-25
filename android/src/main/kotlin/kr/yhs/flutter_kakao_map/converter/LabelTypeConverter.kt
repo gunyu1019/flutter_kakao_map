@@ -1,22 +1,32 @@
 package kr.yhs.flutter_kakao_map.converter
 
 import com.kakao.vectormap.label.LabelManager
+import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelLayer
+import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.label.CompetitionType
 import com.kakao.vectormap.label.CompetitionUnit
 import com.kakao.vectormap.label.OrderingType
 import com.kakao.vectormap.label.LabelTextStyle
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelTransition
+import com.kakao.vectormap.label.Transition
+import com.kakao.vectormap.label.TransformMethod
+import com.kakao.vectormap.label.LabelTextBuilder
+import com.kakao.vectormap.label.LabelStyles
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asDouble
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asList
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asFloat
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asLong
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asPoint
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asBitmap
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
+import com.kakao.vectormap.utils.MapUtils
 
 
 object LabelTypeConverter {
@@ -34,6 +44,13 @@ object LabelTypeConverter {
         }
     }
 
+    fun Any.asLabelTransition(): LabelTransition = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        LabelTransition.from(
+            Transition.getEnum(rawPayload["enterence"]!!.asInt()),
+            Transition.getEnum(rawPayload["exit"]!!.asInt())
+        )
+    }
+
     fun Any.asLabelStyle(): LabelStyle = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
         val labelStyle = if (rawPayload.get("icon") != null) {
             LabelStyle.from(rawPayload["icon"]!!.asBitmap())
@@ -43,12 +60,56 @@ object LabelTypeConverter {
         labelStyle.apply {
             rawPayload["anchorPoint"]?.asPoint().let(::setAnchorPoint)
             rawPayload["applyDpScale"]?.asBoolean()?.let(::setApplyDpScale​)
-            // rawPayload["iconTransition"]?.let(LabelTransition.)?.let(::setIconTransition​)
+            rawPayload["iconTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setIconTransition)
             rawPayload["padding"]?.asFloat()?.let(::setPadding)
             rawPayload["textGravity"]?.asInt()?.let(::setTextGravity)
-            // (rawPayload["textStyle"] as List<Map<String, Any>>).map(::asLabelTextStyle().let(::setTextStyles))
-            // rawPayload["textTransition"]?.let(LabelTransition.)?.let(::setTextTransition​)
+            rawPayload["textStyle"]?.asList<Map<String, Any>>()?.map { 
+                element -> element.asLabelTextStyle() 
+            }?.toTypedArray()?.let { 
+                argument -> setTextStyles(*argument) 
+            }
+            rawPayload["textTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setTextTransition​)
             rawPayload["zoomLevel"]?.asInt()?.let(::setZoomLevel)
+        }
+    }
+
+    fun Any.asLabelStyles(labelManager: LabelManager): LabelStyles? = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        if (rawPayload.containsKey("styleId") && rawPayload.containsKey("styles")) {
+            LabelStyles.from(
+                rawPayload["styleId"]!!.asString(),
+                rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
+                    element -> element.asLabelStyle() 
+                }
+            )
+        } else if (rawPayload.containsKey("styleId")) {
+            labelManager.getLabelStyles(rawPayload["styleId"]!!.asString())
+        } else if (rawPayload.containsKey("styles")) {
+            LabelStyles.from(
+                rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
+                    element -> element.asLabelStyle() 
+                }
+            )
+        } else {
+            null
+        }
+    }
+
+    fun Any.asLabelOptions(labelManager: LabelManager): LabelOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        LabelOptions.from(
+            (rawPayload["id"]?.asString()) ?: MapUtils.getUniqueId(),
+            rawPayload.asLatLng()
+        ).apply {
+            rawPayload.asLabelStyles(labelManager)?.let(::setStyles)
+            rawPayload["rank"]?.asLong()?.let(::setRank)
+            rawPayload["clickable"]?.asBoolean()?.let(::setClickable)
+            rawPayload["visible"]?.asBoolean()?.let(::setVisible)
+            rawPayload["transformMethod"]?.asInt()?.let(TransformMethod::getEnum).let(::setTransform)
+            rawPayload["text"]?.asString()?.let{ element ->
+                val labelText = LabelTextBuilder()
+                labelText.setTexts(*element.split("\n").toTypedArray())
+                labelText
+            }?.let(::setTexts)
+            rawPayload["tag"]?.asString()?.let(::setTag)
         }
     }
 }
