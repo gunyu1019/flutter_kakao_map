@@ -1,21 +1,25 @@
 part of '../../flutter_kakao_map.dart';
 
 class PoiOption {
+  final String? id;
   LatLng position;
   bool clickable;
   String? text;
   int rank;
   String tag;
-  List<PoiStyle> styles;
+  String? styleId;
+  List<PoiStyle>? styles;
   TransformMethod? transform;
   bool visable;
 
   PoiOption(this.position, {
+    this.id,
     this.clickable = false,
     this.text,
     this.tag = "",
     this.rank = 0,
-    this.styles = const [],
+    this.styleId,
+    this.styles,
     this.transform,
     this.visable = true
   });
@@ -26,7 +30,8 @@ class PoiOption {
       "text": text,
       "tag": tag,
       "rank": rank,
-      "styles": styles.map((element) => element.toMessageable()),
+      "styleId": styleId,
+      "styles": styles?.map((element) => element.toMessageable()),
       "transform": transform?.value,
       "visable": visable,
     };
