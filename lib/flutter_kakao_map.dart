@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,8 @@ part 'channel/channel_type.dart';
 part 'controller/controller.dart';
 part 'controller/handler.dart';
 part 'controller/sender.dart';
+
+part 'controller/overlay/label_controller.dart';
 
 /* exception */
 part 'exception/kakao_auth_exception.dart';
@@ -31,7 +34,6 @@ part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
 part 'models/geolocation/latlng.dart';
 
-part 'models/label/label_layer.dart';
 part 'models/label/poi_option.dart';
 part 'models/label/poi_style.dart';
 part 'models/label/poi_text_style.dart';
