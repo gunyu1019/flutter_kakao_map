@@ -31,7 +31,8 @@ class OverlayController(
             throw NullPointerException("LabelManager is null.");
         }
         val layer = labelManager!!.getLayer(layerId)
-        layer!!.addLabel(poi)
+        val label = layer!!.addLabel(poi)
+        label.show()
         onSuccess(mapOf(
             "test" to "test"
         ))
