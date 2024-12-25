@@ -10,4 +10,7 @@ object PrimitiveTypeConverter {
 
     @Suppress("UNCHECKED_CAST")
     fun <T> Any.asMap(): Map<String, T> = this as Map<String, T>
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> Any.asList(): List<T> = this as List<T>
 }
