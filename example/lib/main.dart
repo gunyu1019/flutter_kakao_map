@@ -81,7 +81,11 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                   width: screenWidth,
                   height: screenHeight * 0.8,
-                  child: KakaoMap(onMapReady: onMapReady, onMapError: onMapError)
+                  child: KakaoMap(onMapReady: onMapReady, onMapError: onMapError, onCameraMoveEndHandler: (position, gestureType) => {
+                    setState(() {
+                      this.position = position.position;
+                    })
+                  })
               ),
               Text("경도: ${position?.latitude}, 위도: ${position?.longitude}", style: textStyle),
               ToggleButtons(
@@ -96,10 +100,10 @@ class _MyAppState extends State<MyApp> {
                     }
 
                     switch(index) {
-                      case 0:
+                      case 1:
                         controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.395763313860826, 127.11048591050786)), animation: const CameraAnimation(5000));
                         break;
-                      case 1:
+                      case 0:
                        controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
                        break;
                     }
