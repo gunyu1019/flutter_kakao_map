@@ -19,4 +19,17 @@ class PoiOption {
     this.transform,
     this.visable = true
   });
+  
+  Map<String, dynamic> toMessageable() {
+    final payload = <String, dynamic>{
+      "clickable": clickable,
+      "text": text,
+      "tag": tag,
+      "rank": rank,
+      "styles": styles.map((element) => element.toMessageable()),
+      "transform": transform?.value,
+      "visable": visable,
+    };
+    return payload;
+  }
 }
