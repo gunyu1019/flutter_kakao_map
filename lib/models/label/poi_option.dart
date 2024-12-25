@@ -31,7 +31,7 @@ class PoiOption {
       "tag": tag,
       "rank": rank,
       "styleId": styleId,
-      "styles": styles?.map((element) => element.toMessageable()),
+      "styles": styles?.map((element) => element.toMessageable()).toList(),
       "transform": transform?.value,
       "visable": visable,
     };

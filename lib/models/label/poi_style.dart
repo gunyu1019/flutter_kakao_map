@@ -31,7 +31,7 @@ class PoiStyle {
       "icon": icon?.toMessageable(),
       "iconTransition": iconTransition.toMessageable(),
       "textGravity": textGravity,
-      "textStyle": textStyle.map((e) => e.toMessageable()),
+      "textStyle": textStyle.map((e) => e.toMessageable()).toList(),
       "zoomLevel": zoomLevel
     };
     return payload;
