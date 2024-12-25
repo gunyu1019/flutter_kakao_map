@@ -59,16 +59,17 @@ object LabelTypeConverter {
         }
         labelStyle.apply {
             rawPayload["anchorPoint"]?.asPoint().let(::setAnchorPoint)
-            rawPayload["applyDpScale"]?.asBoolean()?.let(::setApplyDpScale​)
+            rawPayload["applyDpScale"]?.asBoolean()?.let(::setApplyDpScale)
             rawPayload["iconTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setIconTransition)
+            rawPayload["textTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setTextTransition)
             rawPayload["padding"]?.asFloat()?.let(::setPadding)
             rawPayload["textGravity"]?.asInt()?.let(::setTextGravity)
             rawPayload["textStyle"]?.asList<Map<String, Any>>()?.map { 
                 element -> element.asLabelTextStyle() 
             }?.toTypedArray()?.let { 
-                argument -> setTextStyles(*argument) 
+                argument -> setTextStyles(*argument)
             }
-            rawPayload["textTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setTextTransition​)
+
             rawPayload["zoomLevel"]?.asInt()?.let(::setZoomLevel)
         }
     }
