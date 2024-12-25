@@ -139,6 +139,7 @@ class _MyAppState extends State<MyApp> {
         text: "카카오지도 LABEL TEST",
         styles: [
           PoiStyle(
+            icon: KImage.fromAsset("assets/image/location.png"),
             textStyle: const [PoiTextStyle(color: -16744193)]
           )
         ]
