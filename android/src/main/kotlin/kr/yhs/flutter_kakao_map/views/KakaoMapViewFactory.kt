@@ -20,10 +20,9 @@ class KakaoMapViewFactory(
 
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         val channel = MethodChannel(messenger, FlutterKakaoMapPlugin.createViewChannelName(viewId))
-        val eventChannel = MethodChannel(messenger, FlutterKakaoMapPlugin.createEventChannelName(viewId))
         val convertedArgs = args!!.asMap<Any?>()
 
-        val controller = KakaoMapController(viewId, context, channel, eventChannel)
+        val controller = KakaoMapController(viewId, context, channel)
         val option = KakaoMapOption.fromMessageable(controller::onMapReady, convertedArgs)
         return KakaoMapView(
             activity = activity,

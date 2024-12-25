@@ -24,7 +24,7 @@ import kr.yhs.flutter_kakao_map.controller.KakaoMapController
 class KakaoMapController(
     private val viewId: Int,
     private val context: Context,
-    private val channel: MethodChannel,
+    private val channel: MethodChannel
 ): KakaoMapControllerHandler, KakaoMapControllerSender, MapLifeCycleCallback() {
     private lateinit var kakaoMap: KakaoMap
 
