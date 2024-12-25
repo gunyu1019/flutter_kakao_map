@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
         text: "강원대학교 LABEL TEST",
         styles: [
           PoiStyle(
-            textStyle: const [PoiTextStyle()]
+            textStyle: const [PoiTextStyle(color: 4278219007)]
           )
         ]
       )
