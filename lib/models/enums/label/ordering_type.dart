@@ -1,7 +1,7 @@
 part of '../../../flutter_kakao_map.dart';
 
 enum OrderingType {
-  randk(0),
+  rank(0),
   leftBottom(1);
 
   final int value;
