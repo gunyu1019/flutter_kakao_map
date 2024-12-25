@@ -10,7 +10,7 @@ class PoiOption {
   String? styleId;
   List<PoiStyle>? styles;
   TransformMethod? transform;
-  bool visable;
+  bool visible;
 
   PoiOption(this.position, {
     this.id,
@@ -21,7 +21,7 @@ class PoiOption {
     this.styleId,
     this.styles,
     this.transform,
-    this.visable = true
+    this.visible = true
   });
   
   Map<String, dynamic> toMessageable() {
@@ -33,7 +33,7 @@ class PoiOption {
       "styleId": styleId,
       "styles": styles?.map((element) => element.toMessageable()).toList(),
       "transform": transform?.value,
-      "visable": visable,
+      "visible": visible,
     };
     payload.addAll(position.toMessageable());
     return payload;
