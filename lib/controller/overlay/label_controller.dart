@@ -21,7 +21,7 @@ class LabelController extends OverlayController {
     required this.competitionType,
     required this.competitionUnit,
     required this.orderingType,
-    required this.zOrder, // 10001 (default)
+    required this.zOrder,
     this.visable = true,
     this.clickable = true,
     this.tag = ""
