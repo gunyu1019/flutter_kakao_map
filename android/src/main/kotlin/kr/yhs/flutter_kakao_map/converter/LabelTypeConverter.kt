@@ -60,7 +60,7 @@ object LabelTypeConverter {
             LabelStyle.from()
         }
         labelStyle.apply {
-            rawPayload["anchorPoint"]?.asPoint().let(::setAnchorPoint)
+            rawPayload["anchor"]?.asPoint().let(::setAnchorPoint)
             rawPayload["applyDpScale"]?.asBoolean()?.let(::setApplyDpScale)
             rawPayload["iconTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setIconTransition)
             rawPayload["textTransition"]?.let{ element -> element.asLabelTransition() }?.let(::setTextTransition)
