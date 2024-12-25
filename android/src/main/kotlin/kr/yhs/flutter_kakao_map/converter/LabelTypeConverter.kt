@@ -15,6 +15,7 @@ import com.kakao.vectormap.label.Transition
 import com.kakao.vectormap.label.TransformMethod
 import com.kakao.vectormap.label.LabelTextBuilder
 import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.label.Label
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asDouble
@@ -26,6 +27,7 @@ import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asPoint
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asBitmap
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.toMessageable
 import com.kakao.vectormap.utils.MapUtils
 
 
@@ -75,16 +77,16 @@ object LabelTypeConverter {
     }
 
     fun Any.asLabelStyles(labelManager: LabelManager): LabelStyles? = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        if (rawPayload.containsKey("styleId") && rawPayload.containsKey("styles")) {
+        if (rawPayload["styleId"] != null && rawPayload["styles"] != null) {
             LabelStyles.from(
                 rawPayload["styleId"]!!.asString(),
                 rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
                     element -> element.asLabelStyle() 
                 }
             )
-        } else if (rawPayload.containsKey("styleId")) {
+        } else if (rawPayload["styleId"] != null) {
             labelManager.getLabelStyles(rawPayload["styleId"]!!.asString())
-        } else if (rawPayload.containsKey("styles")) {
+        } else if (rawPayload["styles"] != null) {
             LabelStyles.from(
                 rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
                     element -> element.asLabelStyle() 
