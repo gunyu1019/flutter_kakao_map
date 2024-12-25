@@ -106,7 +106,10 @@ object LabelTypeConverter {
             rawPayload["rank"]?.asLong()?.let(::setRank)
             rawPayload["clickable"]?.asBoolean()?.let(::setClickable)
             rawPayload["visible"]?.asBoolean()?.let(::setVisible)
-            rawPayload["transformMethod"]?.asInt()?.let(TransformMethod::getEnum).let(::setTransform)
+
+            if (rawPayload["transformMethod"] != null) {
+                rawPayload["transformMethod"]?.asInt()?.let(TransformMethod::getEnum).let(::setTransform)
+            }
             rawPayload["text"]?.asString()?.let{ element ->
                 val labelText = LabelTextBuilder()
                 labelText.setTexts(*element.split("\n").toTypedArray())
