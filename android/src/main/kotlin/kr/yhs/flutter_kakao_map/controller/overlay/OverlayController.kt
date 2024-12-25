@@ -6,6 +6,7 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.KakaoMap
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_map.model.OverlayType
 
 
@@ -19,9 +20,8 @@ class OverlayController(
         channel.setMethodCallHandler(::handle)
     }
     
-    fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.argument<Int>("type")) {
-        OverlayType.Label.id -> labelHandle(call, result)
-        else -> result.notImplemented()
+    fun handle(call: MethodCall, result: MethodChannel.Result) = when (OverlayType.values().filter { call.arguments["type"]!!.asInt() == it.value }.first()) {
+        OverlayType.Label -> labelHandle(call, result)
     }
 
     override fun createLabelLayer() { }
@@ -32,5 +32,8 @@ class OverlayController(
         }
         val layer = labelManager!!.getLayer(layerId)
         layer!!.addLabel(poi)
+        onSuccess(mapOf(
+            "test" to "test"
+        ))
     }
 }
