@@ -18,7 +18,10 @@ object ReferenceTypeConverter {
             BitmapFactory.decodeStream(inputStream)
         } else if (rawPayload["type"] == 0) {
             val path = rawPayload["path"]!!.asString()
-            BitmapFactory.decodeStream(FlutterKakaoMapPlugin.getAsset(path))
+            Bitmap.createScaledBitmap(
+                BitmapFactory.decodeStream(FlutterKakaoMapPlugin.getAsset(path)), 
+                128, 128, true
+            )
         } else {
             val path = rawPayload["path"]!!.asString()
             BitmapFactory.decodeFile(path)
