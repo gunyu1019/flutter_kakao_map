@@ -57,7 +57,6 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
 
     final labelChannel = ChannelType.label.channelWithId(viewId);
     controller = KakaoMapController(channel, labelChannel: labelChannel);
-    _setEventHandler();
   }
 
   void _setEventHandler() {
@@ -90,6 +89,7 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
 
   @override
   void onMapReady() {
+    _setEventHandler();
     widget.onMapReady.call(controller);
   }
 
