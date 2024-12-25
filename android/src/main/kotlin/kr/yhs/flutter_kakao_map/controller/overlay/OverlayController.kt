@@ -6,6 +6,7 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.KakaoMap
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
+import kr.yhs.flutter_kakao_map.model.OverlayType
 
 
 class OverlayController(
@@ -16,6 +17,11 @@ class OverlayController(
 
     init {
         channel.setMethodCallHandler(::handle)
+    }
+    
+    fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.argument<Int>("type")) {
+        OverlayType.Label.id -> labelHandle(call, result)
+        else -> result.notImplemented()
     }
 
     override fun createLabelLayer() { }

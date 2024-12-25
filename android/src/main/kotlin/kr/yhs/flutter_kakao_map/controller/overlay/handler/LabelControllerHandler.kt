@@ -6,7 +6,7 @@ import com.kakao.vectormap.label.LabelOptions
 
 
 interface LabelControllerHandler {
-    fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
+    fun labelHandle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
         else -> result.notImplemented()
     }
 
