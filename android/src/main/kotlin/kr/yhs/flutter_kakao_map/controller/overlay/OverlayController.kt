@@ -8,6 +8,7 @@ import com.kakao.vectormap.KakaoMap
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.model.OverlayType
+import android.util.Log
 
 
 class OverlayController(
@@ -33,6 +34,7 @@ class OverlayController(
         val layer = labelManager!!.getLayer(layerId)
         val label = layer!!.addLabel(poi)
         label.show()
+        Log.i("flutter_kakao_map", "label text: ${label.getTexts()}")
         onSuccess(mapOf(
             "test" to "test"
         ))
