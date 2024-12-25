@@ -135,11 +135,11 @@ class _MyAppState extends State<MyApp> {
 
     controller.defaultLabelLayer.addPoi(
       PoiOption(
-        const LatLng(37.867489, 127.745273),
-        text: "강원대학교 LABEL TEST",
+        const LatLng(37.395763313860826, 127.11048591050786),
+        text: "카카오지도 LABEL TEST",
         styles: [
           PoiStyle(
-            textStyle: const [PoiTextStyle(color: 4278219007)]
+            textStyle: const [PoiTextStyle(color: -16744193)]
           )
         ]
       )
