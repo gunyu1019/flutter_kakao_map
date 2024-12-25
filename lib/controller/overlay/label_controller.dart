@@ -1,8 +1,11 @@
 part of '../../flutter_kakao_map.dart';
 
-class LabelController {
+class LabelController extends OverlayController {
   final String id;
+
+  @override
   final MethodChannel channel;
+
   final CompetitionType competitionType;
   final CompetitionUnit competitionUnit;
   final OrderingType orderingType;
@@ -10,6 +13,9 @@ class LabelController {
   bool clickable;
   String tag;
   int zOrder;
+
+  @override
+  OverlayType get type => OverlayType.label;
 
   LabelController(this.id, this.channel, {
     required this.competitionType,

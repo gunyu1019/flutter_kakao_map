@@ -15,6 +15,7 @@ part 'controller/controller.dart';
 part 'controller/handler.dart';
 part 'controller/sender.dart';
 
+part 'controller/overlay/overlay_controller.dart';
 part 'controller/overlay/label_controller.dart';
 
 /* exception */
@@ -45,6 +46,7 @@ part 'models/enums/map_type.dart';
 part 'models/enums/camera_update_type.dart';
 part 'models/enums/gesture_type.dart';
 part 'models/enums/image_type.dart';
+part 'models/enums/overlay_type.dart';
 
 part 'models/enums/label/competition_type.dart';
 part 'models/enums/label/competition_unit.dart';
