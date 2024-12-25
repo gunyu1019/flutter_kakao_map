@@ -35,6 +35,7 @@ class PoiOption {
       "transform": transform?.value,
       "visable": visable,
     };
+    payload.addAll(position.toMessageable());
     return payload;
   }
 }
