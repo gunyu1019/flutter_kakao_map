@@ -2,7 +2,7 @@ part of '../flutter_kakao_map.dart';
 
 enum ChannelType {
   sdk("${_baseChannelId}_sdk"),
-  event("${_baseChannelId}_event"),
+  label("${_baseChannelId}_label"),
   view("${_baseChannelId}_view");
 
   final String id;

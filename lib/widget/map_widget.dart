@@ -54,7 +54,9 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   void onPlatformViewCreated(int viewId) {
     channel = ChannelType.view.channelWithId(viewId);
     channel.setMethodCallHandler(handle);
-    controller = KakaoMapController(channel);
+
+    final labelChannel = ChannelType.label.channelWithId(viewId)
+    controller = KakaoMapController(channel, labelChannel: labelChannel);
     _setEventHandler();
   }
 
