@@ -13,7 +13,7 @@ class OverlayController(
     private val channel: MethodChannel,
     private val kakaoMap: KakaoMap
 ): LabelControllerHandler {
-    private val labelManager: LabelManager? get() = kakaoMap.getLabelManager()
+    override val labelManager: LabelManager? get() = kakaoMap.getLabelManager()
 
     init {
         channel.setMethodCallHandler(::handle)
@@ -26,7 +26,7 @@ class OverlayController(
 
     override fun createLabelLayer() { }
 
-    override fun addPoi(layerId: String, poi: LabelOptions) { 
+    override fun addPoi(layerId: String, poi: LabelOptions, onSuccess: (Map<String, Any>) -> Unit) { 
         if (labelManager == null) {
             throw NullPointerException("LabelManager is null.");
         }
