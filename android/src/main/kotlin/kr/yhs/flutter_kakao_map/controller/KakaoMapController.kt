@@ -20,13 +20,16 @@ import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asCameraAnimation
 import kr.yhs.flutter_kakao_map.model.KakaoMapEvent
 import kr.yhs.flutter_kakao_map.listener.CameraListener
 import kr.yhs.flutter_kakao_map.controller.KakaoMapController
+import kr.yhs.flutter_kakao_map.controller.overlay.OverlayController
 
 class KakaoMapController(
     private val viewId: Int,
     private val context: Context,
-    private val channel: MethodChannel
+    private val channel: MethodChannel,
+    private val overlayChannel: MethodChannel
 ): KakaoMapControllerHandler, KakaoMapControllerSender, MapLifeCycleCallback() {
     private lateinit var kakaoMap: KakaoMap
+    private lateinit var overlayController: OverlayController
 
     // listener
     private val cameraListener = CameraListener(channel)
@@ -78,6 +81,7 @@ class KakaoMapController(
     /* Sender */
     override fun onMapReady(kakaoMap: KakaoMap) {
         this.kakaoMap = kakaoMap
+        this.overlayController = OverlayController(overlayChannel,kakaoMap)
         channel.invokeMethod("onMapReady", null)
     }
 
