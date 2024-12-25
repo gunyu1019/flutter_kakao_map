@@ -52,9 +52,11 @@ class FlutterKakaoMapPlugin: FlutterPlugin, ActivityAware {
     companion object {
         private const val BASE_CHANNEL_NAME = "flutter_kakao_map"
         private const val SDK_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_sdk"
+        private const val LABEL_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_label"
         private const val VIEW_CHANNEL_NAME = "${BASE_CHANNEL_NAME}_view"
 
         internal fun createViewChannelName(viewId: Int) = "${VIEW_CHANNEL_NAME}#${viewId}"
+        internal fun createLabelChannelName(viewId: Int) = "${LABEL_CHANNEL_NAME}#${viewId}"
 
         private lateinit var flutterAssets: FlutterAssets
         private lateinit var pluginBinding: FlutterPluginBinding
