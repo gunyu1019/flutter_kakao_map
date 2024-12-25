@@ -83,7 +83,7 @@ object LabelTypeConverter {
                 rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
                     element -> element.asLabelStyle() 
                 }
-            )
+            ).let(labelManager::addLabelStyles)
         } else if (rawPayload["styleId"] != null) {
             labelManager.getLabelStyles(rawPayload["styleId"]!!.asString())
         } else if (rawPayload["styles"] != null) {
