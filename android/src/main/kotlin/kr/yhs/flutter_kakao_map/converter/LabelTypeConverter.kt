@@ -29,6 +29,7 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asBitmap
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.toMessageable
 import com.kakao.vectormap.utils.MapUtils
+import android.util.Log
 
 
 object LabelTypeConverter {
@@ -91,7 +92,7 @@ object LabelTypeConverter {
                 rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
                     element -> element.asLabelStyle() 
                 }
-            )
+            ).let(labelManager::addLabelStyles)
         } else {
             null
         }
@@ -113,6 +114,7 @@ object LabelTypeConverter {
             rawPayload["text"]?.asString()?.let{ element ->
                 val labelText = LabelTextBuilder()
                 labelText.setTexts(*element.split("\n").toTypedArray())
+                Log.i("flutter_kakao_map", "label text: ${element}")
                 labelText
             }?.let(::setTexts)
             rawPayload["tag"]?.asString()?.let(::setTag)
