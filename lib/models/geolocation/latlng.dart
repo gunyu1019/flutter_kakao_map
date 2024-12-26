@@ -1,7 +1,7 @@
 part of '../../flutter_kakao_map.dart';
 
-
-class LatLng {
+/// 위도(Latitude)와 경도(longitude)를 사용하여 좌표를 나타내는 객체입니다.
+class LatLng with KMessageable {
   final double latitude;
   final double longitude;
 
@@ -16,13 +16,11 @@ class LatLng {
       payload['longitude']
     );
 
+  @override
   Map<String, dynamic> toMessageable() {
     return {
       "latitude": latitude,
       "longitude": longitude
     };
   }
-
-  @override
-  String toString() => "$runtimeType: ${toMessageable().map}";
 }
