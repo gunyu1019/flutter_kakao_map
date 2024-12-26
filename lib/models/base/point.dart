@@ -1,11 +1,9 @@
 part of '../../flutter_kakao_map.dart';
 
-class KPoint {
-  final double x;
-  final double y;
+class KPoint extends math.Point<double> with KMessageable {
+  const KPoint(super.x, super.y);
 
-  const KPoint(this.x, this.y);
-
+  @override
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
       "x": x,
