@@ -1,8 +1,9 @@
 import 'dart:io';
+import 'dart:math' as math show Point;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
@@ -29,6 +30,7 @@ part 'models/map_option.dart';
 part 'models/map_lifecycle.dart';
 part 'models/base/point.dart';
 part 'models/base/image.dart';
+part 'models/base/messageable.dart';
 part 'models/camera/camera_animation.dart';
 part 'models/camera/camera_position.dart';
 part 'models/camera/camera_update.dart';
