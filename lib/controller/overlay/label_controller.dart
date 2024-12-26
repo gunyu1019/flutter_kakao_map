@@ -47,6 +47,9 @@ class LabelController extends OverlayController {
     });
   }
 
-  static const String layerLabelDefaultId = "label_default_layer";
-  static const int layerLabelDefaultZOrder = 10001;
+  static const String defaultId = "label_default_layer";
+  static const int defaultZOrder = 10001;
+  static const CompetitionType defaultCompetitionType = CompetitionType.none;
+  static const CompetitionUnit defaultCompetitionUnit = CompetitionUnit.iconAndText;
+  static const OrderingType defaultOrderingType = OrderingType.rank;
 }
