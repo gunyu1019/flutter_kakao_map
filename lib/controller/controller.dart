@@ -4,18 +4,7 @@ class KakaoMapController with KakaoMapControllerSender {
   final MethodChannel channel;
   final MethodChannel labelChannel;
 
-  KakaoMapController(this.channel, {
-    required this.labelChannel
-  }) {
-    defaultLabelLayer = LabelController(
-      LabelController.layerLabelDefaultId, 
-      labelChannel,
-      competitionType: CompetitionType.none,
-      competitionUnit: CompetitionUnit.iconAndText,
-      orderingType: OrderingType.rank,
-      zOrder: LabelController.layerLabelDefaultZOrder
-    );
-  }
+  KakaoMapController(this.channel, {required this.labelChannel});
 
   /* Sender */
   @override
@@ -34,16 +23,20 @@ class KakaoMapController with KakaoMapControllerSender {
   }
 
   /* Sender(Label) */
-  late LabelController defaultLabelLayer;
+  LabelController get defaultLabelLayer =>
+      LabelController(LabelController.defaultId, labelChannel,
+          competitionType: LabelController.defaultCompetitionType,
+          competitionUnit: LabelController.defaultCompetitionUnit,
+          orderingType: LabelController.defaultOrderingType,
+          zOrder: LabelController.defaultZOrder);
 
-  Future<LabelController> addLabelLayer(String id, {
-    CompetitionType competitionType = CompetitionType.none,
-    CompetitionUnit competitionUnit = CompetitionUnit.iconAndText,
-    OrderingType orderingType = OrderingType.rank,
-    int zOrder = LabelController.layerLabelDefaultZOrder
-  }) async {
+  Future<LabelController> addLabelLayer(String id,
+      {CompetitionType competitionType = LabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit = LabelController.defaultCompetitionUnit,
+      OrderingType orderingType = LabelController.defaultOrderingType,
+      int zOrder = LabelController.defaultZOrder}) async {
     final labelLayer = LabelController(
-      LabelController.layerLabelDefaultId, 
+      id,
       labelChannel,
       competitionType: competitionType,
       competitionUnit: competitionUnit,
