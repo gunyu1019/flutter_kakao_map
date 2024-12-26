@@ -34,7 +34,6 @@ class OverlayController(
         val layer = labelManager!!.getLayer(layerId)
         val label = layer!!.addLabel(poi)
         label.show()
-        Log.i("flutter_kakao_map", "label text: ${label.getTexts()}")
         onSuccess(mapOf(
             "test" to "test"
         ))

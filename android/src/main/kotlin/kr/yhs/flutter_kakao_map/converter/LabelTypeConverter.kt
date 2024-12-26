@@ -114,7 +114,6 @@ object LabelTypeConverter {
             rawPayload["text"]?.asString()?.let{ element ->
                 val labelText = LabelTextBuilder()
                 labelText.setTexts(*element.split("\n").toTypedArray())
-                Log.i("flutter_kakao_map", "label text: ${element}")
                 labelText
             }?.let(::setTexts)
             rawPayload["tag"]?.asString()?.let(::setTag)
