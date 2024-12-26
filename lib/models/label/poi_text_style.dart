@@ -3,7 +3,7 @@ part of '../../flutter_kakao_map.dart';
 class PoiTextStyle {
   final double aspectRatio;
   final int characterSpace;
-  final int color;
+  final Color color;
   final String font;
   final double lineSpace;
   final int size;
@@ -13,7 +13,7 @@ class PoiTextStyle {
   const PoiTextStyle({
     this.aspectRatio = 0.0,
     this.characterSpace = 0,
-    this.color = -16777216,
+    this.color = Colors.black,
     this.font = "",
     this.lineSpace = 1.0,
     this.size = 24,
@@ -25,7 +25,8 @@ class PoiTextStyle {
     final payload = <String, dynamic>{
       "aspectRatio": aspectRatio,
       "characterSpace": characterSpace,
-      "color": color,
+      // ignore: deprecated_member_use
+      "color": color.value,
       "font": font,
       "lineSpace": lineSpace,
       "size": size,

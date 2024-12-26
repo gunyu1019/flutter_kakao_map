@@ -1,7 +1,8 @@
 part of '../../flutter_kakao_map.dart';
 
 
-class CameraAnimation {
+/// 카메라 이동의 애니메이션을 정의하는 객체입니다.
+class CameraAnimation with KMessageable {
   final int duration;
   final bool autoElevation;
   final bool isConsecutive;
@@ -11,6 +12,7 @@ class CameraAnimation {
     this.isConsecutive = false
   });
 
+  @override
   Map<String, dynamic> toMessageable() {
     return {
       "duration": duration,
@@ -18,7 +20,4 @@ class CameraAnimation {
       "isConsecutive": isConsecutive,
     };
   }
-
-  @override
-  String toString() => "$runtimeType: ${toMessageable().map}";
 }
