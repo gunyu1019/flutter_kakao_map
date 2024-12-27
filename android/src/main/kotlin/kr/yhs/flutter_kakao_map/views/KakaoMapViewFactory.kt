@@ -22,7 +22,7 @@ class KakaoMapViewFactory(
         val channel = MethodChannel(messenger, FlutterKakaoMapPlugin.createViewChannelName(viewId))
         val convertedArgs = args!!.asMap<Any?>()
 
-        val overlayChannel = MethodChannel(messenger, FlutterKakaoMapPlugin.createLabelChannelName(viewId))
+        val overlayChannel = MethodChannel(messenger, FlutterKakaoMapPlugin.createOverlayChannelName(viewId))
 
         val controller = KakaoMapController(viewId, context, channel, overlayChannel)
         val option = KakaoMapOption.fromMessageable(controller::onMapReady, convertedArgs)
