@@ -9,42 +9,79 @@ class LabelController extends OverlayController {
   final CompetitionType competitionType;
   final CompetitionUnit competitionUnit;
   final OrderingType orderingType;
-  bool visable;
-  bool clickable;
-  String tag;
-  int zOrder;
+
+  bool _visible;
+  bool get visible => _visible;
+
+  bool _clickable;
+  bool get clickable => _clickable;
+
+  int _zOrder;
+  int get zOrder => _zOrder;
 
   @override
   OverlayType get type => OverlayType.label;
+
+  @override
+  Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
+    payload['layerId'] = id;
+    return super._invokeMethod(method, payload);
+  }
 
   LabelController(this.id, this.channel, {
     required this.competitionType,
     required this.competitionUnit,
     required this.orderingType,
-    required this.zOrder,
-    this.visable = true,
-    this.clickable = true,
-    this.tag = ""
-  });
+    int zOrder = LabelController.defaultZOrder,
+    bool visible = true,
+    bool clickable = true
+  }) : _zOrder = zOrder, _visible = visible, _clickable = clickable;
 
   Future<void> _createLabelLayer() async {
-    await invokeMethod("createLabelLayer", {
+    await _invokeMethod("createLabelLayer", {
       "layerId": id,
       "competitionType": competitionType.value,
       "competitionUnit": competitionUnit.value,
       "orderingType": orderingType.value,
       "zOrder": zOrder,
-      "visable": visable,
-      "clickable": clickable,
-      "tag": tag,
+      "visable": _visible,
+      "clickable": _clickable,
     });
   }
 
-  Future<void> addPoi(PoiOption poi) async {
-    await invokeMethod("addPoi", {
-      "layerId": id,
-      "poi": poi.toMessageable()
+  Future<String> addPoiStyle(List<PoiStyle> styles, [String? id]) async {
+    String styleId = await _invokeMethod("addPoiStyle", {
+      "styleId": id,
+      "styles": styles.map((e) => e.toMessageable()).toList()
     });
+    return styleId;
+  }
+
+  Future<void> addPoi(LatLng position, {
+    String? id,
+    String? text,
+    String? styleId,
+    List<PoiStyle>? styles,
+    TransformMethod? transform,
+    int? rank,
+    bool clickable = false,
+    bool visible = true,
+  }) async {
+    if (styles != null) {
+      styleId = await addPoiStyle(styles, styleId);
+    }
+    Map<String, dynamic> payload = {
+      "poi": <String, dynamic>{
+        "clickable": clickable,
+        "text": text,
+        "rank": rank,
+        "styleId": styleId,
+        "transform": transform?.value,
+        "visible": visible,
+      }
+    };
+    payload["poi"].addAll(position.toMessageable());
+    String poiId = await _invokeMethod("addPoi", payload);
   }
 
   static const String defaultId = "label_default_layer";
