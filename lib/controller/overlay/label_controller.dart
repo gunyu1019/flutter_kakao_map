@@ -19,6 +19,9 @@ class LabelController extends OverlayController {
   int _zOrder;
   int get zOrder => _zOrder;
 
+  Map<String, Poi> _poi;
+  Map<String, List<PoiStyle>> _poiStyle;
+
   @override
   OverlayType get type => OverlayType.label;
 
@@ -54,6 +57,7 @@ class LabelController extends OverlayController {
       "styleId": id,
       "styles": styles.map((e) => e.toMessageable()).toList()
     });
+    _poiStyle[styleId] = styles;
     return styleId;
   }
 
