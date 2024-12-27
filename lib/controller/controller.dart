@@ -25,24 +25,35 @@ class KakaoMapController with KakaoMapControllerSender {
   }
   
   /* Overlay */
-  Map<String, LabelController> labelController = {};
+  Map<String, LabelController> _labelController = {};
 
   void _initOverlay() {
-    labelController['default'] = LabelController(
+    _labelController['default'] = LabelController(
       LabelController.defaultId, 
       overlayChannel, 
-      competitionType: LabelController.defaultCompetitionType,
-      competitionUnit: LabelController.defaultCompetitionUnit,
-      orderingType: LabelController.defaultOrderingType,
+      competitionType: _BaseLabelController.defaultCompetitionType,
+      competitionUnit: _BaseLabelController.defaultCompetitionUnit,
+      orderingType: _BaseLabelController.defaultOrderingType,
     );
+  }
+  
+  final Map<String, List<PoiStyle>> _poiStyle = {};
+
+  Future<String> addPoiStyle(List<PoiStyle> styles, [String? id]) async {
+    String styleId = await _BaseLabelController._invokeMethod("addPoiStyle", {
+      "styleId": id,
+      "styles": styles.map((e) => e.toMessageable()).toList()
+    });
+    _poiStyle[styleId] = styles;
+    return styleId;
   }
 
   /* Sender(Label) */
   Future<LabelController> addLabelLayer(String id,
-      {CompetitionType competitionType = LabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = LabelController.defaultCompetitionUnit,
-      OrderingType orderingType = LabelController.defaultOrderingType,
-      int zOrder = LabelController.defaultZOrder}) async {
+      {CompetitionType competitionType = _BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit = _BaseLabelController.defaultCompetitionUnit,
+      OrderingType orderingType = _BaseLabelController.defaultOrderingType,
+      int zOrder = _BaseLabelController.defaultZOrder}) async {
     final labelLayer = LabelController(
       id,
       overlayChannel,
@@ -52,10 +63,11 @@ class KakaoMapController with KakaoMapControllerSender {
       zOrder: zOrder,
     );
     await labelLayer._createLabelLayer();
+    _labelController[id] = labelLayer;
     return labelLayer;
   }
 
-  LabelController? getLabelLayer(String id) => labelController[id];
+  LabelController? getLabelLayer(String id) => _labelController[id];
 
-  LabelController defaultLabelLayer(String id) => labelController['default']!;
+  LabelController defaultLabelLayer(String id) => _labelController['default']!;
 }
