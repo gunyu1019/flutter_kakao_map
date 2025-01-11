@@ -16,8 +16,6 @@ part 'controller/handler.dart';
 part 'controller/sender.dart';
 
 part 'controller/overlay/overlay_controller.dart';
-part 'controller/overlay/label/base_label_controller.dart';
-part 'controller/overlay/label/label_controller.dart';
 
 /* exception */
 part 'exception/kakao_auth_exception.dart';
