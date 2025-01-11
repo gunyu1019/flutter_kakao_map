@@ -50,7 +50,39 @@ class LabelController extends OverlayController {
     });
   }
 
-  Future<Poi> addPoi(LatLng position, {
+  Future<void> _changePoiOffsetPosition(
+      String poiId, double x, double y, bool forceDpScale) async {
+    await _invokeMethod("changePoiOffsetPosition", {
+      "layerId": id,
+      "poiId": poiId,
+      "x": x,
+      "y": y,
+      "forceDpScale": forceDpScale
+    });
+  }
+
+  Future<void> _changePoiVisible(
+      String poiId, bool visible) async {
+    await _invokeMethod("changePoiVisible", {
+      "layerId": id,
+      "poiId": poiId,
+      "visible": visible
+    });
+  }
+
+  Future<void> _invalidate({
+    String? id,
+    String? text,
+    String? styleId,
+    List<PoiStyle>? styles,
+    int? rank,
+    bool clickable = false,
+    bool visible = true,
+  }) async {
+  }
+
+  Future<Poi> addPoi(
+    LatLng position, {
     String? id,
     String? text,
     String? styleId,
@@ -68,10 +100,10 @@ class LabelController extends OverlayController {
     if (styleId == null) {
       throw Exception("Missing a style at Label.");
     }
-    
+
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
-        "clickable": onClick != null || clickable, 
+        "clickable": onClick != null || clickable,
         "text": text,
         "rank": rank,
         "styleId": styleId,
@@ -81,17 +113,15 @@ class LabelController extends OverlayController {
     };
     payload["poi"].addAll(position.toMessageable());
     String poiId = await _invokeMethod("addPoi", payload);
-    final poi = Poi._(
-      this, id,
-       transform: transform,
-       position: position,
-       clickable: clickable, 
-       styleId: styleId, 
-       styles: manager._poiStyle[styleId]!,
-       text: text, 
-       rank: rank ?? 0, 
-       visible: visible
-    );
+    final poi = Poi._(this, poiId,
+        transform: transform,
+        position: position,
+        clickable: clickable,
+        styleId: styleId,
+        styles: manager._poiStyle[styleId]!,
+        text: text,
+        rank: rank ?? 0,
+        visible: visible);
     _poi[poiId] = poi;
     return poi;
   }
