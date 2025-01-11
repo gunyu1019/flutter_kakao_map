@@ -2,7 +2,7 @@ part of '../../flutter_kakao_map.dart';
 
 class Poi {
   final LabelController _controller;
-  final String? id;
+  final String id;
 
   final TransformMethod? transform;
 
@@ -43,4 +43,78 @@ class Poi {
         _text = text,
         _rank = rank,
         _visible = visible;
+
+  // void addBadge();
+
+  void addSharePosition(Poi poi) {
+
+  }
+
+  void addShareTransform​(Poi poi) {
+
+  }
+
+  Future<void> changeOffsetPosition(double x, double y, [bool forceDpScale = false]) async {
+    final prePosition = _position;
+    _position = LatLng(prePosition.latitude + x, prePosition.longitude + y);
+    _controller._changePoiOffsetPosition(id, x, y, forceDpScale);
+  }
+
+  void changeRank(int rank) {
+    _rank = rank;
+  }
+
+  void changeStyles(String? styleId, List<PoiStyle> styles) {
+
+  } 
+
+  void changeText(String text) {
+    _text = text;
+  }
+
+  Future<void> hide() async {
+    _visible = false;
+    await _controller._changePoiVisible(id, false);
+  }
+
+  void invalidate([bool enableTransition = false]) {
+
+  }
+
+  void moveTo(LatLng position, [double? milis]) {
+    _position = position;
+  }
+
+  void remove() {
+
+  }
+
+  // void removeBadge();
+
+  // void removeAllBadge();
+
+  void removeSharePosition(Poi poi) {
+
+  }
+
+  void removeShareTransform(Poi poi) {
+
+  }
+
+  void setClickable(bool clickable) {
+    _clickable = clickable;
+  }
+
+  void setRank(int rank) {
+    _rank = rank;
+  }
+
+  void scaleTo(double x, double y, [double? milis]) {
+    
+  }
+
+  Future<void> show() async {
+    _visible = true;
+    await _controller._changePoiVisible(id, true);
+  }
 }
