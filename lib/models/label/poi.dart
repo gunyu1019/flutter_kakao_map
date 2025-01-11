@@ -50,7 +50,7 @@ class Poi {
 
   }
 
-  void addShareTransform​(Poi poi) {
+  void addShareTransform(Poi poi) {
 
   }
 
