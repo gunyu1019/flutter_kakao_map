@@ -50,7 +50,7 @@ class LabelController extends OverlayController {
     });
   }
 
-  Future<void> addPoi(LatLng position, {
+  Future<Poi> addPoi(LatLng position, {
     String? id,
     String? text,
     String? styleId,
@@ -64,6 +64,11 @@ class LabelController extends OverlayController {
     if (styles != null) {
       styleId = await manager.addPoiStyle(styles, styleId);
     }
+
+    if (styleId == null) {
+      throw Exception("Missing a style at Label.");
+    }
+    
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
         "clickable": onClick != null || clickable, 
@@ -76,7 +81,19 @@ class LabelController extends OverlayController {
     };
     payload["poi"].addAll(position.toMessageable());
     String poiId = await _invokeMethod("addPoi", payload);
-    return;
+    final poi = Poi._(
+      this, id,
+       transform: transform,
+       position: position,
+       clickable: clickable, 
+       styleId: styleId, 
+       styles: manager._poiStyle[styleId]!,
+       text: text, 
+       rank: rank ?? 0, 
+       visible: visible
+    );
+    _poi[poiId] = poi;
+    return poi;
   }
 
   static const String defaultId = "label_default_layer";
