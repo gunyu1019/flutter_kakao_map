@@ -13,18 +13,26 @@ import java.io.ByteArrayInputStream
 
 object ReferenceTypeConverter {
     fun Any.asBitmap(): Bitmap = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        val width = rawPayload["width"]!!.asDouble();
+        val height = rawPayload["height"]!!.asDouble();
         if (rawPayload["type"] == 2) {
             val inputStream = ByteArrayInputStream(rawPayload["data"] as ByteArray)
-            BitmapFactory.decodeStream(inputStream)
+            Bitmap.createScaledBitmap(
+                BitmapFactory.decodeStream(inputStream), 
+                width, height, true
+            )
         } else if (rawPayload["type"] == 0) {
             val path = rawPayload["path"]!!.asString()
             Bitmap.createScaledBitmap(
                 BitmapFactory.decodeStream(FlutterKakaoMapPlugin.getAsset(path)), 
-                128, 128, true
+                width, height, true
             )
         } else {
             val path = rawPayload["path"]!!.asString()
-            BitmapFactory.decodeFile(path)
+            Bitmap.createScaledBitmap(
+                BitmapFactory.decodeFile(path), 
+                width, height, true
+            )
         }
     }
 
