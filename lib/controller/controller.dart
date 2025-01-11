@@ -5,6 +5,7 @@ class KakaoMapController with KakaoMapControllerSender {
   final MethodChannel overlayChannel;
 
   KakaoMapController(this.channel, {required this.overlayChannel}) {
+    _initalizeOverlayController();
   }
 
   /* Sender */
@@ -21,5 +22,10 @@ class KakaoMapController with KakaoMapControllerSender {
       "cameraUpdate": camera.toMessageable(),
       "cameraAnimation": animation?.toMessageable()
     });
+  }
+
+  // Overlay
+  void _initalizeOverlayController() {
+
   }
 }
