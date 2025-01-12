@@ -9,8 +9,8 @@ class Poi {
   LatLng _position;
   LatLng get position => _position;
 
-  bool _clickable;
-  bool get clickable => _clickable;
+  void Function()? _onClick;
+  bool get clickable => _onClick != null;
 
   String? _text;
   String? get text => _text;
@@ -35,9 +35,10 @@ class Poi {
       required List<PoiStyle> styles,
       required String? text,
       required int rank,
-      required bool visible})
+      required bool visible,
+      void Function()? onClick})
       : _position = position,
-        _clickable = clickable,
+        _onClick = onClick,
         _styleId = styleId,
         _styles = styles,
         _text = text,
@@ -57,19 +58,22 @@ class Poi {
   Future<void> changeOffsetPosition(double x, double y, [bool forceDpScale = false]) async {
     final prePosition = _position;
     _position = LatLng(prePosition.latitude + x, prePosition.longitude + y);
-    _controller._changePoiOffsetPosition(id, x, y, forceDpScale);
+    await _controller._changePoiOffsetPosition(id, x, y, forceDpScale);
   }
 
   void changeRank(int rank) {
     _rank = rank;
   }
 
-  void changeStyles(String? styleId, List<PoiStyle> styles) {
-
+  Future<void> changeStyles(String? styleId, List<PoiStyle>? styles, [bool transition = false]) async {
+    _styleId = await _controller.manager._validatePoiStyle(styles, styleId);
+    _styles = _controller.manager._poiStyle[_styleId]!;
+    await _controller._changePoiStyle(id, _styleId);
   } 
 
-  void changeText(String text) {
+  Future<void> changeText(String text, [bool transition = false]) async {
     _text = text;
+    await _controller._changePoiText(id, text);
   }
 
   Future<void> hide() async {
@@ -77,7 +81,7 @@ class Poi {
     await _controller._changePoiVisible(id, false);
   }
 
-  void invalidate([bool enableTransition = false]) {
+  void invalidate([bool transition = false]) {
 
   }
 
@@ -99,10 +103,6 @@ class Poi {
 
   void removeShareTransform(Poi poi) {
 
-  }
-
-  void setClickable(bool clickable) {
-    _clickable = clickable;
   }
 
   void setRank(int rank) {

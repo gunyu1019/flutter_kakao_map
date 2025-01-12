@@ -70,6 +70,24 @@ class LabelController extends OverlayController {
     });
   }
 
+  Future<void> _changePoiStyle(
+      String poiId, String styleId) async {
+    await _invokeMethod("changePoiStyle", {
+      "layerId": id,
+      "poiId": poiId,
+      "styleId": styleId
+    });
+  }
+
+  Future<void> _changePoiText(
+      String poiId, String text) async {
+    await _invokeMethod("changePoiText", {
+      "layerId": id,
+      "poiId": poiId,
+      "text": text
+    });
+  }
+
   Future<void> _invalidate({
     String? id,
     String? text,
@@ -90,20 +108,13 @@ class LabelController extends OverlayController {
     TransformMethod? transform,
     int? rank,
     void Function()? onClick,
-    bool clickable = false,
     bool visible = true,
   }) async {
-    if (styles != null) {
-      styleId = await manager.addPoiStyle(styles, styleId);
-    }
-
-    if (styleId == null) {
-      throw Exception("Missing a style at Label.");
-    }
+    styleId = await manager._validatePoiStyle(styles, styleId);
 
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
-        "clickable": onClick != null || clickable,
+        "clickable": onClick != null,
         "text": text,
         "rank": rank,
         "styleId": styleId,
