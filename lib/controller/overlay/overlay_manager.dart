@@ -9,6 +9,8 @@ mixin OverlayManager {
 
   Future<String> addPoiStyle(List<PoiStyle> styles, [String? id]);
 
+  Future<String> _validatePoiStyle(List<PoiStyle>? styles, [String? id]);
+
   void _initalizeOverlayController() {
     _labelController[_defaultKey] = LabelController._(
       overlayChannel,

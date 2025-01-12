@@ -37,6 +37,19 @@ class KakaoMapController with KakaoMapControllerSender, OverlayManager {
   }
 
   @override
+  Future<String> _validatePoiStyle(List<PoiStyle>? styles, [String? id]) async {
+    String? styleId = id;
+    if (styles != null) {
+      styleId = await addPoiStyle(styles, id);
+    }
+
+    if (styleId == null) {
+      throw Exception("Missing a style at Label.");
+    }
+    return styleId;
+  }
+
+  @override
   Future<LabelController> addLabelLayer(String id,
       {CompetitionType competitionType = LabelController.defaultCompetitionType,
       CompetitionUnit competitionUnit = LabelController.defaultCompetitionUnit,
