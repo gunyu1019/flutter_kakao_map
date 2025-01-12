@@ -186,6 +186,8 @@ class LabelController extends OverlayController {
     _poi.remove(poi.id);
   }
 
+  int get poiCount => _poi.length;
+
   static const String defaultId = "label_default_layer";
   static const int defaultZOrder = 10001;
   static const CompetitionType defaultCompetitionType = CompetitionType.none;
