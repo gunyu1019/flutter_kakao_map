@@ -61,8 +61,9 @@ class Poi {
     await _controller._changePoiOffsetPosition(id, x, y, forceDpScale);
   }
 
-  void changeRank(int rank) {
+  Future<void> changeRank(int rank) async {
     _rank = rank;
+    await _controller._rankPoi(id, rank);
   }
 
   Future<void> changeStyles(String? styleId, List<PoiStyle>? styles, [bool transition = false]) async {
@@ -81,16 +82,17 @@ class Poi {
     await _controller._changePoiVisible(id, false);
   }
 
-  void invalidate([bool transition = false]) {
-
+  Future<void> invalidate([bool transition = false]) async {
+    await _controller._invalidatePoi(id, styleId, text, transition);
   }
 
-  void moveTo(LatLng position, [double? milis]) {
+  Future<void> move(LatLng position, [double? millis]) async {
     _position = position;
+    await _controller._movePoi(id, position, millis);
   }
 
-  void remove() {
-
+  Future<void> remove() async {
+    await _controller.removePoi(this);
   }
 
   // void removeBadge();
@@ -105,15 +107,24 @@ class Poi {
 
   }
 
-  void setRank(int rank) {
-    _rank = rank;
+  Future<void> rotate(double angle, [double? millis]) async {
+    await _controller._rotatePoi(id, angle, millis);
   }
 
-  void scaleTo(double x, double y, [double? milis]) {
-    
+  Future<void> scale(double x, double y, [double? millis]) async {
+    await _controller._scalePoi(id, x, y, millis);
   }
 
-  Future<void> show() async {
+  Future<void> setStyles(String? styleId, List<PoiStyle>? styles) async {
+    _styleId = await _controller.manager._validatePoiStyle(styles, styleId);
+    _styles = _controller.manager._poiStyle[_styleId]!;
+  }
+
+  void setText() {
+    _text = text;
+  }
+
+  Future<void> show([bool? autoMove, double? duration]) async {
     _visible = true;
     await _controller._changePoiVisible(id, true);
   }

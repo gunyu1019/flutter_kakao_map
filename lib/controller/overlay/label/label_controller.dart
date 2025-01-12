@@ -38,6 +38,12 @@ class LabelController extends OverlayController {
         _clickable = clickable,
         _zOrder = zOrder;
 
+  @override
+  Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
+    payload['layerId'] = id;
+    return super._invokeMethod(method, payload);
+  }
+
   Future<void> _createLabelLayer() async {
     await _invokeMethod("createLabelLayer", {
       "layerId": id,
@@ -53,7 +59,6 @@ class LabelController extends OverlayController {
   Future<void> _changePoiOffsetPosition(
       String poiId, double x, double y, bool forceDpScale) async {
     await _invokeMethod("changePoiOffsetPosition", {
-      "layerId": id,
       "poiId": poiId,
       "x": x,
       "y": y,
@@ -64,7 +69,6 @@ class LabelController extends OverlayController {
   Future<void> _changePoiVisible(
       String poiId, bool visible) async {
     await _invokeMethod("changePoiVisible", {
-      "layerId": id,
       "poiId": poiId,
       "visible": visible
     });
@@ -73,7 +77,6 @@ class LabelController extends OverlayController {
   Future<void> _changePoiStyle(
       String poiId, String styleId) async {
     await _invokeMethod("changePoiStyle", {
-      "layerId": id,
       "poiId": poiId,
       "styleId": styleId
     });
@@ -82,21 +85,56 @@ class LabelController extends OverlayController {
   Future<void> _changePoiText(
       String poiId, String text) async {
     await _invokeMethod("changePoiText", {
-      "layerId": id,
       "poiId": poiId,
       "text": text
     });
   }
 
-  Future<void> _invalidate({
-    String? id,
-    String? text,
-    String? styleId,
-    List<PoiStyle>? styles,
-    int? rank,
-    bool clickable = false,
-    bool visible = true,
-  }) async {
+  Future<void> _invalidatePoi(
+      String poiId, String styleId, String? text, [bool transition = false]) async {
+    await _invokeMethod("invalidatePoi", {
+      "poiId": poiId,
+      "styleId": styleId,
+      "text": text,
+      "transition": transition
+    });
+  }
+
+  Future<void> _movePoi(
+      String poiId, LatLng position, [double? millis]) async {
+    final payload = {
+      "poiId": poiId,
+      "millis": millis
+    };
+    payload.addAll(position.toMessageable());
+    await _invokeMethod("movePoi", payload);
+  }
+
+  Future<void> _rotatePoi(
+      String poiId, double angle, [double? millis]) async {
+    await _invokeMethod("rotatePoi", {
+      "poiId": poiId,
+      "angle": angle,
+      "millis": millis
+    });
+  }
+
+  Future<void> _scalePoi(
+      String poiId, double x, double y, [double? millis]) async {
+    await _invokeMethod("scalePoi", {
+      "poiId": poiId,
+      "x": x,
+      "y": y,
+      "millis": millis
+    });
+  }
+
+  Future<void> _rankPoi(
+      String poiId, int rank) async {
+    await _invokeMethod("rankPoi", {
+      "poiId": poiId,
+      "rank": rank
+    });
   }
 
   Future<Poi> addPoi(
@@ -135,6 +173,17 @@ class LabelController extends OverlayController {
         visible: visible);
     _poi[poiId] = poi;
     return poi;
+  }
+
+  Poi? getPoi(String id) {
+    return _poi[id];
+  }
+
+  Future<void> removePoi(Poi poi) async {
+    await _invokeMethod("removePoi", {
+      "poiId": poi.id,
+    });
+    _poi.remove(poi.id);
   }
 
   static const String defaultId = "label_default_layer";
