@@ -119,4 +119,15 @@ object LabelTypeConverter {
             rawPayload["tag"]?.asString()?.let(::setTag)
         }
     }
+
+    fun Any.asLabelLayerOptions(): LabelLayerOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        LabelLayerOptions.from(rawPayload["layerId"]!!.asString()).apply { 
+            rawPayload["competitionType"]?.asInt()?.let{value -> CompetitionType.values().filter { it.value == value }.getOrNull(0) }?.let(::setCompetitionType)
+            rawPayload["competitionUnit"]?.asInt()?.let{value -> CompetitionUnit.values().filter { it.value == value }.getOrNull(0) }?.let(::setCompetitionUnit)
+            rawPayload["orderingType"]?.asInt()?.let{value -> OrderingType.values().filter { it.value == value }.getOrNull(0) }?.let(::setOrderingType)
+            rawPayload["zOrder"]?.asInt()?.let(::setZOrder)
+            rawPayload["visible"]?.asBoolean()?.let(::setVisible)
+            rawPayload["clickable"]?.asBoolean()?.let(::setClickable)
+        }
+    }
 }
