@@ -98,6 +98,12 @@ object LabelTypeConverter {
         }
     }
 
+    fun String.asLabelTextBuilder() = asString().let { text: String ->
+        LabelTextBuilder().apply {
+            setTexts(*text.split("\n").toTypedArray())
+        }
+    }
+
     fun Any.asLabelOptions(labelManager: LabelManager): LabelOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
         LabelOptions.from(
             (rawPayload["id"]?.asString()) ?: MapUtils.getUniqueId(),
@@ -111,11 +117,7 @@ object LabelTypeConverter {
             if (rawPayload["transformMethod"] != null) {
                 rawPayload["transformMethod"]?.asInt()?.let(TransformMethod::getEnum).let(::setTransform)
             }
-            rawPayload["text"]?.asString()?.let{ element ->
-                val labelText = LabelTextBuilder()
-                labelText.setTexts(*element.split("\n").toTypedArray())
-                labelText
-            }?.let(::setTexts)
+            rawPayload["text"]?.asString()?.asLabelTextBuilder()?.let(::setTexts)
             rawPayload["tag"]?.asString()?.let(::setTag)
         }
     }
