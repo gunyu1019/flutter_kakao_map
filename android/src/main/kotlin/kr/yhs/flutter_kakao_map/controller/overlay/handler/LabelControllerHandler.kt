@@ -35,7 +35,7 @@ interface LabelControllerHandler {
     fun removePoi(layerId: String, poiId: String, onSuccess: (Any?) -> Unit);
 
     // Poi Controller
-    fun changePoiOffsetPosition(layerId: String, poiId: String, x: Double, y: Double, forceDpScale: Boolean?, onSuccess: (Any?) -> Unit);
+    fun changePoiOffsetPosition(layerId: String, poiId: String, x: Float, y: Float, forceDpScale: Boolean?, onSuccess: (Any?) -> Unit);
 
     fun changePoiVisible(layerId: String, poiId: String, visible: Boolean, onSuccess: (Any?) -> Unit);
 
