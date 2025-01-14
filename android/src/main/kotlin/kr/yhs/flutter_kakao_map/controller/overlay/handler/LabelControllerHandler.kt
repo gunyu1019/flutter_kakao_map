@@ -45,11 +45,11 @@ interface LabelControllerHandler {
 
     fun invalidatePoi(layerId: String, poiId: String, styleId: String, text: String, transition: Boolean, onSuccess: (Any?) -> Unit);
 
-    fun invalidatePoi(layerId: String, poiId: String, position: LatLng, millis: Double?, onSuccess: (Any?) -> Unit);
+    fun movePoi(layerId: String, poiId: String, position: LatLng, millis: Int?, onSuccess: (Any?) -> Unit);
 
-    fun rotatePoi(layerId: String, poiId: String, angle: Double, millis: Double?, onSuccess: (Any?) -> Unit);
+    fun rotatePoi(layerId: String, poiId: String, angle: Float, millis: Int?, onSuccess: (Any?) -> Unit);
     
-    fun scalePoi(layerId: String, poiId: String, x: Double, y: Double, millis: Double?, onSuccess: (Any?) -> Unit);
+    fun scalePoi(layerId: String, poiId: String, x: Float, y: Float, millis: Int?, onSuccess: (Any?) -> Unit);
 
     fun rankPoi(layerId: String, poiId: String, rank: Long, onSuccess: (Any?) -> Unit);
 }
