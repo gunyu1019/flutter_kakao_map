@@ -29,49 +29,27 @@ class OverlayController(
     }
 
     override fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
         labelManager!!.addLayer(options);
         onSuccess.invoke(null)
     }
 
-    override fun addPoi(layerId: String, poi: LabelOptions, onSuccess: (String) -> Unit) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
+    override fun addPoi(layer: LabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit) {
         val label = layer.addLabel(poi)
         onSuccess.invoke(label.getLabelId())
     }
 
-    override fun removePoi(layerId: String, poiId: String, onSuccess: Function1<Any?, Unit>) {
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
+    override fun removePoi(layer: LabelLayer, poi: Label, onSuccess: Function1<Any?, Unit>) {
         val poi = layer.getLabel(poiId)
         layer.remove(poi)
         onSuccess.invoke(null)
     }
 
-    override fun changePoiOffsetPosition(layerId: String, poiId: String, x: Float, y: Float, forceDpScale: Boolean?, onSuccess: Function1<Any?, Unit>) {
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun changePoiOffsetPosition(poi: Label, x: Float, y: Float, forceDpScale: Boolean?, onSuccess: Function1<Any?, Unit>) {
         forceDpScale?.let { poi.changePixelOffset(x, y, it) } ?: poi.changePixelOffset(x, y)
-        }
         onSuccess.invoke(null)
     }
 
-    override fun changePoiVisible(layerId: String, poiId: String, visible: Boolean, onSuccess: Function1<Any?, Unit>) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun changePoiVisible(poi: Label, visible: Boolean, onSuccess: Function1<Any?, Unit>) { 
         if (visible) {
             poi.show()
         } else {
@@ -80,33 +58,17 @@ class OverlayController(
         onSuccess.invoke(null)
     }
 
-    override fun changePoiStyle(layerId: String, poiId: String, styleId: String, onSuccess: Function1<Any?, Unit>) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poiStyle = labelManager!!.getLabelStyles(styleId)
-        val poi = layer.getLabel(poiId)
+    override fun changePoiStyle(poi: Label, styleId: String, onSuccess: Function1<Any?, Unit>) { 
         poi.changeStyles(poiStyle)
         onSuccess.invoke(null)
      }
 
-    override fun changePoiText(layerId: String, poiId: String, text: String, onSuccess: Function1<Any?, Unit>) {
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun changePoiText(poi: Label, text: String, onSuccess: Function1<Any?, Unit>) {
         poi.changeText(text.asLabelTextBuilder())
         onSuccess.invoke(null)
     }
 
-    override fun invalidatePoi(layerId: String, poiId: String, styleId: String, text: String, transition: Boolean, onSuccess: Function1<Any?, Unit>) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun invalidatePoi(poi: Label, styleId: String, text: String, transition: Boolean, onSuccess: Function1<Any?, Unit>) { 
         val poiStyle = labelManager!!.getLabelStyles(styleId)
         poi.setStyles(poiStyle)
         poi.setTexts(text.asLabelTextBuilder())
@@ -114,42 +76,22 @@ class OverlayController(
         onSuccess.invoke(null)
     }
 
-    override fun movePoi(layerId: String, poiId: String, position: LatLng, millis: Int?, onSuccess: Function1<Any?, Unit>) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun movePoi(poi: Label, position: LatLng, millis: Int?, onSuccess: Function1<Any?, Unit>) { 
         millis?.let { poi.moveTo(position, it) } ?: poi.moveTo(position)
         onSuccess.invoke(null)
     }
 
-    override fun rotatePoi(layerId: String, poiId: String, angle: Float, millis: Int?, onSuccess: Function1<Any?, Unit>) {
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun rotatePoi(poi: Label, angle: Float, millis: Int?, onSuccess: Function1<Any?, Unit>) {
         millis?.let { poi.rotateTo(angle, it) } ?: poi.rotateTo(angle)
         onSuccess.invoke(null)
     }
 
-    override fun scalePoi(layerId: String, poiId: String, x: Float, y: Float, millis: Int?, onSuccess: Function1<Any?, Unit>) {
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun scalePoi(poi: Label, x: Float, y: Float, millis: Int?, onSuccess: Function1<Any?, Unit>) {
         millis?.let { poi.scaleTo(x, y, it) } ?: poi.scaleTo(x, y)
         onSuccess.invoke(null)
     }
 
-    override fun rankPoi(layerId: String, poiId: String, rank: Long, onSuccess: Function1<Any?, Unit>) { 
-        if (labelManager == null) {
-            throw NullPointerException("LabelManager is null.");
-        }
-        val layer = labelManager!!.getLayer(layerId)
-        val poi = layer.getLabel(poiId)
+    override fun rankPoi(poi: Label, rank: Long, onSuccess: Function1<Any?, Unit>) { 
         poi.changeRank(rank)
         onSuccess.invoke(null)
     }
