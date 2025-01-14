@@ -61,10 +61,7 @@ class OverlayController(
         }
         val layer = labelManager!!.getLayer(layerId)
         val poi = layer.getLabel(poiId)
-        if (forceDpScale == null) {
-            poi.changePixelOffset(x, y)
-        } else {
-            poi.changePixelOffset(x, y, forceDpScale)
+        forceDpScale?.let { poi.changePixelOffset(x, y, it) } ?: poi.changePixelOffset(x, y)
         }
         onSuccess.invoke(null)
     }
@@ -104,13 +101,56 @@ class OverlayController(
         onSuccess.invoke(null)
     }
 
-    override fun invalidatePoi(layerId: String, poiId: String, styleId: String, text: String, transition: Boolean, onSuccess: Function1<Any?, Unit>) { }
+    override fun invalidatePoi(layerId: String, poiId: String, styleId: String, text: String, transition: Boolean, onSuccess: Function1<Any?, Unit>) { 
+        if (labelManager == null) {
+            throw NullPointerException("LabelManager is null.");
+        }
+        val layer = labelManager!!.getLayer(layerId)
+        val poi = layer.getLabel(poiId)
+        val poiStyle = labelManager!!.getLabelStyles(styleId)
+        poi.setStyles(poiStyle)
+        poi.setTexts(text.asLabelTextBuilder())
+        poi.invalidate(transition)
+        onSuccess.invoke(null)
+    }
 
-    override fun invalidatePoi(layerId: String, poiId: String, position: LatLng, millis: Double?, onSuccess: Function1<Any?, Unit>) { }
+    override fun movePoi(layerId: String, poiId: String, position: LatLng, millis: Int?, onSuccess: Function1<Any?, Unit>) { 
+        if (labelManager == null) {
+            throw NullPointerException("LabelManager is null.");
+        }
+        val layer = labelManager!!.getLayer(layerId)
+        val poi = layer.getLabel(poiId)
+        millis?.let { poi.moveTo(position, it) } ?: poi.moveTo(position)
+        onSuccess.invoke(null)
+    }
 
-    override fun rotatePoi(layerId: String, poiId: String, angle: Double, millis: Double?, onSuccess: Function1<Any?, Unit>) { }
+    override fun rotatePoi(layerId: String, poiId: String, angle: Float, millis: Int?, onSuccess: Function1<Any?, Unit>) {
+        if (labelManager == null) {
+            throw NullPointerException("LabelManager is null.");
+        }
+        val layer = labelManager!!.getLayer(layerId)
+        val poi = layer.getLabel(poiId)
+        millis?.let { poi.rotateTo(angle, it) } ?: poi.rotateTo(angle)
+        onSuccess.invoke(null)
+    }
 
-    override fun scalePoi(layerId: String, poiId: String, x: Double, y: Double, millis: Double?, onSuccess: Function1<Any?, Unit>) { }
+    override fun scalePoi(layerId: String, poiId: String, x: Float, y: Float, millis: Int?, onSuccess: Function1<Any?, Unit>) {
+        if (labelManager == null) {
+            throw NullPointerException("LabelManager is null.");
+        }
+        val layer = labelManager!!.getLayer(layerId)
+        val poi = layer.getLabel(poiId)
+        millis?.let { poi.scaleTo(x, y, it) } ?: poi.scaleTo(x, y)
+        onSuccess.invoke(null)
+    }
 
-    override fun rankPoi(layerId: String, poiId: String, rank: Long, onSuccess: Function1<Any?, Unit>) { }
+    override fun rankPoi(layerId: String, poiId: String, rank: Long, onSuccess: Function1<Any?, Unit>) { 
+        if (labelManager == null) {
+            throw NullPointerException("LabelManager is null.");
+        }
+        val layer = labelManager!!.getLayer(layerId)
+        val poi = layer.getLabel(poiId)
+        poi.changeRank(rank)
+        onSuccess.invoke(null)
+    }
 }
