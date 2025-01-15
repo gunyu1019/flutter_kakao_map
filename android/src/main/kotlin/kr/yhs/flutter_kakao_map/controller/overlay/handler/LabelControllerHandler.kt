@@ -29,6 +29,9 @@ interface LabelControllerHandler {
         }
 
         val layer = arguments["layerId"]?.asString()?.let<String, LabelLayer> { labelManager!!.getLayer(it) }
+        val poi = layer?.run {
+            arguments["poiId"]?.asString()?.let(layer::getLabel)
+        }
 
         when (call.method) {
             "createLabelLayer" -> {
@@ -38,60 +41,52 @@ interface LabelControllerHandler {
                 val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
                 addPoi(layer!!, poiOption, result::success)
             }
-            else -> {
-                val poi = layer?.run {
-                    arguments["poiId"]?.asString()?.let(layer::getLabel)
-                }
-
-                when(call.method) {
-                    "removePoi" -> removePoi(layer!!, poi!!, result::success)
-                    "changePoiOffsetPosition" -> {
-                        val x = arguments["x"]?.asFloat()!!
-                        val y = arguments["y"]?.asFloat()!!
-                        val forceDpScale = arguments["forceDpScale"]?.asBoolean()
-                        changePoiOffsetPosition(poi!!, x, y, forceDpScale, result::success)
-                    }
-                    "changePoiVisible" -> {
-                        val visible = arguments["visible"]?.asBoolean()!!
-                        changePoiVisible(poi!!, visible, result::success)
-                    }
-                    "changePoiStyle" -> {
-                        val styleId = arguments["styleId"]?.asString()!!
-                        changePoiStyle(poi!!, styleId, result::success)
-                    }
-                    "changePoiText" -> {
-                        val text = arguments["text"]?.asString()!!
-                        changePoiStyle(poi!!, text, result::success)
-                    }
-                    "invalidatePoi" -> {
-                        val styleId = arguments["styleId"]?.asString()!!
-                        val text = arguments["text"]?.asString()!!
-                        val transition = arguments["transition"]?.asBoolean() ?: false
-                        invalidatePoi(poi!!, styleId, text, transition, result::success)
-                    }
-                    "movePoi" -> {
-                        val position = arguments.asLatLng()
-                        val millis = arguments["millis"]?.asInt()
-                        movePoi(poi!!, position, millis, result::success)
-                    }
-                    "rotatePoi" -> {
-                        val angle = arguments["angle"]?.asFloat()!!
-                        val millis = arguments["millis"]?.asInt()
-                        rotatePoi(poi!!, angle, millis, result::success)
-                    }
-                    "scalePoi" -> {
-                        val x = arguments["x"]?.asFloat()!!
-                        val y = arguments["y"]?.asFloat()!!
-                        val millis = arguments["millis"]?.asInt()
-                        scalePoi(poi!!, x, y, millis, result::success)
-                    }
-                    "rankPoi" -> {
-                        val rank = arguments["x"]?.asLong()!!
-                        rankPoi(poi!!, rank, result::success)
-                    }
-                    else -> result.notImplemented()
-                }
+            "removePoi" -> removePoi(layer!!, poi!!, result::success)
+            "changePoiOffsetPosition" -> {
+                val x = arguments["x"]?.asFloat()!!
+                val y = arguments["y"]?.asFloat()!!
+                val forceDpScale = arguments["forceDpScale"]?.asBoolean()
+                changePoiOffsetPosition(poi!!, x, y, forceDpScale, result::success)
             }
+            "changePoiVisible" -> {
+                val visible = arguments["visible"]?.asBoolean()!!
+                changePoiVisible(poi!!, visible, result::success)
+            }
+            "changePoiStyle" -> {
+                val styleId = arguments["styleId"]?.asString()!!
+                changePoiStyle(poi!!, styleId, result::success)
+            }
+            "changePoiText" -> {
+                val text = arguments["text"]?.asString()!!
+                changePoiStyle(poi!!, text, result::success)
+            }
+            "invalidatePoi" -> {
+                val styleId = arguments["styleId"]?.asString()!!
+                val text = arguments["text"]?.asString()!!
+                val transition = arguments["transition"]?.asBoolean() ?: false
+                invalidatePoi(poi!!, styleId, text, transition, result::success)
+            }
+            "movePoi" -> {
+                val position = arguments.asLatLng()
+                val millis = arguments["millis"]?.asInt()
+                movePoi(poi!!, position, millis, result::success)
+            }
+            "rotatePoi" -> {
+                val angle = arguments["angle"]?.asFloat()!!
+                val millis = arguments["millis"]?.asInt()
+                rotatePoi(poi!!, angle, millis, result::success)
+            }
+            "scalePoi" -> {
+                val x = arguments["x"]?.asFloat()!!
+                val y = arguments["y"]?.asFloat()!!
+                val millis = arguments["millis"]?.asInt()
+                scalePoi(poi!!, x, y, millis, result::success)
+            }
+            "rankPoi" -> {
+                val rank = arguments["x"]?.asLong()!!
+                rankPoi(poi!!, rank, result::success)
+            }
+            else -> result.notImplemented()
         }
     }
 
