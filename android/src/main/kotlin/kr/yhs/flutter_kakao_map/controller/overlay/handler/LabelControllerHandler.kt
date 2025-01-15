@@ -8,7 +8,13 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.LatLng
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asFloat
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asLong
+import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelOptions
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelLayerOptions
 
@@ -22,26 +28,71 @@ interface LabelControllerHandler {
             throw NullPointerException("LabelManager is null.");
         }
 
-        val layer = arguments["layerId"]?.let(labelManager::getLayer)
+        val layer = arguments["layerId"]?.asString()?.let<String, LabelLayer> { labelManager!!.getLayer(it) }
 
-        // TODO (implement label required method)
-        // val poi = arguments["poiId"]?.let(layer::getLabel)
-
-        // TODO (implement poi required method)
-        /* when (call.method) {
-            "addPoi" -> { 
-                val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
-                addPoi(layer, poiOption, result::success)
-            }
-            "removePoi" -> {
-                val poiId = call.argument<String>("poiId")!!
-                removePoi(layer, poi, result::success)
-            }
+        when (call.method) {
             "createLabelLayer" -> {
                 createLabelLayer(arguments.asLabelLayerOptions(), result::success)
             }
-            else -> result.notImplemented()
-        } */
+            "addPoi" -> { 
+                val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
+                addPoi(layer!!, poiOption, result::success)
+            }
+            else -> {
+                val poi = layer?.run {
+                    arguments["poiId"]?.asString()?.let(layer::getLabel)
+                }
+
+                when(call.method) {
+                    "removePoi" -> removePoi(layer!!, poi!!, result::success)
+                    "changePoiOffsetPosition" -> {
+                        val x = arguments["x"]?.asFloat()!!
+                        val y = arguments["y"]?.asFloat()!!
+                        val forceDpScale = arguments["forceDpScale"]?.asBoolean()
+                        changePoiOffsetPosition(poi!!, x, y, forceDpScale, result::success)
+                    }
+                    "changePoiVisible" -> {
+                        val visible = arguments["visible"]?.asBoolean()!!
+                        changePoiVisible(poi!!, visible, result::success)
+                    }
+                    "changePoiStyle" -> {
+                        val styleId = arguments["styleId"]?.asString()!!
+                        changePoiStyle(poi!!, styleId, result::success)
+                    }
+                    "changePoiText" -> {
+                        val text = arguments["text"]?.asString()!!
+                        changePoiStyle(poi!!, text, result::success)
+                    }
+                    "invalidatePoi" -> {
+                        val styleId = arguments["styleId"]?.asString()!!
+                        val text = arguments["text"]?.asString()!!
+                        val transition = arguments["transition"]?.asBoolean() ?: false
+                        invalidatePoi(poi!!, styleId, text, transition, result::success)
+                    }
+                    "movePoi" -> {
+                        val position = arguments.asLatLng()
+                        val millis = arguments["millis"]?.asInt()
+                        movePoi(poi!!, position, millis, result::success)
+                    }
+                    "rotatePoi" -> {
+                        val angle = arguments["angle"]?.asFloat()!!
+                        val millis = arguments["millis"]?.asInt()
+                        rotatePoi(poi!!, angle, millis, result::success)
+                    }
+                    "scalePoi" -> {
+                        val x = arguments["x"]?.asFloat()!!
+                        val y = arguments["y"]?.asFloat()!!
+                        val millis = arguments["millis"]?.asInt()
+                        scalePoi(poi!!, x, y, millis, result::success)
+                    }
+                    "rankPoi" -> {
+                        val rank = arguments["x"]?.asLong()!!
+                        rankPoi(poi!!, rank, result::success)
+                    }
+                    else -> result.notImplemented()
+                }
+            }
+        }
     }
 
     fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit);
