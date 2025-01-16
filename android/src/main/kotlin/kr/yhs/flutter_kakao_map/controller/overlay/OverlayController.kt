@@ -3,6 +3,8 @@ package kr.yhs.flutter_kakao_map.controller.overlay
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
 import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelLayer
+import com.kakao.vectormap.label.Label
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.KakaoMap
@@ -39,7 +41,6 @@ class OverlayController(
     }
 
     override fun removePoi(layer: LabelLayer, poi: Label, onSuccess: Function1<Any?, Unit>) {
-        val poi = layer.getLabel(poiId)
         layer.remove(poi)
         onSuccess.invoke(null)
     }
@@ -59,6 +60,7 @@ class OverlayController(
     }
 
     override fun changePoiStyle(poi: Label, styleId: String, onSuccess: Function1<Any?, Unit>) { 
+        val poiStyle = labelManager!!.getLabelStyles(styleId)
         poi.changeStyles(poiStyle)
         onSuccess.invoke(null)
      }
