@@ -51,10 +51,10 @@ class KakaoMapController with KakaoMapControllerSender, OverlayManager {
 
   @override
   Future<LabelController> addLabelLayer(String id,
-      {CompetitionType competitionType = LabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = LabelController.defaultCompetitionUnit,
-      OrderingType orderingType = LabelController.defaultOrderingType,
-      int zOrder = LabelController.defaultZOrder}) async {
+      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      OrderingType orderingType = BaseLabelController.defaultOrderingType,
+      int zOrder = BaseLabelController.defaultZOrder}) async {
     final labelLayer = LabelController._(
       overlayChannel,
       this,

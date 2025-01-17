@@ -16,17 +16,17 @@ mixin OverlayManager {
       overlayChannel,
       this,
       LabelController.defaultId,
-      competitionType: LabelController.defaultCompetitionType,
-      competitionUnit: LabelController.defaultCompetitionUnit,
-      orderingType: LabelController.defaultOrderingType,
+      competitionType: BaseLabelController.defaultCompetitionType,
+      competitionUnit: BaseLabelController.defaultCompetitionUnit,
+      orderingType: BaseLabelController.defaultOrderingType,
     );
   }
 
   Future<LabelController> addLabelLayer(String id,
-      {CompetitionType competitionType = LabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = LabelController.defaultCompetitionUnit,
-      OrderingType orderingType = LabelController.defaultOrderingType,
-      int zOrder = LabelController.defaultZOrder});
+      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      OrderingType orderingType = BaseLabelController.defaultOrderingType,
+      int zOrder = BaseLabelController.defaultZOrder});
 
   LabelController? getLabelLayer(String id);
 

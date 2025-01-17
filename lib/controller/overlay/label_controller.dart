@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-class LabelController extends OverlayController {
+class LabelController extends BaseLabelController {
   @override
   MethodChannel channel;
 
@@ -10,40 +10,20 @@ class LabelController extends OverlayController {
   @override
   OverlayType get type => OverlayType.label;
 
+  @override
   final String id;
-
-  final CompetitionType competitionType;
-  final CompetitionUnit competitionUnit;
-  final OrderingType orderingType;
-
-  bool _visible;
-  bool get visible => _visible;
-
-  bool _clickable;
-  bool get clickable => _clickable;
-
-  int _zOrder;
-  int get zOrder => _zOrder;
 
   final Map<String, Poi> _poi = {};
   final Map<String, PolylineText> _polylineText = {};
 
   LabelController._(this.channel, this.manager, this.id,
-      {this.competitionType = defaultCompetitionType,
-      this.competitionUnit = defaultCompetitionUnit,
-      this.orderingType = defaultOrderingType,
+      {competitionType = BaseLabelController.defaultCompetitionType,
+      competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      orderingType = BaseLabelController.defaultOrderingType,
       bool visible = true,
       bool clickable = false,
-      int zOrder = defaultZOrder})
-      : _visible = visible,
-        _clickable = clickable,
-        _zOrder = zOrder;
-
-  @override
-  Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
-    payload['layerId'] = id;
-    return super._invokeMethod(method, payload);
-  }
+      int zOrder = BaseLabelController.defaultZOrder})
+      : super._(competitionType, competitionUnit, orderingType, visible, clickable, zOrder);
 
   Future<void> _createLabelLayer() async {
     await _invokeMethod("createLabelLayer", {
@@ -239,11 +219,6 @@ class LabelController extends OverlayController {
 
   int get poiCount => _poi.length;
   int get polylineCount => _polylineText.length;
-
+  
   static const String defaultId = "label_default_layer";
-  static const int defaultZOrder = 10001;
-  static const CompetitionType defaultCompetitionType = CompetitionType.none;
-  static const CompetitionUnit defaultCompetitionUnit =
-      CompetitionUnit.iconAndText;
-  static const OrderingType defaultOrderingType = OrderingType.rank;
 }
