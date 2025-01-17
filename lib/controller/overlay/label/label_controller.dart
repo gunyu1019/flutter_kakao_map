@@ -186,6 +186,25 @@ class LabelController extends OverlayController {
     _poi.remove(poi.id);
   }
 
+  Future<void> addPolylineText(
+    String text, 
+    List<LatLng> position, {
+      required List<PolylineTextStyle> styles,
+      String? id,
+      bool visible = true,
+  }) async {
+    Map<String, dynamic> payload = {
+      "label": <String, dynamic>{
+        "position": position.map((e) => e.toMessageable()).toList(),
+        "styles": styles.map((e) => e.toMessageable()).toList(),
+        "id": id,
+        "text": text,
+        "visible": visible
+      }
+    };
+    String labelId = await _invokeMethod("addPloylineText", payload);
+  }
+
   int get poiCount => _poi.length;
 
   static const String defaultId = "label_default_layer";
