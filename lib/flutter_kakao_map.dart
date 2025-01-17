@@ -42,6 +42,7 @@ part 'models/label/poi_style.dart';
 part 'models/label/poi_text_style.dart';
 part 'models/label/poi_transition.dart';
 
+part 'models/label/polyline_text.dart';
 part 'models/label/polyline_text_style.dart';
 
 /* model(enumerate) */
