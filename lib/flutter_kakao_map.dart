@@ -15,7 +15,7 @@ part 'controller/controller.dart';
 part 'controller/handler.dart';
 part 'controller/sender.dart';
 
-part 'controller/overlay/overlay_controller.dart';
+part 'controller/overlay/base_overlay_controller.dart';
 part 'controller/overlay/overlay_manager.dart';
 part 'controller/overlay/label_controller.dart';
 
