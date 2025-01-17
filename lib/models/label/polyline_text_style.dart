@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-class PolylineText {
+class PolylineTextStyle {
   bool applyDpScale;
   int zoomLevel;
 
@@ -9,7 +9,7 @@ class PolylineText {
   final Color color;
   final Color strokeColor;
 
-  PolylineText(this.size, this.strokeSize, this.color, this.strokeColor, {
+  PolylineTextStyle(this.size, this.strokeSize, this.color, this.strokeColor, {
     this.applyDpScale = true,
     this.zoomLevel = 0
   });
