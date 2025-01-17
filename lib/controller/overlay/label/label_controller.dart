@@ -26,6 +26,7 @@ class LabelController extends OverlayController {
   int get zOrder => _zOrder;
 
   final Map<String, Poi> _poi = {};
+  final Map<String, PolylineText> _polylineText = {};
 
   LabelController._(this.channel, this.manager, this.id,
       {this.competitionType = defaultCompetitionType,
@@ -186,7 +187,7 @@ class LabelController extends OverlayController {
     _poi.remove(poi.id);
   }
 
-  Future<void> addPolylineText(
+  Future<PolylineText> addPolylineText(
     String text, 
     List<LatLng> position, {
       required List<PolylineTextStyle> styles,
@@ -203,9 +204,24 @@ class LabelController extends OverlayController {
       }
     };
     String labelId = await _invokeMethod("addPloylineText", payload);
+    final label = PolylineText._(this, labelId, styles: styles, text: text, points: position);
+    _polylineText[labelId] = label;
+    return label;
+  }
+
+  PolylineText? getPolylineText(String id) {
+    return _polylineText[id];
+  }
+
+  Future<void> removePolylineText(PolylineText label) async {
+    await _invokeMethod("removePolylineText", {
+      "labelId": label.id,
+    });
+    _polylineText.remove(label.id);
   }
 
   int get poiCount => _poi.length;
+  int get polylineCount => _polylineText.length;
 
   static const String defaultId = "label_default_layer";
   static const int defaultZOrder = 10001;
