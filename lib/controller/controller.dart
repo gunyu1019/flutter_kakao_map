@@ -70,10 +70,38 @@ class KakaoMapController with KakaoMapControllerSender, OverlayManager {
   }
 
   @override
+  Future<LodLabelController> addLodLabelLayer(String id,
+      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      OrderingType orderingType = BaseLabelController.defaultOrderingType,
+      double radius = LodLabelController.defaultRadius,
+      int zOrder = BaseLabelController.defaultZOrder}) async {
+    final labelLayer = LodLabelController._(
+      overlayChannel,
+      this,
+      id,
+      competitionType: competitionType,
+      competitionUnit: competitionUnit,
+      orderingType: orderingType,
+      radius: radius,
+      zOrder: zOrder,
+    );
+    await labelLayer._createLodLabelLayer();
+    _lodLabelController[id] = labelLayer;
+    return labelLayer;
+  }
+
+  @override
   LabelController? getLabelLayer(String id) => _labelController[id];
 
   @override
+  LodLabelController? getLodLabelLayer(String id) => _lodLabelController[id];
+
+  @override
   LabelController get defaultLabelLayer => _labelController[OverlayManager._defaultKey]!;
+
+  @override
+  LodLabelController get defaultLodLabelLayer => _lodLabelController[OverlayManager._defaultKey]!;
 
   /* Sender(Label) */
 }
