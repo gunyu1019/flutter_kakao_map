@@ -8,7 +8,7 @@ class PoiTextStyle {
   final double lineSpace;
   final int size;
   final int stroke;
-  final int strokeColor;
+  final Color strokeColor;
 
   const PoiTextStyle({
     this.aspectRatio = 0.0,
@@ -18,7 +18,7 @@ class PoiTextStyle {
     this.lineSpace = 1.0,
     this.size = 24,
     this.stroke = 0,
-    this.strokeColor = 0
+    this.strokeColor = Colors.black
   });
 
   Map<String, dynamic> toMessageable() {
@@ -31,7 +31,8 @@ class PoiTextStyle {
       "lineSpace": lineSpace,
       "size": size,
       "stroke": stroke,
-      "strokeColor": strokeColor
+      // ignore: deprecated_member_use
+      "strokeColor": strokeColor.value
     };
     return payload;
   }
