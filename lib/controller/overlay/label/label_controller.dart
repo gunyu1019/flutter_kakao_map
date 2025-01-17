@@ -138,6 +138,23 @@ class LabelController extends OverlayController {
     });
   }
 
+  Future<void> _changePolylineTextStyle(
+      String poiId, List<PolylineTextStyle> styles, [String? text]) async {
+    await _invokeMethod("changePoiStyle", {
+      "poiId": poiId,
+      "styles": styles.map((e) => e.toMessageable()).toList(),
+      "text": text
+    });
+  }
+
+  Future<void> _changePolylineText(
+      String labelId, bool visible) async {
+    await _invokeMethod("changePolylineText", {
+      "labelId": labelId,
+      "visible": visible
+    });
+  }
+
   Future<Poi> addPoi(
     LatLng position, {
     String? id,

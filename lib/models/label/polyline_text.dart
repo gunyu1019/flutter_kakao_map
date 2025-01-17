@@ -24,22 +24,26 @@ class PolylineText {
 
   Future<void> changeStyles(List<PolylineTextStyle> styles) async {
     _styles = styles;
+    await _controller._changePolylineTextStyle(id, styles);
   }
   
   Future<void> changeTextAndStyles(String text, List<PolylineTextStyle> styles) async {
     _styles = styles;
     _text = text;
+    await _controller._changePolylineTextStyle(id, styles, text);
   }
 
   Future<void> remove() async {
-
+    await _controller.removePolylineText(this);
   }
 
   Future<void> hide() async {
+    await _controller._changePolylineText(id, false);
     _visible = false;
   }
 
   Future<void> show() async {
+    await _controller._changePolylineText(id, true);
     _visible = true;
   }
 }
