@@ -90,6 +90,14 @@ class LodLabelController extends BaseLabelController {
     _poi.remove(poi.id);
   }
 
+  Future<void> showAllLodPoi() async {
+    await _invokeMethod("changeVisibleAllLodPoi", {"visible": true});
+  }
+
+  Future<void> hideAllLodPoi() async {
+    await _invokeMethod("changeVisibleAllLodPoi", {"visible": false});
+  }
+
   int get poiCount => _poi.length;
   
   static const String defaultId = "lod_label_default_layer";
