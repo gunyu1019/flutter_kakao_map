@@ -48,6 +48,10 @@ mixin OverlayManager {
 
   LodLabelController? getLodLabelLayer(String id);
 
+  Future<void> removeLabelLayer(LabelController controller);
+
+  Future<void> removeLodLabelLayer(LodLabelController controller);
+
   LabelController get defaultLabelLayer;
 
   LodLabelController get defaultLodLabelLayer;

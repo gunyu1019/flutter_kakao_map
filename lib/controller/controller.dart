@@ -98,6 +98,16 @@ class KakaoMapController with KakaoMapControllerSender, OverlayManager {
   LodLabelController? getLodLabelLayer(String id) => _lodLabelController[id];
 
   @override
+  Future<void> removeLabelLayer(LabelController controller) async {
+    await controller._removeLabelLayer();
+  }
+
+  @override
+  Future<void> removeLodLabelLayer(LodLabelController controller) async {
+    await controller._removeLodLabelLayer();
+  }
+
+  @override
   LabelController get defaultLabelLayer => _labelController[OverlayManager._defaultKey]!;
 
   @override
