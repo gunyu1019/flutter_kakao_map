@@ -30,6 +30,20 @@ abstract class BaseLabelController extends OverlayController {
     return super._invokeMethod(method, payload);
   }
 
+  Future<void> setClickable(bool clickable) async {
+    await _invokeMethod("setLayerClickable", {
+      "clickable": clickable
+    });
+    _clickable = clickable;
+  }
+
+  Future<void> setZOrder(int zOrder) async {
+    await _invokeMethod("setLayerClickable", {
+      "zOrder": zOrder
+    });
+    _zOrder = zOrder;
+  }
+
   static const int defaultZOrder = 10001;
   static const CompetitionType defaultCompetitionType = CompetitionType.none;
   static const CompetitionUnit defaultCompetitionUnit =
