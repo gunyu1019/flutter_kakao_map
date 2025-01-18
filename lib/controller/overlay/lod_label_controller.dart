@@ -15,7 +15,7 @@ class LodLabelController extends BaseLabelController {
 
   final double radius;
 
-  final Map<String, Poi> _poi = {};
+  final Map<String, LodPoi> _poi = {};
 
   LodLabelController._(this.channel, this.manager, this.id,
       {competitionType = BaseLabelController.defaultCompetitionType,
@@ -36,12 +36,12 @@ class LodLabelController extends BaseLabelController {
       "orderingType": orderingType.value,
       "radius": radius,
       "zOrder": zOrder,
-      "visable": _visible,
+      "visable": visible,
       "clickable": _clickable,
     });
   }
 
-  Future<void> addLodPoi(
+  Future<LodPoi> addLodPoi(
     LatLng position, {
     String? id,
     String? text,
@@ -66,7 +66,7 @@ class LodLabelController extends BaseLabelController {
     };
     payload["poi"].addAll(position.toMessageable());
     String poiId = await _invokeMethod("addPoi", payload);
-    /* final poi = Poi._(this, poiId,
+    final poi = LodPoi._(this, poiId,
         transform: transform,
         position: position,
         clickable: clickable,
@@ -76,14 +76,14 @@ class LodLabelController extends BaseLabelController {
         rank: rank ?? 0,
         visible: visible);
     _poi[poiId] = poi;
-    return poi; */
+    return poi;
   }
 
-  Poi? getLodPoi(String id) {
+  LodPoi? getLodPoi(String id) {
     return _poi[id];
   }
 
-  Future<void> removeLodPoi(Poi poi) async {
+  Future<void> removeLodPoi(LodPoi poi) async {
     await _invokeMethod("removePoi", {
       "poiId": poi.id,
     });

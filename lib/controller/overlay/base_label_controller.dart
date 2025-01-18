@@ -7,8 +7,7 @@ abstract class BaseLabelController extends OverlayController {
   final CompetitionUnit competitionUnit;
   final OrderingType orderingType;
 
-  bool _visible;
-  bool get visible => _visible;
+  final bool visible;
 
   bool _clickable;
   bool get clickable => _clickable;
@@ -20,10 +19,10 @@ abstract class BaseLabelController extends OverlayController {
     this.competitionType, 
     this.competitionUnit, 
     this.orderingType,
-    bool visible,
+    this.visible,
     bool clickable,
     int zOrder
-  ) : _visible = visible, _clickable = clickable, _zOrder = zOrder;
+  ) : _clickable = clickable, _zOrder = zOrder;
 
   @override
   Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {

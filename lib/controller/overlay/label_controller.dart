@@ -32,7 +32,7 @@ class LabelController extends BaseLabelController {
       "competitionUnit": competitionUnit.value,
       "orderingType": orderingType.value,
       "zOrder": zOrder,
-      "visable": _visible,
+      "visable": visible,
       "clickable": _clickable,
     });
   }
@@ -184,6 +184,14 @@ class LabelController extends BaseLabelController {
     _poi.remove(poi.id);
   }
 
+  Future<void> showAllPoi() async {
+    await _invokeMethod("changeVisibleAllPoi", {"visible": true});
+  }
+
+  Future<void> hideAllPoi() async {
+    await _invokeMethod("changeVisibleAllPoi", {"visible": false});
+  }
+
   Future<PolylineText> addPolylineText(
     String text, 
     List<LatLng> position, {
@@ -215,6 +223,14 @@ class LabelController extends BaseLabelController {
       "labelId": label.id,
     });
     _polylineText.remove(label.id);
+  }
+
+  Future<void> showAllPolylineText() async {
+    await _invokeMethod("changeVisibleAllPolylineText", {"visible": true});
+  }
+
+  Future<void> hideAllPolylineText() async {
+    await _invokeMethod("changeVisibleAllPolylineText", {"visible": false});
   }
 
   int get poiCount => _poi.length;
