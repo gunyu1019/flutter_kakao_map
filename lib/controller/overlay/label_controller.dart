@@ -27,7 +27,6 @@ class LabelController extends BaseLabelController {
 
   Future<void> _createLabelLayer() async {
     await _invokeMethod("createLabelLayer", {
-      "layerId": id,
       "competitionType": competitionType.value,
       "competitionUnit": competitionUnit.value,
       "orderingType": orderingType.value,
@@ -35,6 +34,10 @@ class LabelController extends BaseLabelController {
       "visable": visible,
       "clickable": _clickable,
     });
+  }
+  
+  Future<void> _removeLabelLayer() async {
+    await _invokeMethod("removeLabelLayer", {});
   }
 
   Future<void> _changePoiOffsetPosition(

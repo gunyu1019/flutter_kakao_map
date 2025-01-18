@@ -40,6 +40,10 @@ class LodLabelController extends BaseLabelController {
       "clickable": _clickable,
     });
   }
+  
+  Future<void> _removeLodLabelLayer() async {
+    await _invokeMethod("removeLabelLayer", {});
+  }
 
   Future<LodPoi> addLodPoi(
     LatLng position, {
