@@ -18,11 +18,8 @@ class Poi {
   int _rank;
   int get rank => _rank;
 
-  String _styleId;
-  String get styleId => _styleId;
-
-  List<PoiStyle> _styles;
-  List<PoiStyle> get styles => _styles;
+  PoiStyle _style;
+  PoiStyle get style => _style;
 
   bool _visible;
   bool get visible => _visible;
@@ -31,16 +28,14 @@ class Poi {
       {required this.transform,
       required LatLng position,
       required bool clickable,
-      required String styleId,
-      required List<PoiStyle> styles,
+      required PoiStyle style,
       required String? text,
       required int rank,
       required bool visible,
       void Function()? onClick})
       : _position = position,
         _onClick = onClick,
-        _styleId = styleId,
-        _styles = styles,
+        _style = style,
         _text = text,
         _rank = rank,
         _visible = visible;
@@ -66,10 +61,9 @@ class Poi {
     await _controller._rankPoi(id, rank);
   }
 
-  Future<void> changeStyles(String? styleId, List<PoiStyle>? styles, [bool transition = false]) async {
-    _styleId = await _controller.manager._validatePoiStyle(styles, styleId);
-    _styles = _controller.manager._poiStyle[_styleId]!;
-    await _controller._changePoiStyle(id, _styleId);
+  Future<void> changeStyles(PoiStyle style, [bool transition = false]) async {
+    final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
+    await _controller._changePoiStyle(id, styleId);
   } 
 
   Future<void> changeText(String text, [bool transition = false]) async {
@@ -83,6 +77,7 @@ class Poi {
   }
 
   Future<void> invalidate([bool transition = false]) async {
+    final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
     await _controller._invalidatePoi(id, styleId, text, transition);
   }
 
@@ -115,9 +110,8 @@ class Poi {
     await _controller._scalePoi(id, x, y, millis);
   }
 
-  Future<void> setStyles(String? styleId, List<PoiStyle>? styles) async {
-    _styleId = await _controller.manager._validatePoiStyle(styles, styleId);
-    _styles = _controller.manager._poiStyle[_styleId]!;
+  void setStyle(PoiStyle style) async {
+    _style = style;
   }
 
   void setText() {

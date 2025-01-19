@@ -17,11 +17,8 @@ class LodPoi {
   int _rank;
   int get rank => _rank;
 
-  String _styleId;
-  String get styleId => _styleId;
-
-  List<PoiStyle> _styles;
-  List<PoiStyle> get styles => _styles;
+  PoiStyle _style;
+  PoiStyle get styles => _style;
 
   bool _visible;
   bool get visible => _visible;
@@ -30,15 +27,13 @@ class LodPoi {
       {required this.transform,
       required this.position,
       required bool clickable,
-      required String styleId,
-      required List<PoiStyle> styles,
+      required PoiStyle style,
       required String? text,
       required int rank,
       required bool visible,
       void Function()? onClick})
       : _onClick = onClick,
-        _styleId = styleId,
-        _styles = styles,
+        _style = style,
         _text = text,
         _rank = rank,
         _visible = visible;
@@ -48,14 +43,12 @@ class LodPoi {
     await _controller._rankPoi(id, rank);
   }
 
-  Future<void> changeStyles(String? styleId, List<PoiStyle>? styles, [bool transition = false]) async {
-    _styleId = await _controller.manager._validatePoiStyle(styles, styleId);
-    _styles = _controller.manager._poiStyle[_styleId]!;
-    await _controller._changePoiStyle(id, _styleId);
+  Future<void> changeStyle(PoiStyle style, [bool transition = false]) async {
+    final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
+    await _controller._changePoiStyle(id, styleId);
   }
   
   Future<void> changeText(String text) async {
-    _styles = styles;
     _text = text;
     await _controller._changePoiText(id, text);
   }
