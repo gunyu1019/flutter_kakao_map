@@ -80,17 +80,15 @@ class LodLabelController extends BaseLabelController {
 
   Future<LodPoi> addLodPoi(
     LatLng position, {
+    required PoiStyle style,
     String? id,
     String? text,
-    String? styleId,
-    List<PoiStyle>? styles,
     TransformMethod? transform,
     int? rank,
     void Function()? onClick,
     bool visible = true,
   }) async {
-    styleId = await manager._validatePoiStyle(styles, styleId);
-
+    final styleId = style.id ?? await manager.addPoiStyle(style);
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
         "clickable": onClick != null,
@@ -107,8 +105,7 @@ class LodLabelController extends BaseLabelController {
         transform: transform,
         position: position,
         clickable: clickable,
-        styleId: styleId,
-        styles: manager._poiStyle[styleId]!,
+        style: style,
         text: text,
         rank: rank ?? 0,
         visible: visible);
