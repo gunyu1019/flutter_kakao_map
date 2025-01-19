@@ -1,6 +1,7 @@
 part of '../../flutter_kakao_map.dart';
 
 class PoiStyle {
+  String? id;
   bool applyDpScale;
   KPoint anchor;
   double padding;
@@ -11,7 +12,10 @@ class PoiStyle {
   PoiTransition textTransition;
   int zoomLevel;
 
+  List<PoiStyle> _styles = [];
+
   PoiStyle({
+    this.id,
     this.applyDpScale = true,
     this.anchor = const KPoint(0.5, 1.0),
     this.padding = 0,
@@ -22,6 +26,23 @@ class PoiStyle {
     this.textTransition = const PoiTransition(),
     this.zoomLevel = 0
   });
+
+  void addStyle({
+    required int zoomLevel,
+    bool? applyDpScale,
+    KPoint? anchor,
+    int? padding,
+    KImage? icon,
+    PoiTransition? iconTransition,
+    int? textGravity,
+    List<PoiTextStyle>? textStyle,
+    PoiTransition? textTransition,
+  }) {
+    final otherStyle = PoiStyle(
+
+      zoomLevel: zoomLevel
+    );
+  }
   
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
