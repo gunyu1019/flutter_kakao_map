@@ -11,7 +11,7 @@ void main() async {
 
   await dotenv.load(fileName: 'assets/config/.env');
   await KakaoMapSdk.instance.initialize(dotenv.env['KAKAO_API_KEY']!);
-    
+
   DebugOverlay.enabled = true;
 
   final hashKey = await KakaoMapSdk.instance.hashKey();
@@ -61,64 +61,73 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 14.0, color: Colors.blue, decoration: TextDecoration.none);
+    const textStyle = TextStyle(
+        fontSize: 14.0, color: Colors.blue, decoration: TextDecoration.none);
     var mediaQueryData = MediaQuery.of(context);
     var screenWidth = mediaQueryData.size.width;
     var screenHeight = mediaQueryData.size.height;
 
     return MaterialApp(
-      builder: DebugOverlay.builder(
-        logBucket: MyApp.logBucket
-      ),
-      home: Scaffold(
-        body: SizedBox(
-          width: screenWidth,
-          height: screenHeight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 10),
-              SizedBox(
-                  width: screenWidth,
-                  height: screenHeight * 0.8,
-                  child: KakaoMap(onMapReady: onMapReady, onMapError: onMapError, onCameraMoveEndHandler: (position, gestureType) => {
-                    setState(() {
-                      this.position = position.position;
-                    })
-                  })
-              ),
-              Text("경도: ${position?.latitude}, 위도: ${position?.longitude}", style: textStyle),
-              ToggleButtons(
-                isSelected: isSelected, onPressed: (int index) {
-                  setState(() {
-                    for (int buttonIndex = 0; buttonIndex < isSelected.length; buttonIndex++) {
-                      if (buttonIndex == index) {
-                        isSelected[buttonIndex] = true;
-                      } else {
-                        isSelected[buttonIndex] = false;
-                      }
-                    }
+        builder: DebugOverlay.builder(logBucket: MyApp.logBucket),
+        home: Scaffold(
+          body: SizedBox(
+            width: screenWidth,
+            height: screenHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                SizedBox(
+                    width: screenWidth,
+                    height: screenHeight * 0.8,
+                    child: KakaoMap(
+                        onMapReady: onMapReady,
+                        onMapError: onMapError,
+                        onCameraMoveEnd: (position, gestureType) => {
+                              setState(() {
+                                this.position = position.position;
+                              })
+                            })),
+                Text("경도: ${position?.latitude}, 위도: ${position?.longitude}",
+                    style: textStyle),
+                ToggleButtons(
+                    isSelected: isSelected,
+                    onPressed: (int index) {
+                      setState(() {
+                        for (int buttonIndex = 0;
+                            buttonIndex < isSelected.length;
+                            buttonIndex++) {
+                          if (buttonIndex == index) {
+                            isSelected[buttonIndex] = true;
+                          } else {
+                            isSelected[buttonIndex] = false;
+                          }
+                        }
 
-                    switch(index) {
-                      case 1:
-                        controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.395763313860826, 127.11048591050786)), animation: const CameraAnimation(5000));
-                        break;
-                      case 0:
-                       controller.moveCamera(CameraUpdate.newCenterPosition(const LatLng(37.867489, 127.745273)), animation: const CameraAnimation(5000));
-                       break;
-                    }
-                  });
-                },
-                children: const <Widget>[
-                  Text("강원대학교"),
-                  Text("판교아지트"),
-                ]
-              )
-            ],
+                        switch (index) {
+                          case 1:
+                            controller.moveCamera(
+                                CameraUpdate.newCenterPosition(const LatLng(
+                                    37.395763313860826, 127.11048591050786)),
+                                animation: const CameraAnimation(5000));
+                            break;
+                          case 0:
+                            controller.moveCamera(
+                                CameraUpdate.newCenterPosition(
+                                    const LatLng(37.867489, 127.745273)),
+                                animation: const CameraAnimation(5000));
+                            break;
+                        }
+                      });
+                    },
+                    children: const <Widget>[
+                      Text("강원대학교"),
+                      Text("판교아지트"),
+                    ])
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   void onMapReady(KakaoMapController controller) {
@@ -134,17 +143,13 @@ class _MyAppState extends State<MyApp> {
     });
 
     controller.defaultLabelLayer.addPoi(
-      PoiOption(
         const LatLng(37.395763313860826, 127.11048591050786),
         text: "KAKAO-LABEL-TEST",
         styles: [
           PoiStyle(
-            // icon: KImage.fromAsset("assets/image/location.png"),
-            textStyle: const [PoiTextStyle(size: 28, color: -16744193)]
-          )
-        ]
-      )
-    );
+              // icon: KImage.fromAsset("assets/image/location.png"),
+              textStyle: const [PoiTextStyle(size: 28, color: Colors.black)])
+        ]);
   }
 
   void onMapError(Exception exception) {
