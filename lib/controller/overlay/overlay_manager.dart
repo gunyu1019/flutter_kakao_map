@@ -6,11 +6,13 @@ mixin OverlayManager {
   // Label
   final Map<String, LabelController> _labelController = {};
   final Map<String, LodLabelController> _lodLabelController = {};
-  final Map<String, List<PoiStyle>> _poiStyle = {};
+  final Map<String, PoiStyle> _poiStyle = {};
 
-  Future<String> addPoiStyle(List<PoiStyle> styles, [String? id]);
+  Future<String> addPoiStyle(PoiStyle style);
 
-  Future<String> _validatePoiStyle(List<PoiStyle>? styles, [String? id]);
+  PoiStyle? getPoiStyle(String id);
+
+  // void removePoiStyle(String id);
 
   void _initalizeOverlayController() {
     _labelController[_defaultKey] = LabelController._(

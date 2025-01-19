@@ -27,27 +27,18 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
   
   @override
-  Future<String> addPoiStyle(List<PoiStyle> styles, [String? id]) async {
+  Future<String> addPoiStyle(PoiStyle style) async {
     String styleId = await defaultLabelLayer._invokeMethod("addPoiStyle", {
-      "styleId": id,
-      "styles": styles.map((e) => e.toMessageable()).toList()
+      "styleId": style.id,
+      "styles": style.toMessageable()
     });
-    _poiStyle[styleId] = styles;
+    style._setStyleId(styleId);
+    _poiStyle[styleId] = style;
     return styleId;
   }
 
   @override
-  Future<String> _validatePoiStyle(List<PoiStyle>? styles, [String? id]) async {
-    String? styleId = id;
-    if (styles != null) {
-      styleId = await addPoiStyle(styles, id);
-    }
-
-    if (styleId == null) {
-      throw Exception("Missing a style at Label.");
-    }
-    return styleId;
-  }
+  PoiStyle? getPoiStyle(String id) => _poiStyle[id];
 
   @override
   Future<LabelController> addLabelLayer(String id,
