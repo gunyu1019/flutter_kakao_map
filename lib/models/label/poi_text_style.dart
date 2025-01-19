@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-class PoiTextStyle {
+class PoiTextStyle with KMessageable {
   final double aspectRatio;
   final int characterSpace;
   final Color color;
@@ -21,6 +21,7 @@ class PoiTextStyle {
     this.strokeColor = Colors.black
   });
 
+  @override
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
       "aspectRatio": aspectRatio,

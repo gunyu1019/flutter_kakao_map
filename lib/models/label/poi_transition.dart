@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-class PoiTransition {
+class PoiTransition with KMessageable {
   final Transition enterence;
   final Transition exit;
 
@@ -10,6 +10,7 @@ class PoiTransition {
   bool isEnterenceTransition() => enterence != Transition.none;
   bool isExitTransition() => exit != Transition.none;
 
+  @override
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
       "enterence": enterence.value,
