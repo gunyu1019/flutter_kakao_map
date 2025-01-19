@@ -45,6 +45,39 @@ class LodLabelController extends BaseLabelController {
     await _invokeMethod("removeLabelLayer", {});
   }
 
+
+  Future<void> _changePoiVisible(
+      String poiId, bool visible) async {
+    await _invokeMethod("changePoiVisible", {
+      "poiId": poiId,
+      "visible": visible
+    });
+  }
+
+  Future<void> _changePoiStyle(
+      String poiId, String styleId) async {
+    await _invokeMethod("changePoiStyle", {
+      "poiId": poiId,
+      "styleId": styleId
+    });
+  }
+
+  Future<void> _changePoiText(
+      String poiId, String text) async {
+    await _invokeMethod("changePoiText", {
+      "poiId": poiId,
+      "text": text
+    });
+  }
+
+  Future<void> _rankPoi(
+      String poiId, int rank) async {
+    await _invokeMethod("rankPoi", {
+      "poiId": poiId,
+      "rank": rank
+    });
+  }
+
   Future<LodPoi> addLodPoi(
     LatLng position, {
     String? id,

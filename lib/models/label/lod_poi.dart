@@ -45,32 +45,32 @@ class LodPoi {
 
   Future<void> changeRank(int rank) async {
     _rank = rank;
-    // await _controller._rankPoi(id, rank);
+    await _controller._rankPoi(id, rank);
   }
 
   Future<void> changeStyles(String? styleId, List<PoiStyle>? styles, [bool transition = false]) async {
     _styleId = await _controller.manager._validatePoiStyle(styles, styleId);
     _styles = _controller.manager._poiStyle[_styleId]!;
-    // await _controller._changePolylineTextStyle(id, styles);
+    await _controller._changePoiStyle(id, _styleId);
   }
   
   Future<void> changeText(String text) async {
     _styles = styles;
     _text = text;
-    // await _controller._changePolylineTextStyle(id, styles, text);
+    await _controller._changePoiText(id, text);
   }
 
   Future<void> remove() async {
-    // await _controller.removePolylineText(this);
+    await _controller.removeLodPoi(this);
   }
 
   Future<void> hide() async {
-    // await _controller._changePolylineText(id, false);
+    await _controller._changePoiVisible(id, false);
     _visible = false;
   }
 
   Future<void> show() async {
-    // await _controller._changePolylineText(id, true);
+    await _controller._changePoiVisible(id, true);
     _visible = true;
   }
 }
