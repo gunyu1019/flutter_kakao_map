@@ -122,10 +122,10 @@ class LabelController extends BaseLabelController {
   }
 
   Future<void> _changePolylineTextStyle(
-      String poiId, List<PolylineTextStyle> styles, [String? text]) async {
+      String poiId, PolylineTextStyle style, [String? text]) async {
     await _invokeMethod("changePoiStyle", {
       "poiId": poiId,
-      "styles": styles.map((e) => e.toMessageable()).toList(),
+      "styles": style.toMessageable(),
       "text": text
     });
   }
@@ -195,21 +195,21 @@ class LabelController extends BaseLabelController {
   Future<PolylineText> addPolylineText(
     String text, 
     List<LatLng> position, {
-      required List<PolylineTextStyle> styles,
+      required PolylineTextStyle style,
       String? id,
       bool visible = true,
   }) async {
     Map<String, dynamic> payload = {
       "label": <String, dynamic>{
         "position": position.map((e) => e.toMessageable()).toList(),
-        "styles": styles.map((e) => e.toMessageable()).toList(),
+        "style": style.toMessageable(),
         "id": id,
         "text": text,
         "visible": visible
       }
     };
     String labelId = await _invokeMethod("addPloylineText", payload);
-    final label = PolylineText._(this, labelId, styles: styles, text: text, points: position);
+    final label = PolylineText._(this, labelId, style: style, text: text, points: position);
     _polylineText[labelId] = label;
     return label;
   }

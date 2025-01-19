@@ -6,8 +6,8 @@ class PolylineText {
   final String id;
   final List<LatLng> points;
 
-  List<PolylineTextStyle> _styles;
-  List<PolylineTextStyle> get styles => _styles;
+  PolylineTextStyle _style;
+  PolylineTextStyle get style => _style;
 
   String _text;
   String get text => _text;
@@ -16,21 +16,21 @@ class PolylineText {
   bool get visible => _visible;
 
   PolylineText._(this._controller, this.id, {
-    required List<PolylineTextStyle> styles,
+    required PolylineTextStyle style,
     required String text,
     required this.points,
     bool visible = true
-  }) : _styles = styles, _text = text, _visible = visible;
+  }) : _style = style, _text = text, _visible = visible;
 
-  Future<void> changeStyles(List<PolylineTextStyle> styles) async {
-    _styles = styles;
-    await _controller._changePolylineTextStyle(id, styles);
+  Future<void> changeStyles(PolylineTextStyle style) async {
+    _style = style;
+    await _controller._changePolylineTextStyle(id, style);
   }
   
-  Future<void> changeTextAndStyles(String text, List<PolylineTextStyle> styles) async {
-    _styles = styles;
+  Future<void> changeTextAndStyles(String text, PolylineTextStyle style) async {
+    _style = style;
     _text = text;
-    await _controller._changePolylineTextStyle(id, styles, text);
+    await _controller._changePolylineTextStyle(id, style, text);
   }
 
   Future<void> remove() async {
