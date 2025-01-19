@@ -6,8 +6,9 @@ class KakaoMap extends StatefulWidget {
   final void Function(KakaoMapController controller) onMapReady;
   final KakaoMapLifecycle? onMapLifecycle;
   final void Function(Exception exception)? onMapError;
-  final void Function(GestureType gestureType)? onCameraMoveStartHandler;
-  final void Function(CameraPosition position, GestureType gestureType)? onCameraMoveEndHandler;
+  final void Function(GestureType gestureType)? onCameraMoveStart;
+  final void Function(CameraPosition position, GestureType gestureType)?
+      onCameraMoveEnd;
 
   final bool forceGesture;
 
@@ -17,10 +18,9 @@ class KakaoMap extends StatefulWidget {
       this.option,
       this.forceGesture = true,
       this.onMapLifecycle,
-      this.onCameraMoveStartHandler,
-      this.onCameraMoveEndHandler,
-      this.onMapError
-    });
+      this.onCameraMoveStart,
+      this.onCameraMoveEnd,
+      this.onMapError});
 
   @override
   State<StatefulWidget> createState() => _KakaoMapState();
@@ -61,8 +61,9 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
 
   void _setEventHandler() {
     int bitMask = 0;
-    if (widget.onCameraMoveStartHandler != null) bitMask |= EventType.onCameraMoveStart.id;
-    if (widget.onCameraMoveEndHandler != null) bitMask |= EventType.onCameraMoveEnd.id;
+    if (widget.onCameraMoveStart != null)
+      bitMask |= EventType.onCameraMoveStart.id;
+    if (widget.onCameraMoveEnd != null) bitMask |= EventType.onCameraMoveEnd.id;
     channel.invokeMethod("setEventHandler", bitMask);
   }
 
@@ -95,11 +96,11 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
 
   @override
   void onCameraMoveStart(GestureType gestureType) {
-    widget.onCameraMoveStartHandler?.call(gestureType);
+    widget.onCameraMoveStart?.call(gestureType);
   }
 
   @override
   void onCameraMoveEnd(CameraPosition position, GestureType gestureType) {
-    widget.onCameraMoveEndHandler?.call(position, gestureType);
+    widget.onCameraMoveEnd?.call(position, gestureType);
   }
 }
