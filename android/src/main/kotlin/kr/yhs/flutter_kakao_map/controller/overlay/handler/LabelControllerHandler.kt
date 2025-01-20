@@ -5,6 +5,7 @@ import io.flutter.plugin.common.MethodCall
 import com.kakao.vectormap.label.Label
 import com.kakao.vectormap.label.LabelLayer
 import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.LatLng
@@ -16,6 +17,7 @@ import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asLong
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelOptions
+import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelStyles
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelLayerOptions
 
 
@@ -36,6 +38,13 @@ interface LabelControllerHandler {
         when (call.method) {
             "createLabelLayer" -> {
                 createLabelLayer(arguments.asLabelLayerOptions(), result::success)
+            }
+            "removeLabelLayer" -> {
+                createLabelLayer(layer, result::success)
+            }
+            "addPoiStyle" -> {
+                val style = arguments.asLabelStyles()
+                addPoiStyle(style, result::success)
             }
             "addPoi" -> { 
                 val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
@@ -91,6 +100,10 @@ interface LabelControllerHandler {
     }
 
     fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit);
+
+    fun removeLabelLayer(layer: LabelLayer, onSuccess: (Any?) -> Unit);
+
+    fun addPoiStyle(style: LabelStyles, onSuccess: (Any?) -> Unit);
 
     fun addPoi(layer: LabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit);
     
