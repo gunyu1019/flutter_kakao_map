@@ -77,3 +77,25 @@ await controller.defaultLabelLayer.addPoi(
     style: poiStyle
 )
 ```
+
+### Polyline Shape / Polygon Shape
+(작업 중) Polygon Shape와 Polyline Shape는 다양한 선분이 있는 도형을 지도에 표시하는 용도로 사용됩니다.
+
+```dart
+final polygonStyle = PolygonStyle(
+  id: "polygon_StyleId",
+  color: Colors.blue
+)
+final polygon = PolygonShape.withAbsolute(
+  MapPoints([
+    const LatLng(37.395763313860826, 127.11048591050786),
+    ...
+  ]),
+  style=polygonStyle
+)
+polygon.addPolygonWithRelative(
+  DotPoints.circle​(const LatLng(37.395763313860826, 127.11048591050786), 10.0)
+  style=polygonStyle,
+)
+await controller.defaultShapeLayer.addPolygonShape(polygon)
+```
