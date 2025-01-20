@@ -43,8 +43,7 @@ interface LabelControllerHandler {
                 removeLabelLayer(layer!!, result::success)
             }
             "addPoiStyle" -> {
-                val style = arguments.asLabelStyles()
-                addPoiStyle(style!!, result::success)
+                addPoiStyle(arguments.asLabelStyles()!!, result::success)
             }
             "addPoi" -> { 
                 val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
