@@ -64,6 +64,8 @@ part 'models/enums/label/ordering_type.dart';
 part 'models/enums/label/transition.dart';
 part 'models/enums/label/transform_method.dart';
 
+part 'models/enums/shape/point_shape_type.dart';
+
 /* widget */
 part 'widget/map_widget.dart';
 part 'widget/platform_view.dart';
