@@ -77,12 +77,12 @@ object LabelTypeConverter {
         }
     }
 
-    fun Any.asLabelStyles(labelManager: LabelManager): LabelStyles? = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        val style: MutableList<LabelStyle> = listOf(rawPayload.asLabelStyle())
+    fun Any.asLabelStyles(): LabelStyles? = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        val style: MutableList<LabelStyle> = mutableListOf(rawPayload.asLabelStyle())
         rawPayload["otherStyle"]?.asList<Map<String, Any?>>()?.map { e -> style.add(e.asLabelStyle()) }
-        return rawPayload["id"]?.let {
-            LabelStyles.from(it, style)
-        } ?: LabelStyles.from(style)
+        return (rawPayload["id"]?.asString()?.let {
+            LabelStyles.from(it, style.toList())
+        }) ?: LabelStyles.from(style.toList()) 
     }
 
     fun String.asLabelTextBuilder() = asString().let { text: String ->
@@ -96,9 +96,8 @@ object LabelTypeConverter {
             (rawPayload["id"]?.asString()) ?: MapUtils.getUniqueId(),
             rawPayload.asLatLng()
         ).apply {
-            // rawPayload.asLabelStyles(labelManager)?.let(::setStyles)
             rawPayload["styleId"]?.asString()?.let {
-                labelManager.getLabelStyles(it)?.let(::setStyle)
+                labelManager.getLabelStyles(it)?.let(::setStyles)
             }
             rawPayload["rank"]?.asLong()?.let(::setRank)
             rawPayload["clickable"]?.asBoolean()?.let(::setClickable)

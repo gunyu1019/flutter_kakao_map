@@ -6,6 +6,7 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelLayer
 import com.kakao.vectormap.label.Label
 import com.kakao.vectormap.label.LabelManager
+import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
