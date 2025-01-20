@@ -37,11 +37,14 @@ class OverlayController(
     }
 
     override fun removeLabelLayer(layer: LabelLayer, onSuccess: (Any?) -> Unit) {
-
+        labelManager!!.remove(layer)
+        onSuccess.invoke(null)
     }
 
     override fun addPoiStyle(style: LabelStyles, onSuccess: (Any?) -> Unit) {
-        
+        labelManager!!.addLabelStyles(style).let { it ->
+            onSuccess.invoke(it?.styleId)
+        }
     }
 
     override fun addPoi(layer: LabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit) {
