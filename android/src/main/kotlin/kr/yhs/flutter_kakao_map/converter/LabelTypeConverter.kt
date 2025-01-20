@@ -78,9 +78,10 @@ object LabelTypeConverter {
     }
 
     fun Any.asLabelStyles(): LabelStyles? = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        val style: MutableList<LabelStyle> = mutableListOf(rawPayload.asLabelStyle())
-        rawPayload["otherStyle"]?.asList<Map<String, Any?>>()?.map { e -> style.add(e.asLabelStyle()) }
-        return (rawPayload["id"]?.asString()?.let {
+        val rawStyle = rawPayload["styles"]?.asMap<Any?>()
+        val style: MutableList<LabelStyle> = mutableListOf(rawStyle!!.asLabelStyle())
+        rawStyle["otherStyle"]?.asList<Map<String, Any?>>()?.map { e -> style.add(e.asLabelStyle()) }
+        return (rawPayload["styleId"]?.asString()?.let {
             LabelStyles.from(it, style.toList())
         }) ?: LabelStyles.from(style.toList()) 
     }
