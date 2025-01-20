@@ -80,10 +80,12 @@ class PoiStyle with KMessageable {
   }
 
   PoiStyle? getStyle(int zoomLevel) {
+    if (_isSecondaryStyle) return null;
     return _styles.where((e) => e.zoomLevel == zoomLevel).firstOrNull;
   }
 
   void removeStyle(int zoomLevel) {
+    if (_isSecondaryStyle) return;
     _styles.removeWhere((e) => e.zoomLevel == zoomLevel);
   }
   
