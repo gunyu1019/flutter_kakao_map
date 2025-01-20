@@ -13,6 +13,15 @@ class PolygonStyle with KMessageable {
   final List<PolygonStyle> _styles = [];
   final bool _isSecondaryStyle;
 
+  void _setStyleId(String id) {
+    _id = id;
+    if (!_isSecondaryStyle) {
+      for (PolygonStyle e in _styles) {
+        e._id = id;
+      }
+    }
+  }
+
   PolygonStyle(this.color, {
     String? id,
     this.strokeWidth = .0,
@@ -54,6 +63,12 @@ class PolygonStyle with KMessageable {
   @override
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
+      // ignore: deprecated_member_use
+      "color": color.value,
+      "strokeWidth": strokeWidth,
+      // ignore: deprecated_member_use
+      "strokeColor": strokeColor.value,
+      "zoomLevel": zoomLevel
     };
     if (!_isSecondaryStyle) {
       payload['otherStyle'] = _styles.map((e) => e.toMessageable()).toList();
