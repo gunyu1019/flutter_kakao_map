@@ -78,24 +78,11 @@ object LabelTypeConverter {
     }
 
     fun Any.asLabelStyles(labelManager: LabelManager): LabelStyles? = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        if (rawPayload["styleId"] != null && rawPayload["styles"] != null) {
-            LabelStyles.from(
-                rawPayload["styleId"]!!.asString(),
-                rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
-                    element -> element.asLabelStyle() 
-                }
-            ).let(labelManager::addLabelStyles)
-        } else if (rawPayload["styleId"] != null) {
-            labelManager.getLabelStyles(rawPayload["styleId"]!!.asString())
-        } else if (rawPayload["styles"] != null) {
-            LabelStyles.from(
-                rawPayload["styles"]!!.asList<Map<String, Any>>().map { 
-                    element -> element.asLabelStyle() 
-                }
-            ).let(labelManager::addLabelStyles)
-        } else {
-            null
-        }
+        val style: MutableList<LabelStyle> = listOf(rawPayload.asLabelStyle())
+        rawPayload["otherStyle"]?.asList<Map<String, Any?>>()?.map { e -> style.add(e.asLabelStyle()) }
+        return rawPayload["id"]?.let {
+            LabelStyles.from(it, style)
+        } ?: LabelStyles.from(style)
     }
 
     fun String.asLabelTextBuilder() = asString().let { text: String ->
@@ -109,7 +96,10 @@ object LabelTypeConverter {
             (rawPayload["id"]?.asString()) ?: MapUtils.getUniqueId(),
             rawPayload.asLatLng()
         ).apply {
-            rawPayload.asLabelStyles(labelManager)?.let(::setStyles)
+            // rawPayload.asLabelStyles(labelManager)?.let(::setStyles)
+            rawPayload["styleId"]?.asString()?.let {
+                labelManager.getLabelStyles(it)?.let(::setStyle)
+            }
             rawPayload["rank"]?.asLong()?.let(::setRank)
             rawPayload["clickable"]?.asBoolean()?.let(::setClickable)
             rawPayload["visible"]?.asBoolean()?.let(::setVisible)
