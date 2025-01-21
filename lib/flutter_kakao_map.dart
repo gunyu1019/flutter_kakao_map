@@ -48,9 +48,12 @@ part 'models/label/polyline_text.dart';
 part 'models/label/polyline_text_style.dart';
 
 part 'models/shape/base_point.dart';
+part 'models/shape/base_dot_point.dart';
+part 'models/shape/circle_point.dart';
 part 'models/shape/map_point.dart';
 part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
+part 'models/shape/rectangle_point.dart';
 
 /* model(enumerate) */
 part 'models/enums/event_type.dart';
