@@ -17,6 +17,7 @@ class RectanglePoint extends _BaseDotPoint {
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
       "type": type,
+      "dotType": dotType,
       "width": width,
       "height": height,
       "clockwise": clockwise,
@@ -27,4 +28,7 @@ class RectanglePoint extends _BaseDotPoint {
 
   @override
   int get type => 1;
+
+  @override
+  PointShapeType get dotType => PointShapeType.rectangle;
 }

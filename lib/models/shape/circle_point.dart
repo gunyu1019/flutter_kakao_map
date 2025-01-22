@@ -17,6 +17,7 @@ class CirclePoint extends _BaseDotPoint {
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
       "type": type,
+      "dotType": dotType,
       "radius": radius,
       "clockwise": clockwise,
       "vertexCount": vertexCount,
@@ -27,4 +28,7 @@ class CirclePoint extends _BaseDotPoint {
 
   @override
   int get type => 1;
+
+  @override
+  PointShapeType get dotType => PointShapeType.none;
 }
