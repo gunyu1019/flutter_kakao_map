@@ -25,4 +25,6 @@ class _BaseDotPoint extends _BasePoint {
 
   @override
   int get type => 1;
+
+  PointShapeType get dotType => PointShapeType.points;
 }
