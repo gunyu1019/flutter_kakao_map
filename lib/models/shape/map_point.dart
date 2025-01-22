@@ -13,7 +13,7 @@ class MapPoint extends _BasePoint {
 
   List<LatLng>? getHole(int index) => _holes[index];
 
-  List<LatLng>? removeHole(int index) => _holes[index];
+  void removeHole(int index) => _holes.removeAt(index);
 
   @override
   Map<String, dynamic> toMessageable() {
