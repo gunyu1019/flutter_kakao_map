@@ -20,6 +20,7 @@ part 'controller/overlay/base_label_controller.dart';
 part 'controller/overlay/overlay_manager.dart';
 part 'controller/overlay/label_controller.dart';
 part 'controller/overlay/lod_label_controller.dart';
+part 'controller/overlay/shape_controller.dart';
 
 /* exception */
 part 'exception/kakao_auth_exception.dart';
