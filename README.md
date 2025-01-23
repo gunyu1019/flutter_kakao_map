@@ -86,16 +86,16 @@ final polygonStyle = PolygonStyle(
   id: "polygon_StyleId",
   color: Colors.blue
 )
-final polygon = PolygonShape.withAbsolute(
+final polygon = PolygonMultipleShape.withAbsolute(
   MapPoints([
     const LatLng(37.395763313860826, 127.11048591050786),
     ...
   ]),
   style=polygonStyle
 )
-polygon.addPolygonWithRelative(
+polygon.addPolygon(
   DotPoints.circle​(const LatLng(37.395763313860826, 127.11048591050786), 10.0)
   style=polygonStyle,
 )
-await controller.defaultShapeLayer.addPolygonShape(polygon)
+await controller.defaultShapeLayer.addMultiplePolygonShape(polygon)
 ```
