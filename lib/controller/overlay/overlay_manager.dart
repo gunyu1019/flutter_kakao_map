@@ -24,57 +24,63 @@ mixin OverlayManager {
 
   PolylineStyle? getPolylineShapeStyle(String id);
 
-  Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style, [String? id]);
+  Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style,
+      [String? id]);
 
-  Future<String> addMultiplePolylineShapeStyle(List<PolygonStyle> style, [String? id]);
+  Future<String> addMultiplePolylineShapeStyle(List<PolygonStyle> style,
+      [String? id]);
 
   List<PolygonStyle>? getMultiplePolygonShapeStyle(String id);
 
   List<PolylineStyle>? getMultiplePolylineShapeStyle(String id);
 
   void _initalizeOverlayController() {
-    _labelController[_defaultKey] = LabelController._(
-      overlayChannel,
-      this,
-      LabelController.defaultId,
-      competitionType: BaseLabelController.defaultCompetitionType,
-      competitionUnit: BaseLabelController.defaultCompetitionUnit,
-      orderingType: BaseLabelController.defaultOrderingType,
-    );
-    _lodLabelController[_defaultKey] = LodLabelController._(
-      overlayChannel,
-      this,
-      LabelController.defaultId,
-      competitionType: BaseLabelController.defaultCompetitionType,
-      competitionUnit: BaseLabelController.defaultCompetitionUnit,
-      orderingType: BaseLabelController.defaultOrderingType,
-    );
+    _labelController[_defaultKey] =
+        LabelController._(overlayChannel, this, LabelController.defaultId);
+    _lodLabelController[_defaultKey] =
+        LodLabelController._(overlayChannel, this, LabelController.defaultId);
+    _shapeController[_defaultKey] =
+        ShapeController._(overlayChannel, this, _defaultKey);
   }
 
   Future<LabelController> addLabelLayer(String id,
-      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      {CompetitionType competitionType =
+          BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit =
+          BaseLabelController.defaultCompetitionUnit,
       OrderingType orderingType = BaseLabelController.defaultOrderingType,
       int zOrder = BaseLabelController.defaultZOrder});
 
   Future<LodLabelController> addLodLabelLayer(String id,
-      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      {CompetitionType competitionType =
+          BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit =
+          BaseLabelController.defaultCompetitionUnit,
       OrderingType orderingType = BaseLabelController.defaultOrderingType,
       double radius = LodLabelController.defaultRadius,
       int zOrder = BaseLabelController.defaultZOrder});
+
+  Future<ShapeController> addShapeLayer(String id,
+      {ShapeLayerPass passType = ShapeController.defaultShapeLayerPass,
+      int zOrder = ShapeController.defaultZOrder});
 
   LabelController? getLabelLayer(String id);
 
   LodLabelController? getLodLabelLayer(String id);
 
+  ShapeController? getShapeLayer(String id);
+
   Future<void> removeLabelLayer(LabelController controller);
 
   Future<void> removeLodLabelLayer(LodLabelController controller);
 
+  Future<void> removeShapeLayer(ShapeController controller);
+
   LabelController get defaultLabelLayer;
 
   LodLabelController get defaultLodLabelLayer;
+
+  ShapeController get defaultShapeLayer;
 
   static const String _defaultKey = 'default';
 }
