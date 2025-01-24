@@ -1,6 +1,7 @@
 part of '../../flutter_kakao_map.dart';
 
 class Polygon<T extends _BasePoint> {
+  final ShapeController _controller;
   final String id;
   
   PolygonStyle _style;
@@ -9,8 +10,8 @@ class Polygon<T extends _BasePoint> {
   T _position;
   T get position => _position;
 
-  Polygon._(this.id, {
+  Polygon._(ShapeController controller, this.id, {
     required T position,
     required PolygonStyle style
-  }) : _style = style, _position = position;
+  }) : _controller = controller, _style = style, _position = position;
 }
