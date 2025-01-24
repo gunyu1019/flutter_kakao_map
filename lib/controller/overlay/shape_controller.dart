@@ -13,7 +13,14 @@ class ShapeController extends OverlayController {
   @override
   final String id;
 
-  ShapeController._(this.channel, this.manager, this.id);
+  final ShapeLayerPass passType;
+
+  final int zOrder;
+
+  ShapeController._(this.channel, this.manager, this.id, {
+    this.passType = defaultShapeLayerPass,
+    this.zOrder = defaultZOrder
+  });
     
   static const String defaultId = "shape_default_layer";
 
@@ -46,4 +53,7 @@ class ShapeController extends OverlayController {
     final polygon = Polygon._(this, shapeId, position: position, style: style);
     return polygon;
   }
+  
+  static const int defaultZOrder = 10001;
+  static const ShapeLayerPass defaultShapeLayerPass = ShapeLayerPass.defaultPass;
 }
