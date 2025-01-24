@@ -52,6 +52,8 @@ part 'models/shape/base_point.dart';
 part 'models/shape/base_dot_point.dart';
 part 'models/shape/circle_point.dart';
 part 'models/shape/map_point.dart';
+part 'models/shape/polygon.dart';
+part 'models/shape/polyline.dart';
 part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
 part 'models/shape/rectangle_point.dart';

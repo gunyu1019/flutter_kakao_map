@@ -17,11 +17,11 @@ class ShapeController extends OverlayController {
     
   static const String defaultId = "shape_default_layer";
 
-  Future<void> addPolylineShape(_BasePoint position, PolylineStyle style) async {
+  Future<void> addPolylineShape<T extends _BasePoint>(T position, PolylineStyle style) async {
 
   }
   
-  Future<void> addPolygonShape(_BasePoint position, PolygonStyle style) async {
+  Future<void> addPolygonShape<T extends _BasePoint>(T position, PolygonStyle style) async {
     
   }
 }
