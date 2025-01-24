@@ -38,7 +38,39 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<String> addPolygonShapeStyle(PolygonStyle style) async {
+    return "TODO()";
+  }
+
+  @override
+  Future<String> addPolylineShapeStyle(PolygonStyle style) async {
+    return "TODO()";
+  }
+
+  @override
+  Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style, [String? id]) async {
+    return "TODO()";
+  }
+
+  @override
+  Future<String> addMultiplePolylineShapeStyle(List<PolygonStyle> style, [String? id]) async {
+    return "TODO()";
+  }
+
+  @override
   PoiStyle? getPoiStyle(String id) => _poiStyle[id];
+
+  @override
+  PolygonStyle? getPolygonShapeStyle(String id) => _polygonStyle[id]?[0];
+
+  @override
+  PolylineStyle? getPolylineShapeStyle(String id) => _polylineStyle[id]?[0];
+
+  @override
+  List<PolygonStyle>? getMultiplePolygonShapeStyle(String id) => _polygonStyle[id];
+
+  @override
+  List<PolylineStyle>? getMultiplePolylineShapeStyle(String id) => _polylineStyle[id];
 
   @override
   Future<LabelController> addLabelLayer(String id,
