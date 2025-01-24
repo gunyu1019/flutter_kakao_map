@@ -2,7 +2,7 @@ part of '../flutter_kakao_map.dart';
 
 class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   final MethodChannel channel;
-  
+
   @override
   final MethodChannel overlayChannel;
 
@@ -25,13 +25,11 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
       "cameraAnimation": animation?.toMessageable()
     });
   }
-  
+
   @override
   Future<String> addPoiStyle(PoiStyle style) async {
-    String styleId = await defaultLabelLayer._invokeMethod("addPoiStyle", {
-      "styleId": style.id,
-      "styles": style.toMessageable()
-    });
+    String styleId = await defaultLabelLayer._invokeMethod(
+        "addPoiStyle", {"styleId": style.id, "styles": style.toMessageable()});
     style._setStyleId(styleId);
     _poiStyle[styleId] = style;
     return styleId;
@@ -48,12 +46,14 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style, [String? id]) async {
+  Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style,
+      [String? id]) async {
     return "TODO()";
   }
 
   @override
-  Future<String> addMultiplePolylineShapeStyle(List<PolygonStyle> style, [String? id]) async {
+  Future<String> addMultiplePolylineShapeStyle(List<PolygonStyle> style,
+      [String? id]) async {
     return "TODO()";
   }
 
@@ -67,15 +67,19 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   PolylineStyle? getPolylineShapeStyle(String id) => _polylineStyle[id]?[0];
 
   @override
-  List<PolygonStyle>? getMultiplePolygonShapeStyle(String id) => _polygonStyle[id];
+  List<PolygonStyle>? getMultiplePolygonShapeStyle(String id) =>
+      _polygonStyle[id];
 
   @override
-  List<PolylineStyle>? getMultiplePolylineShapeStyle(String id) => _polylineStyle[id];
+  List<PolylineStyle>? getMultiplePolylineShapeStyle(String id) =>
+      _polylineStyle[id];
 
   @override
   Future<LabelController> addLabelLayer(String id,
-      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      {CompetitionType competitionType =
+          BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit =
+          BaseLabelController.defaultCompetitionUnit,
       OrderingType orderingType = BaseLabelController.defaultOrderingType,
       int zOrder = BaseLabelController.defaultZOrder}) async {
     final labelLayer = LabelController._(
@@ -94,8 +98,10 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<LodLabelController> addLodLabelLayer(String id,
-      {CompetitionType competitionType = BaseLabelController.defaultCompetitionType,
-      CompetitionUnit competitionUnit = BaseLabelController.defaultCompetitionUnit,
+      {CompetitionType competitionType =
+          BaseLabelController.defaultCompetitionType,
+      CompetitionUnit competitionUnit =
+          BaseLabelController.defaultCompetitionUnit,
       OrderingType orderingType = BaseLabelController.defaultOrderingType,
       double radius = LodLabelController.defaultRadius,
       int zOrder = BaseLabelController.defaultZOrder}) async {
@@ -115,10 +121,21 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<ShapeController> addShapeLayer(String id,
+      {ShapeLayerPass passType = ShapeController.defaultShapeLayerPass,
+      int zOrder = ShapeController.defaultZOrder}) async {
+    // TODO: implement addShapeLayer
+    throw UnimplementedError();
+  }
+
+  @override
   LabelController? getLabelLayer(String id) => _labelController[id];
 
   @override
   LodLabelController? getLodLabelLayer(String id) => _lodLabelController[id];
+
+  @override
+  ShapeController? getShapeLayer(String id) => _shapeController[id];
 
   @override
   Future<void> removeLabelLayer(LabelController controller) async {
@@ -131,10 +148,20 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  LabelController get defaultLabelLayer => _labelController[OverlayManager._defaultKey]!;
+  Future<void> removeShapeLayer(ShapeController controller) {
+    // TODO: implement removeShapeLayer
+    throw UnimplementedError();
+  }
 
   @override
-  LodLabelController get defaultLodLabelLayer => _lodLabelController[OverlayManager._defaultKey]!;
+  LabelController get defaultLabelLayer =>
+      _labelController[OverlayManager._defaultKey]!;
 
-  /* Sender(Label) */
+  @override
+  LodLabelController get defaultLodLabelLayer =>
+      _lodLabelController[OverlayManager._defaultKey]!;
+
+  @override
+  ShapeController get defaultShapeLayer =>
+      _shapeController[OverlayManager._defaultKey]!;
 }
