@@ -34,6 +34,9 @@ interface LabelControllerHandler {
         val poi = layer?.run {
             arguments["poiId"]?.asString()?.let(layer::getLabel)
         }
+        val polylineText = layer?.run {
+            arguments["labelId"]?.asString()?.let(layer::getPolylineLabel)
+        }
 
         when (call.method) {
             "createLabelLayer" -> {
@@ -48,6 +51,9 @@ interface LabelControllerHandler {
             "addPoi" -> { 
                 val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
                 addPoi(layer!!, poiOption, result::success)
+            }
+            "addPolylineText" -> {
+                
             }
             "removePoi" -> removePoi(layer!!, poi!!, result::success)
             "changePoiOffsetPosition" -> {

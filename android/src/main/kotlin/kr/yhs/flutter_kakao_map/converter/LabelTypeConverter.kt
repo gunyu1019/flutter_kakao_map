@@ -16,6 +16,7 @@ import com.kakao.vectormap.label.TransformMethod
 import com.kakao.vectormap.label.LabelTextBuilder
 import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.Label
+import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asDouble
@@ -28,8 +29,6 @@ import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asPoint
 import kr.yhs.flutter_kakao_map.converter.ReferenceTypeConverter.asBitmap
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.toMessageable
-import com.kakao.vectormap.utils.MapUtils
-import android.util.Log
 
 
 object LabelTypeConverter {
