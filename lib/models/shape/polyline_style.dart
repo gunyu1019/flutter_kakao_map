@@ -4,8 +4,8 @@ class PolylineStyle with KMessageable {
   String? _id;
   String? get id => _id;
 
-  Color color;
-  double lineWidth;
+  final Color color;
+  final double lineWidth;
   final double strokeWidth;
   final Color strokeColor;
   int zoomLevel;
