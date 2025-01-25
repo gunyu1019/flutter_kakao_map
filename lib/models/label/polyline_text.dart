@@ -32,18 +32,23 @@ class PolylineText {
     _text = text;
     await _controller._changePolylineTextStyle(id, style, text);
   }
+  
+  Future<void> changeText(String text) async {
+    _text = text;
+    await _controller._changePolylineTextStyle(id, _style, text);
+  }
 
   Future<void> remove() async {
     await _controller.removePolylineText(this);
   }
 
   Future<void> hide() async {
-    await _controller._changePolylineText(id, false);
+    await _controller._changePolylineTextVisible(id, false);
     _visible = false;
   }
 
   Future<void> show() async {
-    await _controller._changePolylineText(id, true);
+    await _controller._changePolylineTextVisible(id, true);
     _visible = true;
   }
 }
