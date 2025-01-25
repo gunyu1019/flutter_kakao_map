@@ -10,19 +10,25 @@ class ShapeController extends OverlayController {
   @override
   OverlayType get type => OverlayType.shape;
 
-  @override
   final String id;
-
   final ShapeLayerPass passType;
-
   final int zOrder;
 
   ShapeController._(this.channel, this.manager, this.id, {
     this.passType = defaultShapeLayerPass,
     this.zOrder = defaultZOrder
   });
-    
-  static const String defaultId = "shape_default_layer";
+
+  Future<void> _createShapeLayer() async {
+    await _invokeMethod("createShapeLayer", {
+      "passType": passType.value,
+      "zOrder": zOrder
+    });
+  }
+  
+  Future<void> _removeShapeLayer() async {
+    await _invokeMethod("removeShapeLayer", {});
+  }
 
   @override
   Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
@@ -53,7 +59,8 @@ class ShapeController extends OverlayController {
     final polygon = Polygon._(this, shapeId, position: position, style: style);
     return polygon;
   }
-  
+    
+  static const String defaultId = "shape_default_layer";
   static const int defaultZOrder = 10001;
   static const ShapeLayerPass defaultShapeLayerPass = ShapeLayerPass.defaultPass;
 }
