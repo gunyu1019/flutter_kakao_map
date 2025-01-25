@@ -124,8 +124,10 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   Future<ShapeController> addShapeLayer(String id,
       {ShapeLayerPass passType = ShapeController.defaultShapeLayerPass,
       int zOrder = ShapeController.defaultZOrder}) async {
-    // TODO: implement addShapeLayer
-    throw UnimplementedError();
+    final shapeLayer = ShapeController._(overlayChannel, this, id);
+    await shapeLayer._createShapeLayer();
+    _shapeController[id] = shapeLayer;
+    return shapeLayer;
   }
 
   @override
@@ -148,9 +150,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<void> removeShapeLayer(ShapeController controller) {
-    // TODO: implement removeShapeLayer
-    throw UnimplementedError();
+  Future<void> removeShapeLayer(ShapeController controller) async {
+    await controller._removeShapeLayer();
   }
 
   @override
