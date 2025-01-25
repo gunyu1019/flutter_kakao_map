@@ -123,16 +123,16 @@ class LabelController extends BaseLabelController {
 
   Future<void> _changePolylineTextStyle(
       String poiId, PolylineTextStyle style, [String? text]) async {
-    await _invokeMethod("changePoiStyle", {
+    await _invokeMethod("changePolylineTextStyle", {
       "poiId": poiId,
       "styles": style.toMessageable(),
       "text": text
     });
   }
 
-  Future<void> _changePolylineText(
+  Future<void> _changePolylineTextVisible(
       String labelId, bool visible) async {
-    await _invokeMethod("changePolylineText", {
+    await _invokeMethod("changePolylineTextVisible", {
       "labelId": labelId,
       "visible": visible
     });
