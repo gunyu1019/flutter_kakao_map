@@ -10,6 +10,7 @@ import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.label.PolylineLabelOptions
 import com.kakao.vectormap.label.PolylineLabel
+import com.kakao.vectormap.label.PolylineLabelStyles
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
@@ -121,6 +122,22 @@ class OverlayController(
 
     override fun rankPoi(poi: Label, rank: Long, onSuccess: Function1<Any?, Unit>) { 
         poi.changeRank(rank)
+        onSuccess.invoke(null)
+    }
+
+    override fun changePolylineTextAndStyle(label: PolylineLabel, style: PolylineLabelStyles, text: String?, onSuccess: (Any?) -> Unit) {
+        text?.let { 
+            label.changeTextAndStyles(it, style)
+        } ?: label.changeStyles(style)
+        onSuccess.invoke(null)
+    }
+
+    override fun changePolylineTextVisible(label: PolylineLabel, visible: Boolean, onSuccess: (Any?) -> Unit) {
+        if (visible) {
+            label.show()
+        } else {
+            label.hide()
+        }
         onSuccess.invoke(null)
     }
 }

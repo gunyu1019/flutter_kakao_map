@@ -10,6 +10,7 @@ import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.label.PolylineLabelOptions
 import com.kakao.vectormap.label.PolylineLabel
+import com.kakao.vectormap.label.PolylineLabelStyles
 import com.kakao.vectormap.LatLng
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
@@ -107,9 +108,8 @@ interface LabelControllerHandler {
                 rankPoi(poi!!, rank, result::success)
             }
             // polyline text handler
-            "changePoiStyle" -> {}
-            "changePolylineText" -> {}
-            "changeVisibleAllPoi" -> {}
+            "changePolylineTextStyle" -> {}
+            "changePolylineTextVisible" -> {}
 
             else -> result.notImplemented()
         }
@@ -149,4 +149,7 @@ interface LabelControllerHandler {
     fun rankPoi(poi: Label, rank: Long, onSuccess: (Any?) -> Unit);
 
     // Polyline Text Controller
+    fun changePolylineTextAndStyle(label: PolylineLabel, style: PolylineLabelStyles, text: String?, onSuccess: (Any?) -> Unit);
+
+    fun changePolylineTextVisible(label: PolylineLabel, visible: Boolean, onSuccess: (Any?) -> Unit);
 }
