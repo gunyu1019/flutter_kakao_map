@@ -11,9 +11,12 @@ import com.kakao.vectormap.label.LabelLayerOptions
 import com.kakao.vectormap.label.PolylineLabelOptions
 import com.kakao.vectormap.label.PolylineLabel
 import com.kakao.vectormap.label.PolylineLabelStyles
+import com.kakao.vectormap.label.LodLabelLayer
+import com.kakao.vectormap.label.LodLabel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
+import kr.yhs.flutter_kakao_map.controller.overlay.handler.LodLabelControllerHandler
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelTextBuilder
 import kr.yhs.flutter_kakao_map.model.OverlayType
@@ -23,7 +26,7 @@ import android.util.Log
 class OverlayController(
     private val channel: MethodChannel,
     private val kakaoMap: KakaoMap
-): LabelControllerHandler {
+): LabelControllerHandler, LodLabelControllerHandler {
     override val labelManager: LabelManager? get() = kakaoMap.getLabelManager()
 
     init {
@@ -32,7 +35,7 @@ class OverlayController(
     
     fun handle(call: MethodCall, result: MethodChannel.Result) = when (OverlayType.values().filter { call.arguments.asMap<Int>()["type"]!! == it.value }.first()) {
         OverlayType.Label -> labelHandle(call, result)
-        OverlayType.LodLabel -> {}
+        OverlayType.LodLabel -> lodLabelHandle(call, result)
         OverlayType.Shape -> {}
     }
 
@@ -138,6 +141,51 @@ class OverlayController(
         } else {
             label.hide()
         }
+        onSuccess.invoke(null)
+    }
+
+    override fun createLodLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) {
+        labelManager!!.addLodLayer(options);
+        onSuccess.invoke(null)
+    }
+
+    override fun removeLodLabelLayer(layer: LodLabelLayer, onSuccess: (Any?) -> Unit) {
+        labelManager!!.remove(layer)
+        onSuccess.invoke(null)
+    }
+
+    override fun addLodPoi(layer: LodLabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit) {
+        val label = layer.addLodLabel(poi)
+        onSuccess.invoke(label.getLabelId())
+    }
+
+    override fun removeLodPoi(layer: LodLabelLayer, poi: LodLabel, onSuccess: (Any?) -> Unit) {
+        layer.remove(poi)
+        onSuccess.invoke(null)
+    }
+
+    override fun changeLodPoiVisible(poi: LodLabel, visible: Boolean, onSuccess: (Any?) -> Unit) {
+        if (visible) {
+            poi.show()
+        } else {
+            poi.hide()
+        }
+        onSuccess.invoke(null)
+    }
+
+    override fun changeLodPoiStyle(poi: LodLabel, styleId: String, onSuccess: (Any?) -> Unit) {
+        val poiStyle = labelManager!!.getLabelStyles(styleId)
+        poi.changeStyles(poiStyle)
+        onSuccess.invoke(null)
+    }
+
+    override fun changeLodPoiText(poi: LodLabel, text: String, onSuccess: (Any?) -> Unit) {
+        poi.changeText(text.asLabelTextBuilder())
+        onSuccess.invoke(null)
+    }
+
+    override fun rankLodPoi(poi: LodLabel, rank: Long, onSuccess: (Any?) -> Unit) {
+        poi.changeRank(rank)
         onSuccess.invoke(null)
     }
 }

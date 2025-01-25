@@ -44,19 +44,19 @@ interface LodLabelControllerHandler {
             // poi Handler
             "changePoiVisible" -> {
                 val visible = arguments["visible"]?.asBoolean()!!
-                changePoiVisible(poi!!, visible, result::success)
+                changeLodPoiVisible(poi!!, visible, result::success)
             }
             "changePoiStyle" -> {
                 val styleId = arguments["styleId"]?.asString()!!
-                changePoiStyle(poi!!, styleId, result::success)
+                changeLodPoiStyle(poi!!, styleId, result::success)
             }
             "changePoiText" -> {
                 val text = arguments["text"]?.asString()!!
-                changePoiStyle(poi!!, text, result::success)
+                changeLodPoiStyle(poi!!, text, result::success)
             }
             "rankPoi" -> {
                 val rank = arguments["x"]?.asLong()!!
-                rankPoi(poi!!, rank, result::success)
+                rankLodPoi(poi!!, rank, result::success)
             }
             else -> result.notImplemented()
         }
@@ -71,11 +71,11 @@ interface LodLabelControllerHandler {
     fun removeLodPoi(layer: LodLabelLayer, poi: LodLabel, onSuccess: (Any?) -> Unit)
 
     // Lod-Poi Controller
-    fun changePoiVisible(poi: LodLabel, visible: Boolean, onSuccess: (Any?) -> Unit)
+    fun changeLodPoiVisible(poi: LodLabel, visible: Boolean, onSuccess: (Any?) -> Unit)
 
-    fun changePoiStyle(poi: LodLabel, styleId: String, onSuccess: (Any?) -> Unit)
+    fun changeLodPoiStyle(poi: LodLabel, styleId: String, onSuccess: (Any?) -> Unit)
 
-    fun changePoiText(poi: LodLabel, text: String, onSuccess: (Any?) -> Unit)
+    fun changeLodPoiText(poi: LodLabel, text: String, onSuccess: (Any?) -> Unit)
 
-    fun rankPoi(poi: LodLabel, rank: Long, onSuccess: (Any?) -> Unit)
+    fun rankLodPoi(poi: LodLabel, rank: Long, onSuccess: (Any?) -> Unit)
 }
