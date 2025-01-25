@@ -16,6 +16,8 @@ import com.kakao.vectormap.label.TransformMethod
 import com.kakao.vectormap.label.LabelTextBuilder
 import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.Label
+import com.kakao.vectormap.label.PolylineLabelStyle
+import com.kakao.vectormap.label.PolylineLabelStyles
 import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
@@ -120,5 +122,26 @@ object LabelTypeConverter {
             rawPayload["visible"]?.asBoolean()?.let(::setVisible)
             rawPayload["clickable"]?.asBoolean()?.let(::setClickable)
         }
+    }
+
+    fun Any.asPolylineTextStyle(): PolylineLabelStyle = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        PolylineLabelStyle.from(
+            (rawPayload["size"]?.asInt()) ?: 0,
+            (rawPayload["color"]?.asInt()) ?: 0, 
+            (rawPayload["strokeWidth"]?.asInt()) ?: 0, 
+            (rawPayload["strokeColor"]?.asInt()) ?: 0, 
+        ).apply {
+            // rawPayload["applyDpScale"]?.asBoolean()?.let(::setApplyDpScale)
+            rawPayload["zoomLevel"]?.asInt()?.let(::setZoomLevel)
+        }
+    }
+
+    fun Any.asPolylineTextStyles(): PolylineLabelStyles = asMap<Any?>().let { rawPayload: Map<String, Any?> -> 
+        val rawStyle = rawPayload["styles"]?.asMap<Any?>()
+        val style: MutableList<PolylineLabelStyle> = mutableListOf(rawStyle!!.asPolylineTextStyle())
+        rawStyle["otherStyle"]?.asList<Map<String, Any?>>()?.map { e -> style.add(e.asPolylineTextStyle()) }
+        return (rawPayload["styleId"]?.asString()?.let {
+            PolylineLabelStyles.from(it, style.toList())
+        }) ?: PolylineLabelStyles.from(style.toList()) 
     }
 }
