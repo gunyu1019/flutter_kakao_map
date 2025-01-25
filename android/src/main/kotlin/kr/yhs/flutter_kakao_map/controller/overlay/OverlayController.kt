@@ -8,6 +8,8 @@ import com.kakao.vectormap.label.Label
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelLayerOptions
+import com.kakao.vectormap.label.PolylineLabelOptions
+import com.kakao.vectormap.label.PolylineLabel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
@@ -30,6 +32,7 @@ class OverlayController(
     fun handle(call: MethodCall, result: MethodChannel.Result) = when (OverlayType.values().filter { call.arguments.asMap<Int>()["type"]!! == it.value }.first()) {
         OverlayType.Label -> labelHandle(call, result)
         OverlayType.LodLabel -> {}
+        OverlayType.Shape -> {}
     }
 
     override fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) { 
@@ -55,6 +58,16 @@ class OverlayController(
 
     override fun removePoi(layer: LabelLayer, poi: Label, onSuccess: Function1<Any?, Unit>) {
         layer.remove(poi)
+        onSuccess.invoke(null)
+    }
+
+    override fun addPolylineText(layer: LabelLayer, label: PolylineLabelOptions, onSuccess: (String) -> Unit) {
+        val polylineText = layer.addPolylineLabel(label)
+        onSuccess.invoke(polylineText.getLabelId())
+    }
+
+    override fun removePolylineText(layer: LabelLayer, label: PolylineLabel, onSuccess: (Any?) -> Unit) {
+        layer.remove(label)
         onSuccess.invoke(null)
     }
 

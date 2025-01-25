@@ -8,6 +8,8 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelManager
 import com.kakao.vectormap.label.LabelLayerOptions
+import com.kakao.vectormap.label.PolylineLabelOptions
+import com.kakao.vectormap.label.PolylineLabel
 import com.kakao.vectormap.LatLng
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
@@ -19,6 +21,7 @@ import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelOptions
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelStyles
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelLayerOptions
+import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asPolylineTextOption
 
 
 interface LabelControllerHandler {
@@ -53,9 +56,12 @@ interface LabelControllerHandler {
                 addPoi(layer!!, poiOption, result::success)
             }
             "addPolylineText" -> {
-                
+                val labelOption = arguments["label"]!!.asPolylineTextOption()
+                addPolylineText(layer!!, labelOption, result::success)
             }
             "removePoi" -> removePoi(layer!!, poi!!, result::success)
+            "removePolylineText" -> removePolylineText(layer!!, polylineText!!, result::success)
+            // poi Handler
             "changePoiOffsetPosition" -> {
                 val x = arguments["x"]?.asFloat()!!
                 val y = arguments["y"]?.asFloat()!!
@@ -100,6 +106,11 @@ interface LabelControllerHandler {
                 val rank = arguments["x"]?.asLong()!!
                 rankPoi(poi!!, rank, result::success)
             }
+            // polyline text handler
+            "changePoiStyle" -> {}
+            "changePolylineText" -> {}
+            "changeVisibleAllPoi" -> {}
+
             else -> result.notImplemented()
         }
     }
@@ -113,6 +124,10 @@ interface LabelControllerHandler {
     fun addPoi(layer: LabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit);
     
     fun removePoi(layer: LabelLayer, poi: Label, onSuccess: (Any?) -> Unit);
+
+    fun addPolylineText(layer: LabelLayer, label: PolylineLabelOptions, onSuccess: (String) -> Unit);
+
+    fun removePolylineText(layer: LabelLayer, label: PolylineLabel, onSuccess: (Any?) -> Unit);
 
     // Poi Controller
     fun changePoiOffsetPosition(poi: Label, x: Float, y: Float, forceDpScale: Boolean?, onSuccess: (Any?) -> Unit);
@@ -132,4 +147,6 @@ interface LabelControllerHandler {
     fun scalePoi(poi: Label, x: Float, y: Float, millis: Int?, onSuccess: (Any?) -> Unit);
 
     fun rankPoi(poi: Label, rank: Long, onSuccess: (Any?) -> Unit);
+
+    // Polyline Text Controller
 }
