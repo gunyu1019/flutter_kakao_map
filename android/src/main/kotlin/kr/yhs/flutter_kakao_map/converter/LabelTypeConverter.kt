@@ -18,6 +18,7 @@ import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.Label
 import com.kakao.vectormap.label.PolylineLabelStyle
 import com.kakao.vectormap.label.PolylineLabelStyles
+import com.kakao.vectormap.label.PolylineLabelOptions
 import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
@@ -143,5 +144,16 @@ object LabelTypeConverter {
         return (rawPayload["styleId"]?.asString()?.let {
             PolylineLabelStyles.from(it, style.toList())
         }) ?: PolylineLabelStyles.from(style.toList()) 
+    }
+
+    fun Any.asPolylineTextOption(): PolylineLabelOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> -> 
+        PolylineLabelOptions.from(
+            (rawPayload["id"]?.asString()) ?: MapUtils.getUniqueId(),
+            rawPayload["text"]?.asString()!!,
+            rawPayload["position"]?.asList<Map<String, Any>>()?.map { element -> element.asLatLng() }
+        ).apply { 
+            rawPayload["style"]?.asMap<Any?>()?.let { element -> element.asPolylineTextStyles() }?.let(::setStyles)
+            rawPayload["visible"]?.asBoolean()?.let(::setVisible)
+         }
     }
 }
