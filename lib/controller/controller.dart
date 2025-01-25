@@ -37,24 +37,38 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<String> addPolygonShapeStyle(PolygonStyle style) async {
-    return "TODO()";
+    final styleIds = await addMultiplePolygonShapeStyle([style], style.id);
+    return styleIds;
   }
 
   @override
   Future<String> addPolylineShapeStyle(PolygonStyle style) async {
-    return "TODO()";
+    final styleIds = await addMultiplePolylineShapeStyle([style], style.id);
+    return styleIds;
   }
 
   @override
   Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style,
       [String? id]) async {
-    return "TODO()";
+    String styleId = await defaultShapeLayer._invokeMethod("addPolygonStyle", {
+      "styleId": id,
+      "styles": style.map((e) => e.toMessageable()).toList()
+    });
+    style.map((e) => e._setStyleId(styleId));
+    _polygonStyle[styleId] = style;
+    return styleId;
   }
 
   @override
   Future<String> addMultiplePolylineShapeStyle(List<PolygonStyle> style,
       [String? id]) async {
-    return "TODO()";
+    String styleId = await defaultShapeLayer._invokeMethod("addPolylineStyle", {
+      "styleId": id,
+      "styles": style.map((e) => e.toMessageable()).toList()
+    });
+    style.map((e) => e._setStyleId(styleId));
+    _polygonStyle[styleId] = style;
+    return styleId;
   }
 
   @override
@@ -124,7 +138,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   Future<ShapeController> addShapeLayer(String id,
       {ShapeLayerPass passType = ShapeController.defaultShapeLayerPass,
       int zOrder = ShapeController.defaultZOrder}) async {
-    final shapeLayer = ShapeController._(overlayChannel, this, id);
+    final shapeLayer = ShapeController._(overlayChannel, this, id,
+        passType: passType, zOrder: zOrder);
     await shapeLayer._createShapeLayer();
     _shapeController[id] = shapeLayer;
     return shapeLayer;
