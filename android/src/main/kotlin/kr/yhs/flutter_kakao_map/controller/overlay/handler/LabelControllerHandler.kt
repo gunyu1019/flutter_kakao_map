@@ -23,6 +23,7 @@ import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelOptions
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelStyles
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelLayerOptions
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asPolylineTextOption
+import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asPolylineTextStyles
 
 
 interface LabelControllerHandler {
@@ -108,8 +109,15 @@ interface LabelControllerHandler {
                 rankPoi(poi!!, rank, result::success)
             }
             // polyline text handler
-            "changePolylineTextStyle" -> {}
-            "changePolylineTextVisible" -> {}
+            "changePolylineTextStyle" -> {
+                val style = arguments["styles"]?.asPolylineTextStyles()
+                val text = arguments["text"]?.asString()
+                changePolylineTextAndStyle(polylineText!!, style!!, text, result::success)
+            }
+            "changePolylineTextVisible" -> {
+                val visible = arguments["visible"]?.asBoolean()!!
+                changePolylineTextVisible(polylineText!!, visible, result::success)
+            }
 
             else -> result.notImplemented()
         }
