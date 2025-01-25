@@ -208,7 +208,7 @@ class LabelController extends BaseLabelController {
         "visible": visible
       }
     };
-    String labelId = await _invokeMethod("addPloylineText", payload);
+    String labelId = await _invokeMethod("addPolylineText", payload);
     final label = PolylineText._(this, labelId, style: style, text: text, points: position);
     _polylineText[labelId] = label;
     return label;
