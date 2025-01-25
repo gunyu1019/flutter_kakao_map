@@ -30,7 +30,6 @@ class LodLabelController extends BaseLabelController {
 
   Future<void> _createLodLabelLayer() async {
     await _invokeMethod("createLodLabelLayer", {
-      "layerId": id,
       "competitionType": competitionType.value,
       "competitionUnit": competitionUnit.value,
       "orderingType": orderingType.value,
@@ -42,7 +41,7 @@ class LodLabelController extends BaseLabelController {
   }
   
   Future<void> _removeLodLabelLayer() async {
-    await _invokeMethod("removeLabelLayer", {});
+    await _invokeMethod("removeLodLabelLayer", {});
   }
 
 
