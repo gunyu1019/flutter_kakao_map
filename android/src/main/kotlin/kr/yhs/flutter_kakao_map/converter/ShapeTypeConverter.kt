@@ -13,6 +13,9 @@ import com.kakao.vectormap.shape.LatLngVertex
 import com.kakao.vectormap.shape.PointVertex
 import com.kakao.vectormap.shape.PolylineOptions
 import com.kakao.vectormap.shape.ShapeManager
+import com.kakao.vectormap.shape.ShapeLayerOptions
+import com.kakao.vectormap.shape.ShapeLayerPass
+import com.kakao.vectormap.shape.ShapeLayer
 import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
@@ -22,6 +25,7 @@ import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asFloat
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asList
 import kr.yhs.flutter_kakao_map.converter.CameraTypeConverter.asLatLng
+import java.util.Arrays
 
 
 object ShapeTypeConverter {
@@ -129,20 +133,38 @@ object ShapeTypeConverter {
     fun Any.asPolygonOption(shapeManager: ShapeManager): PolygonOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
         val position = rawPayload["position"]!!.asMap<Any?>()
         val style = shapeManager.getPolygonStyles(rawPayload["styleId"]!!.asString())
-        if (position["type"]!!.asInt() == 0) {
-            return PolygonOptions.from(position.asMapPoints(), style)
-        } else {
-            return PolygonOptions.from(position.asDotPoints(), style)
+        return ((rawPayload["id"]?.asString()?.let { 
+            PolygonOptions.from(it)
+        }) ?: PolygonOptions.from()).apply { 
+            if (position["type"]!!.asInt() == 0) {
+                position.asMapPoints().let{ Arrays.asList(it) }.let(::setMapPoints)
+            } else {
+                position.asDotPoints().let{ Arrays.asList(it) }.let(::setDotPoints)
+            }
+            setStylesSet(style)
         }
     }
 
     fun Any.asPolylineOption(shapeManager: ShapeManager): PolylineOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
         val position = rawPayload["position"]!!.asMap<Any?>()
         val style = shapeManager.getPolylineStyles(rawPayload["styleId"]!!.asString())
-        if (position["type"]!!.asInt() == 0) {
-            return PolylineOptions.from(position.asMapPoints(), style)
-        } else {
-            return PolylineOptions.from(position.asDotPoints(), style)
+        return ((rawPayload["id"]?.asString()?.let { 
+            PolylineOptions.from(it)
+        }) ?: PolylineOptions.from()).apply { 
+            if (position["type"]!!.asInt() == 0) {
+                position.asMapPoints().let{ Arrays.asList(it) }.let(::setMapPoints)
+            } else {
+                position.asDotPoints().let{ Arrays.asList(it) }.let(::setDotPoints)
+            }
+            setStylesSet(style)
         }
+    }
+
+    fun Any.asShapeLayerOption(): ShapeLayerOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        ShapeLayerOptions.from(
+            rawPayload["layerId"]?.asString() ?: MapUtils.getUniqueId(),
+            rawPayload["zOrder"]?.asInt() ?: 10000,
+            rawPayload["passType"]?.asInt()?.let{ value -> ShapeLayerPass.values().filter { it.value == value }.getOrNull(0) } ?: ShapeLayerPass.Default
+        )
     }
 }
