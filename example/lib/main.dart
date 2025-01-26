@@ -148,8 +148,8 @@ class _MyAppState extends State<MyApp> {
         style: PoiStyle(
               icon: KImage.fromAsset("assets/image/location.png", 68, 100),
               anchor: const KPoint(0.5, 0.9),
-              textStyle: const [PoiTextStyle(size: 28, color: Colors.black, stroke: 2, strokeColor: Colors.white)])
-        ).then((poi) => poi.hide());
+              textStyle: const [PoiTextStyle(size: 28, color: Colors.blue, stroke: 2, strokeColor: Colors.white)])
+        ).then((poi) => poi.changeText("KAKAO MAP LABEL"));
 
     controller.defaultLabelLayer.addPolylineText(
         "KAKAO POLYLINE TEXT",
