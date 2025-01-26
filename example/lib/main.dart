@@ -144,10 +144,11 @@ class _MyAppState extends State<MyApp> {
 
     controller.defaultLabelLayer.addPoi(
         const LatLng(37.395763313860826, 127.11048591050786),
-        text: "KAKAO-LABEL-TEST",
+        text: "KAKAO LABEL",
         style: PoiStyle(
-              icon: KImage.fromAsset("assets/image/location.png", 30, 30),
-              textStyle: const [PoiTextStyle(size: 28, color: Colors.black)])
+              icon: KImage.fromAsset("assets/image/location.png", 68, 100),
+              anchor: const KPoint(0.5, 0.9),
+              textStyle: const [PoiTextStyle(size: 28, color: Colors.black, stroke: 2, strokeColor: Colors.white)])
         );
   }
 
