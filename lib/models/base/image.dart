@@ -35,7 +35,7 @@ class KImage {
 
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
-      "type": type.name,
+      "type": type.value,
       "width": width,
       "height": height
     };
