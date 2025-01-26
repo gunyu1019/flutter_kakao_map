@@ -11,6 +11,8 @@ import com.kakao.vectormap.shape.DotPoints
 import com.kakao.vectormap.shape.MapPoints
 import com.kakao.vectormap.shape.LatLngVertex
 import com.kakao.vectormap.shape.PointVertex
+import com.kakao.vectormap.shape.PolylineOptions
+import com.kakao.vectormap.shape.ShapeManager
 import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
@@ -124,7 +126,23 @@ object ShapeTypeConverter {
          }
     }
 
-    fun Any.asPolygonOption(): PolygonOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        return PolygonOptions.from()
+    fun Any.asPolygonOption(shapeManager: ShapeManager): PolygonOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        val position = rawPayload["position"]!!.asMap<Any?>()
+        val style = shapeManager.getPolygonStyles(rawPayload["styleId"]!!.asString())
+        if (position["type"]!!.asInt() == 0) {
+            return PolygonOptions.from(position.asMapPoints(), style)
+        } else {
+            return PolygonOptions.from(position.asDotPoints(), style)
+        }
+    }
+
+    fun Any.asPolylineOption(shapeManager: ShapeManager): PolylineOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+        val position = rawPayload["position"]!!.asMap<Any?>()
+        val style = shapeManager.getPolylineStyles(rawPayload["styleId"]!!.asString())
+        if (position["type"]!!.asInt() == 0) {
+            return PolylineOptions.from(position.asMapPoints(), style)
+        } else {
+            return PolylineOptions.from(position.asDotPoints(), style)
+        }
     }
 }
