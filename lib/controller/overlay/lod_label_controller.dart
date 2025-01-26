@@ -99,7 +99,7 @@ class LodLabelController extends BaseLabelController {
       }
     };
     payload["poi"].addAll(position.toMessageable());
-    String poiId = await _invokeMethod("addPoi", payload);
+    String poiId = await _invokeMethod("addLodPoi", payload);
     final poi = LodPoi._(this, poiId,
         transform: transform,
         position: position,
@@ -117,7 +117,7 @@ class LodLabelController extends BaseLabelController {
   }
 
   Future<void> removeLodPoi(LodPoi poi) async {
-    await _invokeMethod("removePoi", {
+    await _invokeMethod("removeLodPoi", {
       "poiId": poi.id,
     });
     _poi.remove(poi.id);
