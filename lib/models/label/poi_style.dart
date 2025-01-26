@@ -6,7 +6,7 @@ class PoiStyle with KMessageable {
 
   bool applyDpScale;
   KPoint anchor;
-  int padding;
+  double padding;
   PoiTransition iconTransition;
   int textGravity;
   KImage? icon;
@@ -21,7 +21,7 @@ class PoiStyle with KMessageable {
     String? id,
     this.applyDpScale = true,
     this.anchor = const KPoint(0.5, 1.0),
-    this.padding = 0,
+    this.padding = 0.0,
     this.icon,
     this.iconTransition = const PoiTransition(),
     this.textGravity = 8,
@@ -34,7 +34,7 @@ class PoiStyle with KMessageable {
     String? id,
     this.applyDpScale = true,
     this.anchor = const KPoint(0.5, 1.0),
-    this.padding = 0,
+    this.padding = 0.0,
     this.icon,
     this.iconTransition = const PoiTransition(),
     this.textGravity = 8,
@@ -56,7 +56,7 @@ class PoiStyle with KMessageable {
     required int zoomLevel,
     bool? applyDpScale,
     KPoint? anchor,
-    int? padding,
+    double? padding,
     KImage? icon,
     PoiTransition? iconTransition,
     int? textGravity,
