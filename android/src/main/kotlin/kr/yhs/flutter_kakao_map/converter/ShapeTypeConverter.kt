@@ -117,11 +117,7 @@ object ShapeTypeConverter {
             rawPayload["points"]!!.asList<Any>().map { it.asLatLng() }
         ).apply { 
             rawPayload["holes"]?.asList<Any>()?.map { element ->
-                LatLngVertex.from(
-                    element.asList<Any>().map {
-                        it.asLatLng()
-                    }
-                )
+                LatLngVertex.from(element.asList<Any>().map { it.asLatLng() })
             }?.let {
                 setHolePoints(*it.toTypedArray())
             }
