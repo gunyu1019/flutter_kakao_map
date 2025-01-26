@@ -160,6 +160,11 @@ class _MyAppState extends State<MyApp> {
         ],
         style: PolylineTextStyle(28, Colors.blue)
     );
+
+    controller.defaultShapeLayer.addPolylineShape(
+      CirclePoint(10, const LatLng(37.39375894087694, 127.10964757834647)), 
+      PolylineStyle(Colors.green, 5.0)
+    );
   }
 
   void onMapError(Exception exception) {
