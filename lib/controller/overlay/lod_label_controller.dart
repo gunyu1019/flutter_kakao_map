@@ -134,5 +134,5 @@ class LodLabelController extends BaseLabelController {
   int get poiCount => _poi.length;
   
   static const String defaultId = "lodLabel_default_layer";
-  static const double defaultRadius = 0.0;
+  static const double defaultRadius = 20.0;
 }
