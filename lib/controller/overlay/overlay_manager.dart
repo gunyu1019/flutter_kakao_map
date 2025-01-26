@@ -38,7 +38,7 @@ mixin OverlayManager {
     _labelController[_defaultKey] =
         LabelController._(overlayChannel, this, LabelController.defaultId);
     _lodLabelController[_defaultKey] =
-        LodLabelController._(overlayChannel, this, LabelController.defaultId);
+        LodLabelController._(overlayChannel, this, LodLabelController.defaultId);
     _shapeController[_defaultKey] =
         ShapeController._(overlayChannel, this, _defaultKey);
   }
