@@ -14,7 +14,7 @@ class CirclePoint extends _BaseDotPoint {
   });
 
   @override
-  Map<String, dynamic> toMessageable() {
+  Map<String, dynamic> toMessageable([bool isHole = false]) {
     final payload = <String, dynamic>{
       "type": type,
       "dotType": dotType,
