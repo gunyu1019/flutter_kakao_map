@@ -13,8 +13,8 @@ import java.io.ByteArrayInputStream
 
 object ReferenceTypeConverter {
     fun Any.asBitmap(): Bitmap = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        val width = rawPayload["width"]!!.asInt();
-        val height = rawPayload["height"]!!.asInt();
+        val width = rawPayload["width"]!!.asInt()
+        val height = rawPayload["height"]!!.asInt()
         if (rawPayload["type"] == 2) {
             val inputStream = ByteArrayInputStream(rawPayload["data"] as ByteArray)
             Bitmap.createScaledBitmap(
