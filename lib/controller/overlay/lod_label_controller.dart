@@ -90,6 +90,7 @@ class LodLabelController extends BaseLabelController {
     final styleId = style.id ?? await manager.addPoiStyle(style);
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
+        "id": id,
         "clickable": onClick != null,
         "text": text,
         "rank": rank,
