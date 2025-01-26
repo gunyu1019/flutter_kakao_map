@@ -9,9 +9,9 @@
 * Move camera position.
 * Handle moving camera position event.
 * Add Overlay
-    * (WIP, Test Needed) Poi (#4)
-    * (WIP, Test Needed) Lod-Poi (#4)
-    * (WIP, Test Needed) Polyline Text (#4)
+    * Poi
+    * Lod-Poi
+    * Polyline Text
     * (WIP, Not-yet) Polyline Shape (#5)
     * (WIP, Not-yet) Polyline Shape (#5)
     * (WIP, Not-yet) Route Line (#6)
