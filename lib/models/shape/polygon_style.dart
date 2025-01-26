@@ -62,6 +62,7 @@ class PolygonStyle with KMessageable {
   @override
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{
+      "id": _id,
       // ignore: deprecated_member_use
       "color": color.value,
       "strokeWidth": strokeWidth,
