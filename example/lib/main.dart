@@ -149,7 +149,17 @@ class _MyAppState extends State<MyApp> {
               icon: KImage.fromAsset("assets/image/location.png", 68, 100),
               anchor: const KPoint(0.5, 0.9),
               textStyle: const [PoiTextStyle(size: 28, color: Colors.black, stroke: 2, strokeColor: Colors.white)])
-        );
+        ).then((poi) => poi.hide());
+
+    controller.defaultLabelLayer.addPolylineText(
+        "KAKAO POLYLINE TEXT",
+        const [
+          LatLng(37.39375894087694, 127.10964757834647),
+          LatLng(37.39623174904037, 127.10968366570474),
+          LatLng(37.396289088551704, 127.1129315279461)
+        ],
+        style: PolylineTextStyle(28, Colors.blue)
+    );
   }
 
   void onMapError(Exception exception) {
