@@ -122,6 +122,9 @@ object LabelTypeConverter {
             rawPayload["zOrder"]?.asInt()?.let(::setZOrder)
             rawPayload["visible"]?.asBoolean()?.let(::setVisible)
             rawPayload["clickable"]?.asBoolean()?.let(::setClickable)
+
+            // For LodLayer
+            rawPayload["radius"]?.asFloat()?.let(::setLodRadius)
         }
     }
 
