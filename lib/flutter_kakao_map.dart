@@ -58,6 +58,8 @@ part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
 part 'models/shape/rectangle_point.dart';
 
+part 'models/route/route_pattern.dart';
+
 /* model(enumerate) */
 part 'models/enums/event_type.dart';
 part 'models/enums/map_type.dart';
