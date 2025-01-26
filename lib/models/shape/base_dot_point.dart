@@ -16,11 +16,14 @@ class _BaseDotPoint extends _BasePoint {
   void removeHole(int index) => _holes.removeAt(index);
 
   @override
-  Map<String, dynamic> toMessageable() {
-    return {
-      "basePoint": basePoint.toMessageable(),
-      "holes": _holes.map((e) => e.toMessageable())
+  Map<String, dynamic> toMessageable([bool isHole = false]) {
+    final payload = <String, dynamic>{
+      "basePoint": basePoint.toMessageable()
     };
+    if (!isHole) {
+      payload["holes"] = _holes.map((e) => e.toMessageable())
+    }
+    return payload;
   }
 
   @override
