@@ -2,7 +2,7 @@ part of '../../flutter_kakao_map.dart';
 
 
 class _BaseDotPoint extends _BasePoint {
-  final LatLng basePoint;
+  final LatLng? basePoint;
   final List<_BaseDotPoint> _holes = [];
 
   _BaseDotPoint(this.basePoint);
@@ -17,11 +17,11 @@ class _BaseDotPoint extends _BasePoint {
 
   @override
   Map<String, dynamic> toMessageable([bool isHole = false]) {
-    final payload = <String, dynamic>{
-      "basePoint": basePoint.toMessageable()
-    };
+    final payload = <String, dynamic>{};
     if (!isHole) {
-      payload["holes"] = _holes.map((e) => e.toMessageable())
+      payload["holes"] = _holes.map((e) => e.toMessageable());
+    } else {
+      payload["basePoint"] = basePoint!.toMessageable();
     }
     return payload;
   }

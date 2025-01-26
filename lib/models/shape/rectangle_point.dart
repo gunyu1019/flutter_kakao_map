@@ -7,9 +7,9 @@ class RectanglePoint extends _BaseDotPoint {
   final bool clockwise;
 
   RectanglePoint(
-    super.basePoint,
     this.width,
-    this.height, {
+    this.height, 
+    super.basePoint, {
       this.clockwise = false
   });
 
