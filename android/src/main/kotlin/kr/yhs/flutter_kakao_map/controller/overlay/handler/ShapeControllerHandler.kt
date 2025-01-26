@@ -2,18 +2,22 @@ package kr.yhs.flutter_kakao_map.controller.overlay.handler
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelLayerOptions
-import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelOptions
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asLong
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
+import kr.yhs.flutter_kakao_map.converter.ShapeTypeConverter.asShapeLayerOption
+import kr.yhs.flutter_kakao_map.converter.ShapeTypeConverter.asPolygonOption
+import kr.yhs.flutter_kakao_map.converter.ShapeTypeConverter.asPolylineOption
+import kr.yhs.flutter_kakao_map.converter.ShapeTypeConverter.asPolygonStylesSet
+import kr.yhs.flutter_kakao_map.converter.ShapeTypeConverter.asPolylineStylesSet
 import com.kakao.vectormap.shape.ShapeManager
 import com.kakao.vectormap.shape.ShapeLayer
 import com.kakao.vectormap.shape.ShapeLayerOptions
 import com.kakao.vectormap.shape.PolygonStylesSet
 import com.kakao.vectormap.shape.PolylineOptions
 import com.kakao.vectormap.shape.PolygonOptions
+import com.kakao.vectormap.shape.PolylineStylesSet
 import com.kakao.vectormap.label.PolylineLabelStyles
 
 interface ShapeControllerHandler {
@@ -29,7 +33,26 @@ interface ShapeControllerHandler {
             shapeManager!!.getLayer(it)
         }
 
+        val polylineShape = layer?.run {
+            arguments["id"]?.asString()?.let(layer::getPolyline)
+        }
+        val polygonShape = layer?.run {
+            arguments["id"]?.asString()?.let(layer::getPolyline)
+        }
+
         when(call.method) {
+            "createShapeLayer" -> createShapeLayer(arguments.asShapeLayerOption(), result::success)
+            "removeShapeLayer" -> removeShapeLayer(layer!!, result::success)
+            "addPolylineShapeStyle" -> addPolylineShapeStyle(arguments.asPolylineStylesSet(), result::success)
+            "addPolygonShapeStyle" -> addPolygonShapeStyle(arguments.asPolygonStylesSet(), result::success)
+            "addPolylineShape" -> {
+                val shapeOption = arguments["polyline"]!!.asPolylineOption(shapeManager!!)
+                addPolylineShape(layer!!, shapeOption, result::success)
+            }
+            "addPolygonShape" -> {
+                val shapeOption = arguments["polygon"]!!.asPolygonOption(shapeManager!!)
+                addPolygonShape(layer!!, shapeOption, result::success)
+            }
             else -> result.notImplemented()
         }
     }
@@ -38,7 +61,7 @@ interface ShapeControllerHandler {
 
     fun removeShapeLayer(layer: ShapeLayer, onSuccess: (Any?) -> Unit);
 
-    fun addPolylineShapeStyle(style: PolylineLabelStyles, onSuccess: (String) -> Unit);
+    fun addPolylineShapeStyle(style: PolylineStylesSet, onSuccess: (String) -> Unit);
 
     fun addPolygonShapeStyle(style: PolygonStylesSet, onSuccess: (String) -> Unit);
 
