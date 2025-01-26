@@ -15,8 +15,16 @@ import com.kakao.vectormap.label.LodLabelLayer
 import com.kakao.vectormap.label.LodLabel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
+import com.kakao.vectormap.shape.ShapeManager
+import com.kakao.vectormap.shape.ShapeLayerOptions
+import com.kakao.vectormap.shape.ShapeLayer
+import com.kakao.vectormap.shape.PolylineStylesSet
+import com.kakao.vectormap.shape.PolygonStylesSet
+import com.kakao.vectormap.shape.PolylineOptions
+import com.kakao.vectormap.shape.PolygonOptions
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LodLabelControllerHandler
+import kr.yhs.flutter_kakao_map.controller.overlay.handler.ShapeControllerHandler
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelTextBuilder
 import kr.yhs.flutter_kakao_map.model.OverlayType
@@ -26,8 +34,9 @@ import android.util.Log
 class OverlayController(
     private val channel: MethodChannel,
     private val kakaoMap: KakaoMap
-): LabelControllerHandler, LodLabelControllerHandler {
+): LabelControllerHandler, LodLabelControllerHandler, ShapeControllerHandler {
     override val labelManager: LabelManager? get() = kakaoMap.getLabelManager()
+    override val shapeManager: ShapeManager? get() = kakaoMap.getShapeManager()
 
     init {
         channel.setMethodCallHandler(::handle)
@@ -188,4 +197,35 @@ class OverlayController(
         poi.changeRank(rank)
         onSuccess.invoke(null)
     }
+    
+    override fun createShapeLayer(options: ShapeLayerOptions, onSuccess: (Any?) -> Unit) {
+        shapeManager!!.addLayer(options);
+        onSuccess.invoke(null)
+    }
+    
+    override fun removeShapeLayer(layer: ShapeLayer, onSuccess: (Any?) -> Unit) {
+        shapeManager!!.remove(layer);
+        onSuccess.invoke(null)
+    }
+    
+    override fun addPolylineShapeStyle(style: PolylineStylesSet, onSuccess: (String) -> Unit) {
+        val styleSet = shapeManager!!.addPolylineStyles(style)
+        onSuccess.invoke(styleSet.getStyleId())
+    }
+    
+    override fun addPolygonShapeStyle(style: PolygonStylesSet, onSuccess: (String) -> Unit) {
+        val styleSet = shapeManager!!.addPolygonStyles(style)
+        onSuccess.invoke(styleSet.getStyleId())
+    }
+    
+    override fun addPolylineShape(layer: ShapeLayer, shape: PolylineOptions, onSuccess: (String) -> Unit) {
+        val polylineShape = layer.addPolyline(shape)
+        onSuccess.invoke(polylineShape.getId())
+    }
+    
+    override fun addPolygonShape(layer: ShapeLayer, shape: PolygonOptions, onSuccess: (String) -> Unit) {
+        val polylineShape = layer.addPolygon(shape)
+        onSuccess.invoke(polylineShape.getId())
+    }
+    
 }
