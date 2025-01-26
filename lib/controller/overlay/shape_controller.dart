@@ -37,10 +37,11 @@ class ShapeController extends OverlayController {
   }
 
   Future<Polyline> addPolylineShape<T extends _BasePoint>(T position, PolylineStyle style) async {
+    final styleId = style._id ?? await manager.addPolylineShapeStyle(style);
     final payload = <String, dynamic>{
       "polyline": <String, dynamic>{
         "position": position.toMessageable(),
-        "style": style.toMessageable()
+        "styleId": styleId
       }
     };
     String shapeId = await _invokeMethod("addPolylineShape", payload);
@@ -49,10 +50,11 @@ class ShapeController extends OverlayController {
   }
   
   Future<Polygon> addPolygonShape<T extends _BasePoint>(T position, PolygonStyle style) async {
+    final styleId = style._id ?? await manager.addPolygonShapeStyle(style);
     final payload = <String, dynamic>{
       "polygon": <String, dynamic>{
         "position": position.toMessageable(),
-        "style": style.toMessageable()
+        "styleId": styleId
       }
     };
     String shapeId = await _invokeMethod("addPolygonShape", payload);
@@ -60,7 +62,7 @@ class ShapeController extends OverlayController {
     return polygon;
   }
     
-  static const String defaultId = "shape_default_layer";
-  static const int defaultZOrder = 10001;
+  static const String defaultId = "vector_layer_0";
+  static const int defaultZOrder = 10000;
   static const ShapeLayerPass defaultShapeLayerPass = ShapeLayerPass.defaultPass;
 }
