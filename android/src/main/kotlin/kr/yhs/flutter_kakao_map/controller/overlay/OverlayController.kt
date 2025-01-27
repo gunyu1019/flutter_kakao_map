@@ -45,7 +45,7 @@ class OverlayController(
     fun handle(call: MethodCall, result: MethodChannel.Result) = when (OverlayType.values().filter { call.arguments.asMap<Int>()["type"]!! == it.value }.first()) {
         OverlayType.Label -> labelHandle(call, result)
         OverlayType.LodLabel -> lodLabelHandle(call, result)
-        OverlayType.Shape -> {}
+        OverlayType.Shape -> shapeHandle(call, result)
     }
 
     override fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) { 
