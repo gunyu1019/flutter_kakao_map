@@ -33,10 +33,10 @@ interface ShapeControllerHandler {
         }
 
         val polylineShape = layer?.run {
-            arguments["id"]?.asString()?.let(layer::getPolyline)
+            arguments["polylineId"]?.asString()?.let(layer::getPolyline)
         }
         val polygonShape = layer?.run {
-            arguments["id"]?.asString()?.let(layer::getPolyline)
+            arguments["polygonId"]?.asString()?.let(layer::getPolyline)
         }
 
         when(call.method) {
@@ -52,6 +52,14 @@ interface ShapeControllerHandler {
                 val shapeOption = arguments["polygon"]!!.asPolygonOption(shapeManager!!)
                 addPolygonShape(layer!!, shapeOption, result::success)
             }
+            "removePolylineShape" -> {}
+            "removePolygonShape" -> {}
+            "changePolylineVisible" -> {}
+            "changePolygonVisible" -> {}
+            "changePolylineStyle" -> {}
+            "changePolygonStyle" -> {}
+            "changePolylinePosition" -> {}
+            "changePolygonPosition" -> {}
             else -> result.notImplemented()
         }
     }
