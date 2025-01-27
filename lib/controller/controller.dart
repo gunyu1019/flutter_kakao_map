@@ -64,7 +64,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
       [String? id]) async {
     String styleId = await defaultShapeLayer._invokeMethod("addPolylineShapeStyle", {
       "styleId": id,
-      "styles": style.map((e) => e.toMessageable()).toList()
+      "styles": style.map((e) => e.toMessageable()).toList(),
+      "polylineCap": style[0].polylineCap
     });
     style.map((e) => e._setStyleId(styleId));
     _polylineStyle[styleId] = style;
