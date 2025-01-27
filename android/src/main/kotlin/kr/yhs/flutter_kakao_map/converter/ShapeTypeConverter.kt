@@ -16,6 +16,7 @@ import com.kakao.vectormap.shape.ShapeManager
 import com.kakao.vectormap.shape.ShapeLayerOptions
 import com.kakao.vectormap.shape.ShapeLayerPass
 import com.kakao.vectormap.shape.ShapeLayer
+import com.kakao.vectormap.shape.PolylineCap
 import com.kakao.vectormap.utils.MapUtils
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
@@ -79,6 +80,9 @@ object ShapeTypeConverter {
             rawPayload["styles"]?.asList<Any>()?.map { element ->
                 addPolylineStyles(element.asPolylineStyles())    
             }
+            rawPayload["polylineCap"]?.asInt()?.let {
+                value -> PolylineCap.values().filter { it.value == value }.getOrNull(0) 
+            } ?.let(::setPolylineCap)
          }
     }
 
