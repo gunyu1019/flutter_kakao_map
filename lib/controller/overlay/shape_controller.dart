@@ -14,6 +14,9 @@ class ShapeController extends OverlayController {
   final ShapeLayerPass passType;
   final int zOrder;
 
+  final Map<String, Polyline> _polylineShape = {};
+  final Map<String, Polygon> _polygonShape = {};
+
   ShapeController._(this.channel, this.manager, this.id, {
     this.passType = defaultShapeLayerPass,
     this.zOrder = defaultZOrder
@@ -72,7 +75,7 @@ class ShapeController extends OverlayController {
 
   Future<void> _changePolygonPosition<T extends _BasePoint>(
       String shapeId, T position) async {
-    await _invokeMethod("changePolylinePosition", {
+    await _invokeMethod("changePolygonPosition", {
       "shapeId": shapeId,
       "position": position.toMessageable()
     });
@@ -95,6 +98,7 @@ class ShapeController extends OverlayController {
     };
     String shapeId = await _invokeMethod("addPolylineShape", payload);
     final polyline = Polyline._(this, shapeId, position: position, style: style);
+    _polylineShape[shapeId] = polyline;
     return polyline;
   }
   
@@ -109,7 +113,26 @@ class ShapeController extends OverlayController {
     };
     String shapeId = await _invokeMethod("addPolygonShape", payload);
     final polygon = Polygon._(this, shapeId, position: position, style: style);
+    _polygonShape[shapeId] = polygon;
     return polygon;
+  }
+
+  Polyline? getPolylineShape(String id) => _polylineShape[id];
+
+  Polygon? getPolygonShape(String id) => _polygonShape[id];
+
+  Future<void> removePolylineShape(Polyline shape) async {
+    await _invokeMethod("removePolylineShape", {
+      "polylineId": shape.id
+    });
+    _polylineShape.remove(shape.id);
+  }
+
+  Future<void> removePolygonShape(Polyline shape) async {
+    await _invokeMethod("removePolygonShape", {
+      "polygonId": shape.id
+    });
+    _polygonShape.remove(shape.id);
   }
     
   static const String defaultId = "vector_layer_0";
