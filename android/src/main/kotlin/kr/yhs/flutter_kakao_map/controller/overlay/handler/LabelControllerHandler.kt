@@ -79,7 +79,7 @@ interface LabelControllerHandler {
             }
             "changePoiText" -> {
                 val text = arguments["text"]?.asString()!!
-                changePoiStyle(poi!!, text, result::success)
+                changePoiText(poi!!, text, result::success)
             }
             "invalidatePoi" -> {
                 val styleId = arguments["styleId"]?.asString()!!
