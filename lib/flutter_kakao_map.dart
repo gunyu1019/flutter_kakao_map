@@ -76,6 +76,7 @@ part 'models/enums/label/transition.dart';
 part 'models/enums/label/transform_method.dart';
 
 part 'models/enums/shape/point_shape_type.dart';
+part 'models/enums/shape/polyline_cap.dart';
 part 'models/enums/shape/shape_layer_pass.dart';
 
 /* widget */
