@@ -79,6 +79,8 @@ part 'models/enums/shape/point_shape_type.dart';
 part 'models/enums/shape/polyline_cap.dart';
 part 'models/enums/shape/shape_layer_pass.dart';
 
+part 'models/enums/route/curved_type.dart';
+
 /* widget */
 part 'widget/map_widget.dart';
 part 'widget/platform_view.dart';
