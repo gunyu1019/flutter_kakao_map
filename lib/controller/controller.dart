@@ -28,7 +28,7 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<String> addPoiStyle(PoiStyle style) async {
-    String styleId = await defaultLabelLayer._invokeMethod(
+    String styleId = await labelLayer._invokeMethod(
         "addPoiStyle", {"styleId": style.id, "styles": style.toMessageable()});
     style._setStyleId(styleId);
     _poiStyle[styleId] = style;
@@ -50,7 +50,7 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   @override
   Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style,
       [String? id]) async {
-    String styleId = await defaultShapeLayer._invokeMethod("addPolygonShapeStyle", {
+    String styleId = await shapeLayer._invokeMethod("addPolygonShapeStyle", {
       "styleId": id,
       "styles": style.map((e) => e.toMessageable()).toList()
     });
@@ -62,7 +62,7 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   @override
   Future<String> addMultiplePolylineShapeStyle(List<PolylineStyle> style,
       [String? id]) async {
-    String styleId = await defaultShapeLayer._invokeMethod("addPolylineShapeStyle", {
+    String styleId = await shapeLayer._invokeMethod("addPolylineShapeStyle", {
       "styleId": id,
       "styles": style.map((e) => e.toMessageable()).toList(),
       "polylineCap": style[0].polylineCap?.value
@@ -171,14 +171,14 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  LabelController get defaultLabelLayer =>
+  LabelController get labelLayer =>
       _labelController[OverlayManager._defaultKey]!;
 
   @override
-  LodLabelController get defaultLodLabelLayer =>
+  LodLabelController get lodLabelLayer =>
       _lodLabelController[OverlayManager._defaultKey]!;
 
   @override
-  ShapeController get defaultShapeLayer =>
+  ShapeController get shapeLayer =>
       _shapeController[OverlayManager._defaultKey]!;
 }

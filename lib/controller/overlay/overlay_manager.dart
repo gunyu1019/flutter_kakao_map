@@ -76,11 +76,11 @@ mixin OverlayManager {
 
   Future<void> removeShapeLayer(ShapeController controller);
 
-  LabelController get defaultLabelLayer;
+  LabelController get labelLayer;
 
-  LodLabelController get defaultLodLabelLayer;
+  LodLabelController get lodLabelLayer;
 
-  ShapeController get defaultShapeLayer;
+  ShapeController get shapeLayer;
 
   static const String _defaultKey = 'default';
 }

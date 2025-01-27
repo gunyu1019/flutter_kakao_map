@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
 
-    controller.defaultLodLabelLayer.addLodPoi(
+    controller.lodLabelLayer.addLodPoi(
         const LatLng(37.395763313860826, 127.11048591050786),
         text: "KAKAO LABEL",
         style: PoiStyle(
@@ -151,7 +151,7 @@ class _MyAppState extends State<MyApp> {
               textStyle: const [PoiTextStyle(size: 28, color: Colors.blue, stroke: 2, strokeColor: Colors.white)])
         ).then((poi) => poi.changeText("KAKAO MAP LABEL"));
 
-    controller.defaultLabelLayer.addPolylineText(
+    controller.labelLayer.addPolylineText(
         "휘어지는 글씨 테스트",
         const [
           LatLng(37.39375894087694, 127.10964757834647),
@@ -161,12 +161,12 @@ class _MyAppState extends State<MyApp> {
         style: PolylineTextStyle(28, Colors.blue)
     );
 
-    controller.defaultShapeLayer.addPolylineShape(
+    controller.shapeLayer.addPolylineShape(
       RectanglePoint(100, 100, const LatLng(37.396289088551704, 127.1129315279461)),
       PolylineStyle(Colors.green, 10.0, PolylineCap.round)
     );
 
-    controller.defaultShapeLayer.addPolygonShape(
+    controller.shapeLayer.addPolygonShape(
       CirclePoint(200, const LatLng(37.39375894087694, 127.10964757834647)),
       PolygonStyle(Colors.green)
     );
