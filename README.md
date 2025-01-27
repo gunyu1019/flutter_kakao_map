@@ -12,8 +12,8 @@
     * Poi
     * Lod-Poi
     * Polyline Text
-    * (WIP, Not-yet) Polyline Shape (#5)
-    * (WIP, Not-yet) Polyline Shape (#5)
+    * Polyline Shape
+    * Polyline Shape
     * (WIP, Not-yet) Route Line (#6)
 
 ### 지도 위젯
