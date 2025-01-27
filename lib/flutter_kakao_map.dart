@@ -57,6 +57,10 @@ part 'models/shape/polyline.dart';
 part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
 part 'models/shape/rectangle_point.dart';
+part 'models/shape/multiple_polygon_option.dart';
+part 'models/shape/multiple_polyline_option.dart';
+part 'models/shape/multiple_polygon.dart';
+part 'models/shape/multiple_polyline.dart';
 
 part 'models/route/route_pattern.dart';
 part 'models/route/route_style.dart';
