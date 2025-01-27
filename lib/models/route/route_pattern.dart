@@ -1,6 +1,6 @@
 part of '../../flutter_kakao_map.dart';
 
-class RoutePattern {
+class RoutePattern with KMessageable {
   final KImage patternImage;
   final KImage? symbolImage;
   final double distance;
@@ -13,4 +13,15 @@ class RoutePattern {
     this.pinStart = false,
     this.pinEnd = false,
   });
+
+  @override
+  Map<String, dynamic> toMessageable() {
+    return {
+      "patternImage": patternImage.toMessageable(),
+      "symbolImage": symbolImage?.toMessageable(),
+      "distance": distance,
+      "pinStart": pinStart,
+      "pinEnd": pinEnd
+    };
+  }
 }
