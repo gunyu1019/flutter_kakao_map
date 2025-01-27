@@ -26,9 +26,8 @@ interface ShapeControllerHandler {
     fun shapeHandle(call: MethodCall, result: MethodChannel.Result) {
         val arguments = call.arguments!!.asMap<Any?>()
         if (shapeManager == null) {
-            throw NullPointerException("LabelManager is null.")
+            throw NullPointerException("ShapeManager is null.")
         }
-
         val layer = arguments["layerId"]?.asString()?.let<String, ShapeLayer> {
             shapeManager!!.getLayer(it)
         }
