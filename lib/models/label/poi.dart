@@ -64,6 +64,7 @@ class Poi {
   Future<void> changeStyles(PoiStyle style, [bool transition = false]) async {
     final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
     await _controller._changePoiStyle(id, styleId);
+    _style = style;
   } 
 
   Future<void> changeText(String text, [bool transition = false]) async {
