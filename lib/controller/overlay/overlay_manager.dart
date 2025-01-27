@@ -18,7 +18,7 @@ mixin OverlayManager {
 
   Future<String> addPolygonShapeStyle(PolygonStyle style);
 
-  Future<String> addPolylineShapeStyle(PolylineStyle style);
+  Future<String> addPolylineShapeStyle(PolylineStyle style, PolylineCap polylineCap);
 
   PolygonStyle? getPolygonShapeStyle(String id);
 
@@ -27,7 +27,7 @@ mixin OverlayManager {
   Future<String> addMultiplePolygonShapeStyle(List<PolygonStyle> style,
       [String? id]);
 
-  Future<String> addMultiplePolylineShapeStyle(List<PolylineStyle> style,
+  Future<String> addMultiplePolylineShapeStyle(List<PolylineStyle> style, PolylineCap polylineCap,
       [String? id]);
 
   List<PolygonStyle>? getMultiplePolygonShapeStyle(String id);

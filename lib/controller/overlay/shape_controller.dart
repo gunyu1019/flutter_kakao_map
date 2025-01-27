@@ -87,8 +87,8 @@ class ShapeController extends OverlayController {
     return super._invokeMethod(method, payload);
   }
 
-  Future<Polyline> addPolylineShape<T extends _BasePoint>(T position, PolylineStyle style, {String? id}) async {
-    final styleId = style._id ?? await manager.addPolylineShapeStyle(style);
+  Future<Polyline> addPolylineShape<T extends _BasePoint>(T position, PolylineStyle style, PolylineCap polylineCap, {String? id}) async {
+    final styleId = style._id ?? await manager.addPolylineShapeStyle(style, polylineCap);
     final payload = <String, dynamic>{
       "polyline": <String, dynamic>{
         "id": id,
@@ -97,7 +97,7 @@ class ShapeController extends OverlayController {
       }
     };
     String shapeId = await _invokeMethod("addPolylineShape", payload);
-    final polyline = Polyline._(this, shapeId, position: position, style: style);
+    final polyline = Polyline<T>._(this, shapeId, position: position, style: style, polylineCap: polylineCap);
     _polylineShape[shapeId] = polyline;
     return polyline;
   }
@@ -112,7 +112,7 @@ class ShapeController extends OverlayController {
       }
     };
     String shapeId = await _invokeMethod("addPolygonShape", payload);
-    final polygon = Polygon._(this, shapeId, position: position, style: style);
+    final polygon = Polygon<T>._(this, shapeId, position: position, style: style);
     _polygonShape[shapeId] = polygon;
     return polygon;
   }

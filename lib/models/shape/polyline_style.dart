@@ -8,7 +8,6 @@ class PolylineStyle with KMessageable {
   final double lineWidth;
   final double strokeWidth;
   final Color strokeColor;
-  PolylineCap? polylineCap;
   int zoomLevel;
 
   final List<PolylineStyle> _styles = [];
@@ -23,7 +22,7 @@ class PolylineStyle with KMessageable {
     }
   }
 
-  PolylineStyle(this.color, this.lineWidth, PolylineCap this.polylineCap, {
+  PolylineStyle(this.color, this.lineWidth, {
     String? id,
     this.strokeWidth = .0,
     this.strokeColor = Colors.black,
@@ -71,7 +70,6 @@ class PolylineStyle with KMessageable {
       // ignore: deprecated_member_use
       "color": color.value,
       "lineWidth": lineWidth,
-      "polylineCap": polylineCap?.value,
       "strokeWidth": strokeWidth,
       // ignore: deprecated_member_use
       "strokeColor": strokeColor.value,

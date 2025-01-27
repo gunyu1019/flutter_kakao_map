@@ -13,15 +13,20 @@ class Polyline<T extends _BasePoint> {
   bool _visible;
   bool get visible => _visible;
 
+  PolylineCap _polylineCap;
+  PolylineCap get polylineCap => _polylineCap;
+
   Polyline._(ShapeController controller, this.id,
-      {required T position, required PolylineStyle style})
+      {required T position, required PolylineStyle style, required PolylineCap polylineCap})
       : _controller = controller,
         _style = style,
         _position = position,
+        _polylineCap = polylineCap,
         _visible = true;
 
-  Future<void> changeStyle(PolylineStyle style) async {
-    final styleId = style.id ?? await _controller.manager.addPolylineShapeStyle(style);
+  Future<void> changeStyle(PolylineStyle style, PolylineCap? polylineCap) async {
+    _polylineCap = polylineCap ?? _polylineCap;
+    final styleId = style.id ?? await _controller.manager.addPolylineShapeStyle(style, _polylineCap);
     await _controller._changePolylineStyle(id, styleId);
     _style = style;
   }

@@ -42,8 +42,10 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<String> addPolylineShapeStyle(PolylineStyle style) async {
-    final styleIds = await addMultiplePolylineShapeStyle([style], style.id);
+  Future<String> addPolylineShapeStyle(
+      PolylineStyle style, PolylineCap polylineCap) async {
+    final styleIds =
+        await addMultiplePolylineShapeStyle([style], polylineCap, style.id);
     return styleIds;
   }
 
@@ -60,12 +62,13 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<String> addMultiplePolylineShapeStyle(List<PolylineStyle> style,
+  Future<String> addMultiplePolylineShapeStyle(
+      List<PolylineStyle> style, PolylineCap polylineCap,
       [String? id]) async {
     String styleId = await shapeLayer._invokeMethod("addPolylineShapeStyle", {
       "styleId": id,
       "styles": style.map((e) => e.toMessageable()).toList(),
-      "polylineCap": style[0].polylineCap?.value
+      "polylineCap": polylineCap.value
     });
     style.map((e) => e._setStyleId(styleId));
     _polylineStyle[styleId] = style;
