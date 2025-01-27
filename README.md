@@ -71,7 +71,7 @@ final poiStyle = PoiStyle(
     icon: KImage.fromAssets("ICON ASSET"),
     textStyle: const [PoiTextStyle(size: 28, color: Colors.black)]
 )
-await controller.defaultLabelLayer.addPoi(
+await controller.labelLayer.addPoi(
     const LatLng(37.395763313860826, 127.11048591050786),
     text: "Project FKMP(Flutter Kakao-Map Plugin)"
     style: poiStyle
@@ -97,5 +97,5 @@ polygon.addPolygon(
   DotPoints.circle​(const LatLng(37.395763313860826, 127.11048591050786), 10.0)
   style=polygonStyle,
 )
-await controller.defaultShapeLayer.addMultiplePolygonShape(polygon)
+await controller.shapeLayer.addMultiplePolygonShape(polygon)
 ```
