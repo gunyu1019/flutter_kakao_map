@@ -30,6 +30,54 @@ class ShapeController extends OverlayController {
     await _invokeMethod("removeShapeLayer", {});
   }
 
+  Future<void> _changePolylineVisible(
+      String shapeId, bool visible) async {
+    await _invokeMethod("changePolylineVisible", {
+      "shapeId": shapeId,
+      "visible": visible
+    });
+  }
+
+  Future<void> _changePolygonVisible(
+      String shapeId, bool visible) async {
+    await _invokeMethod("changePolygonVisible", {
+      "shapeId": shapeId,
+      "visible": visible
+    });
+  }
+
+  Future<void> _changePolylineStyle(
+      String shapeId, String styleId) async {
+    await _invokeMethod("changePolylineStyle", {
+      "shapeId": shapeId,
+      "styleId": styleId
+    });
+  }
+
+  Future<void> _changePolygonStyle(
+      String shapeId, String styleId) async {
+    await _invokeMethod("changePolygonStyle", {
+      "shapeId": shapeId,
+      "styleId": styleId
+    });
+  }
+
+  Future<void> _changePolylinePosition<T extends _BasePoint>(
+      String shapeId, T position) async {
+    await _invokeMethod("changePolylinePosition", {
+      "shapeId": shapeId,
+      "position": position.toMessageable()
+    });
+  }
+
+  Future<void> _changePolygonPosition<T extends _BasePoint>(
+      String shapeId, T position) async {
+    await _invokeMethod("changePolylinePosition", {
+      "shapeId": shapeId,
+      "position": position.toMessageable()
+    });
+  }
+
   @override
   Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
     payload['layerId'] = id;
