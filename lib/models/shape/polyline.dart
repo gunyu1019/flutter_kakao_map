@@ -10,9 +10,34 @@ class Polyline<T extends _BasePoint> {
   T _position;
   T get position => _position;
 
+  bool _visible;
+  bool get visible => _visible;
+
   Polyline._(ShapeController controller, this.id,
       {required T position, required PolylineStyle style})
       : _controller = controller,
         _style = style,
-        _position = position;
+        _position = position,
+        _visible = true;
+
+  Future<void> changeStyle(PolylineStyle style) async {
+    final styleId = style.id ?? await _controller.manager.addPolylineShapeStyle(style);
+    await _controller._changePolylineStyle(id, styleId);
+    _style = style;
+  }
+
+  Future<void> changePosition(T position) async {
+    await _controller._changePolylinePosition(id, position);
+    _position = position;
+  }
+
+  Future<void> show() async {
+    await _controller._changePolylineVisible(id, true);
+    _visible = true;
+  }
+
+  Future<void> hide() async {
+    await _controller._changePolylineVisible(id, false);
+    _visible = false;
+  }
 }
