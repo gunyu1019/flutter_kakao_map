@@ -16,12 +16,12 @@ class CirclePoint extends _BaseDotPoint {
   Map<String, dynamic> toMessageable([bool isHole = false]) {
     final payload = <String, dynamic>{
       "type": type,
-      "dotType": dotType,
+      "dotType": dotType.value,
       "radius": radius,
       "clockwise": clockwise,
       "vertexCount": vertexCount,
     };
-    payload.addAll(super.toMessageable());
+    payload.addAll(super.toMessageable(false));
     return payload;
   }
 
@@ -29,5 +29,5 @@ class CirclePoint extends _BaseDotPoint {
   int get type => 1;
 
   @override
-  PointShapeType get dotType => PointShapeType.none;
+  PointShapeType get dotType => PointShapeType.circle;
 }

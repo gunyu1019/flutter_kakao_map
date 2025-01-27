@@ -17,7 +17,7 @@ class RectanglePoint extends _BaseDotPoint {
   Map<String, dynamic> toMessageable([bool isHole = false]) {
     final payload = <String, dynamic>{
       "type": type,
-      "dotType": dotType,
+      "dotType": dotType.value,
       "width": width,
       "height": height,
       "clockwise": clockwise,
