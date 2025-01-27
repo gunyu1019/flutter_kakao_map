@@ -40,7 +40,7 @@ mixin OverlayManager {
     _lodLabelController[_defaultKey] =
         LodLabelController._(overlayChannel, this, LodLabelController.defaultId);
     _shapeController[_defaultKey] =
-        ShapeController._(overlayChannel, this, _defaultKey);
+        ShapeController._(overlayChannel, this, ShapeController.defaultId);
   }
 
   Future<LabelController> addLabelLayer(String id,
