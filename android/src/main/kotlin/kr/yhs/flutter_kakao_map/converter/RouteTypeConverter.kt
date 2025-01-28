@@ -41,7 +41,7 @@ object RouteTypeConverter {
             rawPayload["strokeWidth"]?.asFloat() ?: 0.0F,
             rawPayload["strokeColor"]?.asInt() ?: 0,
         ).apply { 
-            rawPayload["pattern"]?asRouteLinePattern()?.let(::setPattern)
+            rawPayload["pattern"]?.asRouteLinePattern()?.let(::setPattern)
          }
     }
 
