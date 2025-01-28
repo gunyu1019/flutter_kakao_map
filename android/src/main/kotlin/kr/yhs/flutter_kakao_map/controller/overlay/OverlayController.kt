@@ -24,9 +24,15 @@ import com.kakao.vectormap.shape.PolylineOptions
 import com.kakao.vectormap.shape.PolygonOptions
 import com.kakao.vectormap.shape.Polyline
 import com.kakao.vectormap.shape.Polygon
+import com.kakao.vectormap.route.RouteLineLayer
+import com.kakao.vectormap.route.RouteLineStylesSet
+import com.kakao.vectormap.route.RouteLineOptions
+import com.kakao.vectormap.route.RouteLine
+import com.kakao.vectormap.route.RouteLineManager
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LodLabelControllerHandler
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.ShapeControllerHandler
+import kr.yhs.flutter_kakao_map.controller.overlay.handler.RouteControllerHandler
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.LabelTypeConverter.asLabelTextBuilder
 import kr.yhs.flutter_kakao_map.model.OverlayType
@@ -36,9 +42,10 @@ import android.util.Log
 class OverlayController(
     private val channel: MethodChannel,
     private val kakaoMap: KakaoMap
-): LabelControllerHandler, LodLabelControllerHandler, ShapeControllerHandler {
+): LabelControllerHandler, LodLabelControllerHandler, ShapeControllerHandler, RouteControllerHandler {
     override val labelManager: LabelManager? get() = kakaoMap.getLabelManager()
     override val shapeManager: ShapeManager? get() = kakaoMap.getShapeManager()
+    override val routeManager: RouteLineManager? get() = kakaoMap.getRouteLineManager()
 
     init {
         channel.setMethodCallHandler(::handle)
@@ -52,7 +59,7 @@ class OverlayController(
     }
 
     override fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) { 
-        labelManager!!.addLayer(options);
+        labelManager!!.addLayer(options)
         onSuccess.invoke(null)
     }
 
@@ -69,7 +76,7 @@ class OverlayController(
 
     override fun addPoi(layer: LabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit) {
         val label = layer.addLabel(poi)
-        onSuccess.invoke(label.getLabelId())
+        onSuccess.invoke(label.labelId)
     }
 
     override fun removePoi(layer: LabelLayer, poi: Label, onSuccess: Function1<Any?, Unit>) {
@@ -79,7 +86,7 @@ class OverlayController(
 
     override fun addPolylineText(layer: LabelLayer, label: PolylineLabelOptions, onSuccess: (String) -> Unit) {
         val polylineText = layer.addPolylineLabel(label)
-        onSuccess.invoke(polylineText.getLabelId())
+        onSuccess.invoke(polylineText.labelId)
     }
 
     override fun removePolylineText(layer: LabelLayer, label: PolylineLabel, onSuccess: (Any?) -> Unit) {
@@ -157,7 +164,7 @@ class OverlayController(
     }
 
     override fun createLodLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) {
-        labelManager!!.addLodLayer(options);
+        labelManager!!.addLodLayer(options)
         onSuccess.invoke(null)
     }
 
@@ -168,7 +175,7 @@ class OverlayController(
 
     override fun addLodPoi(layer: LodLabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit) {
         val label = layer.addLodLabel(poi)
-        onSuccess.invoke(label.getLabelId())
+        onSuccess.invoke(label.labelId)
     }
 
     override fun removeLodPoi(layer: LodLabelLayer, poi: LodLabel, onSuccess: (Any?) -> Unit) {
@@ -202,33 +209,33 @@ class OverlayController(
     }
     
     override fun createShapeLayer(options: ShapeLayerOptions, onSuccess: (Any?) -> Unit) {
-        shapeManager!!.addLayer(options);
+        shapeManager!!.addLayer(options)
         onSuccess.invoke(null)
     }
     
     override fun removeShapeLayer(layer: ShapeLayer, onSuccess: (Any?) -> Unit) {
-        shapeManager!!.remove(layer);
+        shapeManager!!.remove(layer)
         onSuccess.invoke(null)
     }
     
     override fun addPolylineShapeStyle(style: PolylineStylesSet, onSuccess: (String) -> Unit) {
         val styleSet = shapeManager!!.addPolylineStyles(style)
-        onSuccess.invoke(styleSet.getStyleId())
+        onSuccess.invoke(styleSet.styleId)
     }
     
     override fun addPolygonShapeStyle(style: PolygonStylesSet, onSuccess: (String) -> Unit) {
         val styleSet = shapeManager!!.addPolygonStyles(style)
-        onSuccess.invoke(styleSet.getStyleId())
+        onSuccess.invoke(styleSet.styleId)
     }
     
     override fun addPolylineShape(layer: ShapeLayer, shape: PolylineOptions, onSuccess: (String) -> Unit) {
         val polylineShape = layer.addPolyline(shape)
-        onSuccess.invoke(polylineShape.getId())
+        onSuccess.invoke(polylineShape.id)
     }
     
     override fun addPolygonShape(layer: ShapeLayer, shape: PolygonOptions, onSuccess: (String) -> Unit) {
         val polylineShape = layer.addPolygon(shape)
-        onSuccess.invoke(polylineShape.getId())
+        onSuccess.invoke(polylineShape.id)
     }
     
     override fun removePolylineShape(layer: ShapeLayer, shape: Polyline, onSuccess: (Any?) -> Unit) {
@@ -270,4 +277,32 @@ class OverlayController(
         shape.changeStylesSet(style)
         onSuccess.invoke(null)
     }
+    
+    override fun createRouteLayer(routeId: String, zOrder: Int?, onSuccess: (Any?) -> Unit) {
+        (zOrder?.let{ routeManager!!.addLayer(routeId, it) }) ?: routeManager!!.addLayer(routeId)
+        onSuccess.invoke(null)
+    }
+    
+    override fun removeRouteLayer(layer: RouteLineLayer, onSuccess: (Any?) -> Unit) {
+        routeManager!!.remove(layer)
+        onSuccess.invoke(null)
+    }
+    
+    override fun addRouteStyle(style: RouteLineStylesSet, onSuccess: (String) -> Unit) {
+        routeManager!!.addStylesSet(style).let {
+            it.styleId
+        }.let(onSuccess::invoke)
+    }
+    
+    override fun addRoute(layer: RouteLineLayer, route: RouteLineOptions, onSuccess: (String) -> Unit) {
+        layer.addRouteLine(route).let {
+            it.lineId
+        }.let(onSuccess::invoke)
+    }
+    
+    override fun removeRoute(layer: RouteLineLayer, route: RouteLine, onSuccess: (Any?) -> Unit) {
+        layer.remove(route)
+        onSuccess.invoke(null)
+    }
+    
 }
