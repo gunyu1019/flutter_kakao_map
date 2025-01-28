@@ -55,7 +55,7 @@ class OverlayController(
         OverlayType.Label -> labelHandle(call, result)
         OverlayType.LodLabel -> lodLabelHandle(call, result)
         OverlayType.Shape -> shapeHandle(call, result)
-        OverlayType.Route -> {}
+        OverlayType.Route -> routeHandle(call, result)
     }
 
     override fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) { 
@@ -278,8 +278,8 @@ class OverlayController(
         onSuccess.invoke(null)
     }
     
-    override fun createRouteLayer(routeId: String, zOrder: Int?, onSuccess: (Any?) -> Unit) {
-        (zOrder?.let{ routeManager!!.addLayer(routeId, it) }) ?: routeManager!!.addLayer(routeId)
+    override fun createRouteLayer(layerId: String, zOrder: Int?, onSuccess: (Any?) -> Unit) {
+        (zOrder?.let{ routeManager!!.addLayer(layerId, it) }) ?: routeManager!!.addLayer(layerId)
         onSuccess.invoke(null)
     }
     
