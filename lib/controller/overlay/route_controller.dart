@@ -32,6 +32,22 @@ class RouteController extends OverlayController {
     payload['layerId'] = id;
     return super._invokeMethod(method, payload);
   }
+
+  Future<void> addRoute(List<LatLng> points, RouteStyle style, {
+    String? id,
+    CurvedType curvedType = CurvedType.none
+  }) async {
+    final styleId = style.id ?? await manager.addRouteStyle(style);
+    Map<String, dynamic> payload = {
+      "route": <String, dynamic>{
+        "id": id,
+        "points": points.map((e) => e.toMessageable()).toList(),
+        "styleId": styleId,
+        "curvedType": curvedType.value
+      }
+    };
+    String routeId = await _invokeMethod("addRoute", payload);
+  }
     
   static const String defaultId = "route_layer_0";
   static const int defaultZOrder = 10000;
