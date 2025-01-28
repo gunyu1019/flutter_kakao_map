@@ -6,6 +6,10 @@ import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asLong
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asString
+import kr.yhs.flutter_kakao_map.converter.PrimitiveTypeConverter.asInt
+import kr.yhs.flutter_kakao_map.converter.RouteTypeConverter.asRouteStylesSet
+import kr.yhs.flutter_kakao_map.converter.RouteTypeConverter.asRouteOption
+import kr.yhs.flutter_kakao_map.converter.RouteTypeConverter.asRouteMultipleOption
 import com.kakao.vectormap.route.RouteLineManager
 import com.kakao.vectormap.route.RouteLineLayer
 import com.kakao.vectormap.route.RouteLineStylesSet
@@ -24,18 +28,26 @@ interface RouteControllerHandler {
             routeManager!!.getLayer(it)
         }
 
+        val routeLine = layer?.run {
+            arguments["id"]?.asString()?.let(layer::getRouteLine)
+        }
+
         when(call.method) {
-            "createRouteLayer" -> {}
-            "removeRouteLayer" -> {}
-            "addRouteStyle" -> {}
-            "addRoute" -> {}
-            "addMultipleRoute" -> {}
-            "removeRoute" -> {}
+            "createRouteLayer" -> {
+                val zOrder = arguments["zOrder"]?.asInt()
+                val layerId = arguments["layerId"]!!.asString()
+                createRouteLayer(layerId, zOrder, result::success)
+            }
+            "removeRouteLayer" -> removeRouteLayer(layer!!, result::success)
+            "addRouteStyle" -> addRouteStyle(arguments.asRouteStylesSet(), result::success)
+            "addRoute" -> addRoute(layer!!, arguments["route"]!!.asRouteOption(routeManager!!), result::success)
+            "addMultipleRoute" -> addRoute(layer!!, arguments["route"]!!.asRouteMultipleOption(routeManager!!), result::success)
+            "removeRoute" -> removeRoute(layer!!, routeLine!!, result::success)
             else -> result.notImplemented()
         }
     }
 
-    fun createRouteLayer(routeId: String, zOrder: Int?, onSuccess: (Any?) -> Unit);
+    fun createRouteLayer(layerId: String, zOrder: Int?, onSuccess: (Any?) -> Unit);
 
     fun removeRouteLayer(layer: RouteLineLayer, onSuccess: (Any?) -> Unit);
 
