@@ -76,6 +76,22 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<String> addRouteStyle(RouteStyle style) async {
+    final styleIds = await addMultipleRouteStyle([style], style.id);
+    return styleIds;
+  }
+
+  @override
+  Future<String> addMultipleRouteStyle(List<RouteStyle> styles, [String? id]) async {
+    String styleId = await routeLayer._invokeMethod("addRouteStyle", {
+      "styleId": id,
+      "styles": styles.map((e) => e.toMessageable()).toList()
+    });
+    _routeStyle[styleId] = styles;
+    return styleId;
+  }
+
+  @override
   PoiStyle? getPoiStyle(String id) => _poiStyle[id];
 
   @override
@@ -91,6 +107,12 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   @override
   List<PolylineStyle>? getMultiplePolylineShapeStyle(String id) =>
       _polylineStyle[id];
+
+  @override
+  RouteStyle? getRotueStyle(String id) => _routeStyle[id]?[0];
+
+  @override
+  List<RouteStyle>? getMultipleRotueStyle(String id) => _routeStyle[id];
 
   @override
   Future<LabelController> addLabelLayer(String id,
@@ -150,6 +172,15 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<RouteController> addRouteLayer(String id,
+      {int zOrder = ShapeController.defaultZOrder}) async {
+    final routeLayer = RouteController._(overlayChannel, this, id, zOrder: zOrder);
+    await routeLayer._createRouteLayer();
+    _routeController[id] = routeLayer;
+    return routeLayer;
+  }
+
+  @override
   LabelController? getLabelLayer(String id) => _labelController[id];
 
   @override
@@ -157,6 +188,9 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   ShapeController? getShapeLayer(String id) => _shapeController[id];
+
+  @override
+  RouteController? getRouteLayer(String id) => _routeController[id];
 
   @override
   Future<void> removeLabelLayer(LabelController controller) async {
@@ -174,6 +208,11 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<void> removeRouteLayer(RouteController controller) async {
+    await controller._removeRouteLayer();
+  }
+
+  @override
   LabelController get labelLayer =>
       _labelController[OverlayManager._defaultKey]!;
 
@@ -184,4 +223,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   @override
   ShapeController get shapeLayer =>
       _shapeController[OverlayManager._defaultKey]!;
+
+  @override
+  RouteController get routeLayer =>
+      _routeController[OverlayManager._defaultKey]!;
 }
