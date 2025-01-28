@@ -22,6 +22,8 @@ import com.kakao.vectormap.shape.PolylineStylesSet
 import com.kakao.vectormap.shape.PolygonStylesSet
 import com.kakao.vectormap.shape.PolylineOptions
 import com.kakao.vectormap.shape.PolygonOptions
+import com.kakao.vectormap.shape.Polyline
+import com.kakao.vectormap.shape.Polygon
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LabelControllerHandler
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.LodLabelControllerHandler
 import kr.yhs.flutter_kakao_map.controller.overlay.handler.ShapeControllerHandler
@@ -229,4 +231,43 @@ class OverlayController(
         onSuccess.invoke(polylineShape.getId())
     }
     
+    override fun removePolylineShape(layer: ShapeLayer, shape: Polyline, onSuccess: (Any?) -> Unit) {
+        layer.remove(shape)
+        onSuccess.invoke(null)
+    }
+    
+    override fun removePolygonShape(layer: ShapeLayer, shape: Polygon, onSuccess: (Any?) -> Unit) {
+        layer.remove(shape)
+        onSuccess.invoke(null)
+    }
+    
+    override fun changePolylineVisible(shape: Polyline, visible: Boolean, onSuccess: (Any?) -> Unit) {
+        if (visible) {
+            shape.show()
+        } else {
+            shape.hide()
+        }
+        onSuccess.invoke(null)
+    }
+    
+    override fun changePolygonVisible(shape: Polygon, visible: Boolean, onSuccess: (Any?) -> Unit) {
+        if (visible) {
+            shape.show()
+        } else {
+            shape.hide()
+        }
+        onSuccess.invoke(null)
+    }
+    
+    override fun changePolylineStyle(shape: Polyline, styleId: String, onSuccess: (Any?) -> Unit) {
+        val style = shapeManager!!.getPolylineStyles(styleId)
+        shape.changeStylesSet(style)
+        onSuccess.invoke(null)
+    }
+    
+    override fun changePolygonStyle(shape: Polygon, styleId: String, onSuccess: (Any?) -> Unit) {
+        val style = shapeManager!!.getPolygonStyles(styleId)
+        shape.changeStylesSet(style)
+        onSuccess.invoke(null)
+    }
 }
