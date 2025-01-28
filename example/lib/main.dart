@@ -171,6 +171,14 @@ class _MyAppState extends State<MyApp> {
       CirclePoint(200, const LatLng(37.39375894087694, 127.10964757834647)),
       PolygonStyle(Colors.green)
     );
+
+    controller.routeLayer.addRoute(const [
+      LatLng(37.32428751919564, 127.10361027597592),
+      LatLng(37.38433356340711, 127.10312961558715),
+      LatLng(37.40049196436421, 127.09982509355939),
+      LatLng(37.40605078821915, 127.09458697605862),
+      LatLng(37.43918161748264, 127.06078195006104),
+    ], RouteStyle(Colors.yellow, 10));
   }
 
   void onMapError(Exception exception) {
