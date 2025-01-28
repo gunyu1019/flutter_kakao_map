@@ -34,6 +34,15 @@ class RouteStyle with KMessageable {
     this.zoomLevel = 0
   }) : _id = id, _isSecondaryStyle = true;
 
+  void _setStyleId(String id) {
+    _id = id;
+    if (!_isSecondaryStyle) {
+      for (RouteStyle e in _styles) {
+        e._id = id;
+      }
+    }
+  }
+
   void addStyle(int zoomLevel, Color? color, double? lineWidth, {
     Color? strokeColor,
     double? strokeWidth,
