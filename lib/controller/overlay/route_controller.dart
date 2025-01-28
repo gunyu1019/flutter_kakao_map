@@ -13,6 +13,8 @@ class RouteController extends OverlayController {
   final String id;
   final int zOrder;
 
+  final Map<String, Route> _route = {};
+
   RouteController._(this.channel, this.manager, this.id, {
     this.zOrder = defaultZOrder
   });
@@ -33,7 +35,7 @@ class RouteController extends OverlayController {
     return super._invokeMethod(method, payload);
   }
 
-  Future<void> addRoute(List<LatLng> points, RouteStyle style, {
+  Future<Route> addRoute(List<LatLng> points, RouteStyle style, {
     String? id,
     CurvedType curvedType = CurvedType.none
   }) async {
@@ -47,6 +49,9 @@ class RouteController extends OverlayController {
       }
     };
     String routeId = await _invokeMethod("addRoute", payload);
+    final route = Route._(this, routeId, points: points, style: style, curvedType: curvedType);
+    _route[routeId] = route;
+    return route;
   }
     
   static const String defaultId = "route_layer_0";

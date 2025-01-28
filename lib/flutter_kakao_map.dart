@@ -59,6 +59,7 @@ part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
 part 'models/shape/rectangle_point.dart';
 
+part 'models/route/route.dart';
 part 'models/route/route_pattern.dart';
 part 'models/route/route_style.dart';
 
