@@ -46,6 +46,7 @@ class OverlayController(
         OverlayType.Label -> labelHandle(call, result)
         OverlayType.LodLabel -> lodLabelHandle(call, result)
         OverlayType.Shape -> shapeHandle(call, result)
+        OverlayType.Route -> {}
     }
 
     override fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit) { 
