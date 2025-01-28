@@ -61,7 +61,13 @@ object RouteTypeConverter {
     }
 
     fun Any.asRouteSegment(routeManager: RouteLineManager, index: Int = 0): RouteLineSegment = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        val styleSets = routeManager.getStylesSet(rawPayload["styleId"]!!.asString())
+        // val styleSets = routeManager.getStylesSet(rawPayload["styleId"]!!.asString())
+        //
+        // Temporary Actions 
+        // https://devtalk.kakao.com/t/bug-android-kakaomap-sdk-routemanager-getstylesset/142232
+        val styleSets = routeManager.addStylesSet(
+            RouteLineStylesSet.from(rawPayload["styleId"]!!.asString(), listOf())
+        )
 
         return RouteLineSegment.from().apply { 
             styleSets.styles[index].let(::setStyles)
