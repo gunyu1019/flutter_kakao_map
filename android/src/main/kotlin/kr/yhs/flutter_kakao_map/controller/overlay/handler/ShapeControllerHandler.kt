@@ -18,6 +18,8 @@ import com.kakao.vectormap.shape.PolygonStylesSet
 import com.kakao.vectormap.shape.PolylineOptions
 import com.kakao.vectormap.shape.PolygonOptions
 import com.kakao.vectormap.shape.PolylineStylesSet
+import com.kakao.vectormap.shape.Polyline
+import com.kakao.vectormap.shape.Polygon
 import com.kakao.vectormap.label.PolylineLabelStyles
 
 interface ShapeControllerHandler {
@@ -36,7 +38,7 @@ interface ShapeControllerHandler {
             arguments["polylineId"]?.asString()?.let(layer::getPolyline)
         }
         val polygonShape = layer?.run {
-            arguments["polygonId"]?.asString()?.let(layer::getPolyline)
+            arguments["polygonId"]?.asString()?.let(layer::getPolygon)
         }
 
         when(call.method) {
@@ -52,14 +54,30 @@ interface ShapeControllerHandler {
                 val shapeOption = arguments["polygon"]!!.asPolygonOption(shapeManager!!)
                 addPolygonShape(layer!!, shapeOption, result::success)
             }
-            "removePolylineShape" -> {}
-            "removePolygonShape" -> {}
-            "changePolylineVisible" -> {}
-            "changePolygonVisible" -> {}
-            "changePolylineStyle" -> {}
-            "changePolygonStyle" -> {}
-            "changePolylinePosition" -> {}
-            "changePolygonPosition" -> {}
+            "removePolylineShape" -> removePolylineShape(layer!!, polylineShape!!, result::success)
+            "removePolygonShape" -> removePolygonShape(layer!!, polygonShape!!, result::success)
+            "changePolylineVisible" -> {
+                val visible = arguments["visible"]?.asBoolean()!!
+                changePolylineVisible(polylineShape!!, visible, result::success)
+            }
+            "changePolygonVisible" -> {
+                val visible = arguments["visible"]?.asBoolean()!!
+                changePolygonVisible(polygonShape!!, visible, result::success)
+            }
+            "changePolylineStyle" -> {
+                val styleId = arguments["styleId"]?.asString()
+                changePolylineStyle(polylineShape!!, styleId!!, result::success)
+            }
+            "changePolygonStyle" -> {
+                val styleId = arguments["styleId"]?.asString()
+                changePolygonStyle(polygonShape!!, styleId!!, result::success)
+            }
+            "changePolylinePosition" -> {
+                // TODO (Thinking logic...)
+            }
+            "changePolygonPosition" -> {
+                // TODO (Thinking logic...)
+            }
             else -> result.notImplemented()
         }
     }
@@ -75,4 +93,20 @@ interface ShapeControllerHandler {
     fun addPolylineShape(layer: ShapeLayer, shape: PolylineOptions, onSuccess: (String) -> Unit);
 
     fun addPolygonShape(layer: ShapeLayer, shape: PolygonOptions, onSuccess: (String) -> Unit);
+
+    fun removePolylineShape(layer: ShapeLayer, shape: Polyline, onSuccess: (Any?) -> Unit);
+
+    fun removePolygonShape(layer: ShapeLayer, shape: Polygon, onSuccess: (Any?) -> Unit);
+
+    fun changePolylineVisible(shape: Polyline, visible: Boolean, onSuccess: (Any?) -> Unit);
+
+    fun changePolygonVisible(shape: Polygon, visible: Boolean, onSuccess: (Any?) -> Unit);
+
+    fun changePolylineStyle(shape: Polyline, styleId: String, onSuccess: (Any?) -> Unit);
+
+    fun changePolygonStyle(shape: Polygon, styleId: String, onSuccess: (Any?) -> Unit);
+
+    // fun changePolylinePosition(shape: Polyline, style: PolygonStylesSet, onSuccess: (Any?) -> Unit);
+
+    // fun changePolygonPosition(shape: Polygon, style: PolygonStylesSet, onSuccess: (Any?) -> Unit);
 }
