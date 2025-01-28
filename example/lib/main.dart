@@ -163,7 +163,8 @@ class _MyAppState extends State<MyApp> {
 
     controller.shapeLayer.addPolylineShape(
       RectanglePoint(100, 100, const LatLng(37.396289088551704, 127.1129315279461)),
-      PolylineStyle(Colors.green, 10.0, PolylineCap.round)
+      PolylineStyle(Colors.green, 10.0),
+      PolylineCap.round
     );
 
     controller.shapeLayer.addPolygonShape(
