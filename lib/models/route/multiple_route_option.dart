@@ -57,4 +57,8 @@ class MultipleRouteOption with KMessageable {
           })
     };
   }
+
+  bool _isStyleAdded() {
+    return _styles.map((e) => e.id).any((e) => e == null);
+  }
 }
