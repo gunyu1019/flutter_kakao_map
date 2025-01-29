@@ -178,7 +178,7 @@ class _MyAppState extends State<MyApp> {
       LatLng(37.40049196436421, 127.09982509355939),
       LatLng(37.40605078821915, 127.09458697605862),
       LatLng(37.43918161748264, 127.06078195006104),
-    ], RouteStyle(Colors.black, 10, pattern: RoutePattern(KImage.fromAsset("asset/image/circle.png", 30, 30), 6)));
+    ], RouteStyle(Colors.black, 10, pattern: RoutePattern(KImage.fromAsset("assets/image/circle.png", 30, 30), 6)));
   }
 
   void onMapError(Exception exception) {
