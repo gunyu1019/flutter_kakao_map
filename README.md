@@ -175,3 +175,8 @@ RouteStyle.withPattern(
 ```
 
 ## 4. 기여 / 이슈 제보
+Flutter Kakao Maps의 기여는 언제든지 환영합니다. <br/>
+`Pull Reuqest` 해주시면, 확인 후 병합(`Merge`) 해드리겠습니다.
+
+동일하게 버그 제보도 언제든지 환영합니다. 
+문제가 발생하면 `Issue`를 열어주세요.
