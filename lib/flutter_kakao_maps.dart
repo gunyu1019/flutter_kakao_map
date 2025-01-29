@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math show Point;
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,8 @@ part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
 part 'models/shape/rectangle_point.dart';
 
+part 'models/route/multiple_route.dart';
+part 'models/route/multiple_route_option.dart';
 part 'models/route/route.dart';
 part 'models/route/route_pattern.dart';
 part 'models/route/route_style.dart';
