@@ -40,7 +40,7 @@ mixin OverlayManager {
 
   RouteStyle? getRotueStyle(String id);
 
-  Future<String> addMultipleRouteStyle(List<RouteStyle> style, [String? id]);
+  Future<String> addMultipleRouteStyle(List<RouteStyle> styles, [String? id]);
 
   List<RouteStyle>? getMultipleRotueStyle(String id);
 
