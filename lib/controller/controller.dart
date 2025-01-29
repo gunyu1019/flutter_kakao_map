@@ -27,6 +27,21 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<LatLng> fromScreenPoint(double x, double y) async {
+    final position = await channel.invokeMethod("fromScreenPoint", {
+      "x": x,
+      "y": y
+    });
+    return LatLng.fromMessageable(position);
+  }
+
+  @override
+  Future<KPoint> toScreenPoint(LatLng position) async {
+    final point = await channel.invokeMethod("toScreenPoint", position.toMessageable());
+    return KPoint(point['x'], point['y']);
+  }
+
+  @override
   Future<String> addPoiStyle(PoiStyle style) async {
     String styleId = await labelLayer._invokeMethod(
         "addPoiStyle", {"styleId": style.id, "styles": style.toMessageable()});
