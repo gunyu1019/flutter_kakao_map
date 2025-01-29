@@ -152,7 +152,6 @@ class LabelController extends BaseLabelController {
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
         "id": id,
-        "clickable": onClick != null,
         "text": text,
         "rank": rank,
         "styleId": styleId,
@@ -165,7 +164,6 @@ class LabelController extends BaseLabelController {
     final poi = Poi._(this, poiId,
         transform: transform,
         position: position,
-        clickable: clickable,
         style: style,
         text: text,
         rank: rank ?? 0,

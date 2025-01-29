@@ -26,7 +26,6 @@ class LodPoi {
   LodPoi._(this._controller, this.id,
       {required this.transform,
       required this.position,
-      required bool clickable,
       required PoiStyle style,
       required String? text,
       required int rank,

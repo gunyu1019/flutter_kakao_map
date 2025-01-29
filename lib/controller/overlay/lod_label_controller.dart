@@ -91,7 +91,6 @@ class LodLabelController extends BaseLabelController {
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
         "id": id,
-        "clickable": onClick != null,
         "text": text,
         "rank": rank,
         "styleId": styleId,
@@ -104,7 +103,6 @@ class LodLabelController extends BaseLabelController {
     final poi = LodPoi._(this, poiId,
         transform: transform,
         position: position,
-        clickable: clickable,
         style: style,
         text: text,
         rank: rank ?? 0,
