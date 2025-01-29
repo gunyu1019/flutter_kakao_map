@@ -28,17 +28,24 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<LatLng> fromScreenPoint(double x, double y) async {
-    final position = await channel.invokeMethod("fromScreenPoint", {
-      "x": x,
-      "y": y
-    });
+    final position =
+        await channel.invokeMethod("fromScreenPoint", {"x": x, "y": y});
     return LatLng.fromMessageable(position);
   }
 
   @override
   Future<KPoint> toScreenPoint(LatLng position) async {
-    final point = await channel.invokeMethod("toScreenPoint", position.toMessageable());
+    final point =
+        await channel.invokeMethod("toScreenPoint", position.toMessageable());
     return KPoint(point['x'], point['y']);
+  }
+
+  @override
+  Future<void> setGesture(GestureType gesture, bool enable) async {
+    await channel.invokeMethod("setGestureEnable", {
+      "gestureType": gesture.value,
+      "enable": enable
+    });
   }
 
   @override
@@ -97,7 +104,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<String> addMultipleRouteStyle(List<RouteStyle> styles, [String? id]) async {
+  Future<String> addMultipleRouteStyle(List<RouteStyle> styles,
+      [String? id]) async {
     String styleId = await routeLayer._invokeMethod("addRouteStyle", {
       "styleId": id,
       "styles": styles.map((e) => e.toMessageable()).toList()
@@ -190,7 +198,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   @override
   Future<RouteController> addRouteLayer(String id,
       {int zOrder = ShapeController.defaultZOrder}) async {
-    final routeLayer = RouteController._(overlayChannel, this, id, zOrder: zOrder);
+    final routeLayer =
+        RouteController._(overlayChannel, this, id, zOrder: zOrder);
     await routeLayer._createRouteLayer();
     _routeController[id] = routeLayer;
     return routeLayer;
