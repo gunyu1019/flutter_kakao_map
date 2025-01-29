@@ -1,4 +1,4 @@
-part of '../flutter_kakao_map.dart';
+part of '../flutter_kakao_maps.dart';
 
 class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   final MethodChannel channel;

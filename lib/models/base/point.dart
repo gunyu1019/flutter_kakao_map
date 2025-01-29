@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../flutter_kakao_maps.dart';
 
 class KPoint extends math.Point<double> with KMessageable {
   const KPoint(super.x, super.y);

@@ -1,7 +1,7 @@
-name: flutter_kakao_map
-description: "An unoffical kakao map plugin."
+name: flutter_kakao_maps
+description: "An unoffical kakao maps plugin."
 version: 0.0.1
-homepage: https://github.com/gunyu1019/flutter_kakao_map
+homepage: https://github.com/gunyu1019/flutter_kakao_maps
 publisher: gunyu1019@gmail.com
 
 environment:
@@ -22,5 +22,5 @@ flutter:
   plugin:
     platforms:
       android:
-        package: kr.yhs.flutter_kakao_map
-        pluginClass: FlutterKakaoMapPlugin
+        package: kr.yhs.flutter_kakao_maps
+        pluginClass: FlutterKakaoMapsPlugin

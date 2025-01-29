@@ -1,4 +1,4 @@
-part of '../../../flutter_kakao_map.dart';
+part of '../../../flutter_kakao_maps.dart';
 
 enum Transition {
   none(0),

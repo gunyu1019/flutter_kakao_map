@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../flutter_kakao_maps.dart';
 
 
 sealed class _BaseDotPoint extends _BasePoint {

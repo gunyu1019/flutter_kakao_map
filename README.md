@@ -1,4 +1,4 @@
-# flutter_kakao_map
+# flutter_kakao_mapss
 네이티브 환경 기반의 카카오맵을 구현하는 플러그인입니다. 
 현재 작업 중인 프로젝트이며, 빠른 시일 내에 완성시킬 예정입니다.
 
@@ -14,7 +14,7 @@
     * Polyline Text
     * Polyline Shape
     * Polyline Shape
-    * (WIP, Not-yet) Route Line (#6)
+    * Route Line
 
 ### 지도 위젯
 

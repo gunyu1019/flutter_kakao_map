@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../flutter_kakao_maps.dart';
 
 
 /// 지도의 카메라 속성을 가지고 있는 객체입니다.
