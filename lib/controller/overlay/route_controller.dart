@@ -16,16 +16,13 @@ class RouteController extends OverlayController {
   final Map<String, Route> _route = {};
   final Map<String, MultipleRoute> _multiple_route = {};
 
-  RouteController._(this.channel, this.manager, this.id, {
-    this.zOrder = defaultZOrder
-  });
+  RouteController._(this.channel, this.manager, this.id,
+      {this.zOrder = defaultZOrder});
 
   Future<void> _createRouteLayer() async {
-    await _invokeMethod("createRouteLayer", {
-      "zOrder": zOrder
-    });
+    await _invokeMethod("createRouteLayer", {"zOrder": zOrder});
   }
-  
+
   Future<void> _removeRouteLayer() async {
     await _invokeMethod("removeRouteLayer", {});
   }
@@ -36,10 +33,8 @@ class RouteController extends OverlayController {
     return super._invokeMethod(method, payload);
   }
 
-  Future<Route> addRoute(List<LatLng> points, RouteStyle style, {
-    String? id,
-    CurveType curveType = CurveType.none
-  }) async {
+  Future<Route> addRoute(List<LatLng> points, RouteStyle style,
+      {String? id, CurveType curveType = CurveType.none}) async {
     final styleId = style.id ?? await manager.addRouteStyle(style);
     Map<String, dynamic> payload = {
       "route": <String, dynamic>{
@@ -50,7 +45,8 @@ class RouteController extends OverlayController {
       }
     };
     String routeId = await _invokeMethod("addRoute", payload);
-    final route = Route._(this, routeId, points: points, style: style, curveType: curveType);
+    final route = Route._(this, routeId,
+        points: points, style: style, curveType: curveType);
     _route[routeId] = route;
     return route;
   }
@@ -59,15 +55,17 @@ class RouteController extends OverlayController {
     if (!option._isStyleAdded()) {
       await manager.addMultipleRouteStyle(option._styles);
     }
-    Map<String, dynamic> payload = {
-      "route": option.toMessageable()
-    };
+    Map<String, dynamic> payload = {"route": option.toMessageable()};
     String routeId = await _invokeMethod("addMultipleRoute", payload);
-    final route = MultipleRoute._(this, routeId, points: points, style: style, curveType: curveType);
+    final route = MultipleRoute._(this, routeId,
+        points: option._points,
+        style: option._styles,
+        curveType: option._curveType,
+        styleIndex: option._styleIndex);
     _multiple_route[routeId] = route;
     return route;
   }
-    
+
   static const String defaultId = "route_layer_0";
   static const int defaultZOrder = 10000;
 }
