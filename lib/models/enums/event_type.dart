@@ -6,7 +6,9 @@ enum EventType {
   onCompassClick(4),
   onMapClick(8),
   onTerrainClick(16),
-  onTerrainLongClick(32);
+  onTerrainLongClick(32),
+  onPoiClick(64),
+  onLodPoiClick(128);
 
   final int id;
 
