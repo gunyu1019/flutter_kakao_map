@@ -3,7 +3,7 @@ part of '../../flutter_kakao_maps.dart';
 class MultipleRouteOption with KMessageable {
   final String? id;
 
-  final List<CurvedType> _curvedType;
+  final List<CurveType> _curveType;
   final List<List<LatLng>> _points;
   final List<int> _styleIndex;
   final List<RouteStyle> _styles;
@@ -11,30 +11,30 @@ class MultipleRouteOption with KMessageable {
   MultipleRouteOption(
     List<RouteStyle>? styles, {
     List<LatLng>? point,
-    CurvedType curvedType = CurvedType.none,
+    CurveType curveType = CurveType.none,
     this.id,
   })  : _points = [],
         _styles = styles ?? [],
-        _curvedType = [],
+        _curveType = [],
         _styleIndex = [] {
     if (point != null && _styles.isNotEmpty) {
-      addRouteWithIndex(point, 0, curvedType);
+      addRouteWithIndex(point, 0, curveType);
     }
   }
 
   void addRouteWithStyle(List<LatLng> point, RouteStyle style,
-      [CurvedType curvedType = CurvedType.none]) {
+      [CurveType curveType = CurveType.none]) {
     _styles.add(style);
     _points.add(point);
     _styleIndex.add(_styles.length);
-    _curvedType.add(curvedType);
+    _curveType.add(curveType);
   }
 
   void addRouteWithIndex(List<LatLng> point, int styleIndex,
-      [CurvedType curvedType = CurvedType.none]) {
+      [CurveType curveType = CurveType.none]) {
     _points.add(point);
     _styleIndex.add(styleIndex);
-    _curvedType.add(curvedType);
+    _curveType.add(curveType);
   }
 
   void addRouteStyle(RouteStyle style) => _styles.add(style);
@@ -51,7 +51,7 @@ class MultipleRouteOption with KMessageable {
             <String, dynamic>{
               "points": points,
               "styleIndex": _styleIndex[index],
-              "curvedType": _curvedType[index]
+              "curveType": _curveType[index]
             }
           })
     };

@@ -10,14 +10,14 @@ class Route {
   RouteStyle _style;
   RouteStyle get style => _style;
 
-  CurvedType _curvedType;
-  CurvedType get curvedType => _curvedType;
+  CurveType _curveType;
+  CurveType get curveType => _curveType;
 
   Route._(this._controller, this.id,
       {required List<LatLng> points,
       required RouteStyle style,
-      required CurvedType curvedType})
+      required CurveType curveType})
       : _points = points,
         _style = style,
-        _curvedType = curvedType;
+        _curveType = curveType;
 }
