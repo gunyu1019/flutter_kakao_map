@@ -29,6 +29,8 @@ import com.kakao.vectormap.route.RouteLineStylesSet
 import com.kakao.vectormap.route.RouteLineOptions
 import com.kakao.vectormap.route.RouteLine
 import com.kakao.vectormap.route.RouteLineManager
+import com.kakao.vectormap.route.RouteLineSegment
+import com.kakao.vectormap.CurveType
 import kr.yhs.flutter_kakao_maps.controller.overlay.handler.LabelControllerHandler
 import kr.yhs.flutter_kakao_maps.controller.overlay.handler.LodLabelControllerHandler
 import kr.yhs.flutter_kakao_maps.controller.overlay.handler.ShapeControllerHandler
@@ -304,5 +306,36 @@ class OverlayController(
         layer.remove(route)
         onSuccess.invoke(null)
     }
-    
+
+    override fun changeRouteStyle(route: RouteLine, styleId: String, onSuccess: (Any?) -> Unit) {
+        // val styleSets = routeManager.getStylesSet(rawPayload["styleId"]!!.asString())
+        //
+        // Temporary Actions 
+        // https://devtalk.kakao.com/t/bug-android-kakaomap-sdk-routemanager-getstylesset/142232
+        routeManager!!.addStylesSet(
+            RouteLineStylesSet.from(styleId, listOf())
+        ).let(route::changeStyle)
+        onSuccess.invoke(null)
+    }
+
+    override fun changeRouteCurveType(route: RouteLine, curveType: List<CurveType>, onSuccess: (Any?) -> Unit) {
+        curveType.mapIndexed { index, element -> route.segments[index].apply {
+            element.let(::setCurveType)
+        }}.let(route::changeSegments)
+    }
+
+    override fun changeRoutePoint(route: RouteLine, points: List<List<LatLng>>, onSuccess: (Any?) -> Unit) {
+        points.mapIndexed { index, element -> RouteLineSegment.from(element).apply {
+            route.segments[index].curveType.let(CurveType::getEnum).let(::setCurveType)
+        }}.let(route::changeSegments)
+    }
+
+    override fun changeRouteVisible(route: RouteLine, visible: Boolean, onSuccess: (Any?) -> Unit) {
+        if (visible) {
+            route.show()
+        } else {
+            route.hide()
+        }
+        onSuccess.invoke(null)
+    }
 }
