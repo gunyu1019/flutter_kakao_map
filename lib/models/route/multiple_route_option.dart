@@ -51,7 +51,8 @@ class MultipleRouteOption with KMessageable {
             <String, dynamic>{
               "points": points,
               "styleIndex": _styleIndex[index],
-              "curveType": _curveType[index]
+              "curveType": _curveType[index],
+              "styleId": _styles[_styleIndex[index]].id
             }
           })
     };
