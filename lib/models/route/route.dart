@@ -52,11 +52,19 @@ class Route {
     await _controller.removeRoute(this);
   }
 
-  Future<void> changeStyle() async {
-    
+  Future<void> changeStyle(RouteStyle style) async {
+    String styleId = style.id ?? await _controller.manager.addRouteStyle(style);
+    await _controller._changeStyle(id, styleId);
+    _style = style;
   }
 
-  Future<void> changePoint() async {
-    
+  Future<void> changeCurveType(CurveType curveType) async {
+    await _controller._changeCurveType(id, [curveType]);
+    _curveType = curveType;
+  }
+
+  Future<void> changePoint(List<LatLng> points) async {
+    await _controller._changePoints(id, [points]);
+    _points = points;
   }
 }
