@@ -63,6 +63,7 @@ flutter:
   assets:
     - assets/config/.env
     - assets/image/location.png
+    - assets/image/circle.png
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
