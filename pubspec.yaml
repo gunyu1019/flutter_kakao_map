@@ -2,7 +2,6 @@ name: flutter_kakao_maps
 description: "An unoffical kakao maps plugin."
 version: 0.0.1
 homepage: https://github.com/gunyu1019/flutter_kakao_maps
-publisher: gunyu1019@gmail.com
 
 environment:
   sdk: ^3.5.3
