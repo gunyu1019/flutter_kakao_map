@@ -1,8 +1,8 @@
 part of '../../../flutter_kakao_maps.dart';
 
 enum CurveType {
-  left(0),
-  none(1),
+  left(1),
+  none(0),
   right(2);
 
   final int value;
