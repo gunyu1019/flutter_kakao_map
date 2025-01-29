@@ -27,6 +27,34 @@ class RouteController extends OverlayController {
     await _invokeMethod("removeRouteLayer", {});
   }
 
+  Future<void> _changePoints(String routeId, List<List<LatLng>> points) async {
+    await _invokeMethod("changeRoutePoint", {
+      "routeId": routeId,
+      "points": points.map((e1) => e1.map((e2) => e2.toMessageable()).toList()).toList()
+    });
+  }
+
+  Future<void> _changeStyle(String routeId, String styleId) async {
+    await _invokeMethod("changeRouteStyle", {
+      "routeId": routeId,
+      "styleId": styleId,
+    });
+  }
+
+  Future<void> _changeCurveType(String routeId, List<CurveType> curveType) async {
+    await _invokeMethod("changeRouteCurveType", {
+      "routeId": routeId,
+      "curveType": curveType.map((e) => e.value).toList(),
+    });
+  }
+
+  Future<void> _changeRouteVisible(String routeId, bool visible) async {
+    await _invokeMethod("changeRouteVisible", {
+      "routeId": routeId,
+      "visible": visible
+    });
+  }
+
   @override
   Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
     payload['layerId'] = id;
@@ -71,16 +99,12 @@ class RouteController extends OverlayController {
   MultipleRoute? getMultipleRoute(String id) => _multiple_route[id];
 
   Future<void> removeRoute(Route route) async {
-    await _invokeMethod("removeRoute", {
-      "routeId": route.id
-    });
+    await _invokeMethod("removeRoute", {"routeId": route.id});
     _route.remove(route.id);
   }
 
   Future<void> removeMultipleRoute(MultipleRoute route) async {
-    await _invokeMethod("removeRoute", {
-      "routeId": route.id
-    });
+    await _invokeMethod("removeRoute", {"routeId": route.id});
     _multiple_route.remove(route.id);
   }
 
