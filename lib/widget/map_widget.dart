@@ -10,6 +10,14 @@ class KakaoMap extends StatefulWidget {
   final void Function(CameraPosition position, GestureType gestureType)?
       onCameraMoveEnd;
 
+  final void Function()? onCompassClick;
+  final void Function(LabelController labelController, Poi poi)? onPoiClick;
+  final void Function(LodLabelController lodLabelController, LodPoi poi)?
+      onLodPoiClick;
+  final void Function(KPoint point, LatLng position)? onMapClick;
+  final void Function(KPoint point, LatLng position)? onTerrainClick;
+  final void Function(KPoint point, LatLng position)? onTerrainLongClick;
+
   final bool forceGesture;
 
   const KakaoMap(
@@ -20,6 +28,12 @@ class KakaoMap extends StatefulWidget {
       this.onMapLifecycle,
       this.onCameraMoveStart,
       this.onCameraMoveEnd,
+      this.onCompassClick,
+      this.onPoiClick,
+      this.onLodPoiClick,
+      this.onMapClick,
+      this.onTerrainClick,
+      this.onTerrainLongClick,
       this.onMapError});
 
   @override
@@ -60,11 +74,17 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   }
 
   void _setEventHandler() {
-    int bitMask = 0;
+    int bitMask = EventType.onPoiClick.id | EventType.onLodPoiClick.id;
     if (widget.onCameraMoveStart != null) {
       bitMask |= EventType.onCameraMoveStart.id;
     }
     if (widget.onCameraMoveEnd != null) bitMask |= EventType.onCameraMoveEnd.id;
+    if (widget.onCompassClick != null) bitMask |= EventType.onCompassClick.id;
+    if (widget.onMapClick != null) bitMask |= EventType.onMapClick.id;
+    if (widget.onTerrainClick != null) bitMask |= EventType.onTerrainClick.id;
+    if (widget.onTerrainLongClick != null) {
+      bitMask |= EventType.onTerrainLongClick.id;
+    }
     channel.invokeMethod("setEventHandler", bitMask);
   }
 
@@ -103,5 +123,41 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   @override
   void onCameraMoveEnd(CameraPosition position, GestureType gestureType) {
     widget.onCameraMoveEnd?.call(position, gestureType);
+  }
+
+  @override
+  void onCompassClick() {
+    widget.onCompassClick?.call();
+  }
+
+  @override
+  void onPoiClick(String layerId, String poiId) {
+    final layer = controller.getLabelLayer(layerId);
+    final poi = layer!.getPoi(poiId);
+    poi?._onClick?.call();
+    widget.onPoiClick?.call(layer, poi!);
+  }
+
+  @override
+  void onLodPoiClick(String layerId, String poiId) {
+    final layer = controller.getLodLabelLayer(layerId);
+    final poi = layer!.getLodPoi(poiId);
+    poi?._onClick?.call();
+    widget.onLodPoiClick?.call(layer, poi!);
+  }
+
+  @override
+  void onMapClick(KPoint point, LatLng position) {
+    widget.onMapClick?.call(point, position);
+  }
+
+  @override
+  void onTerrainClick(KPoint point, LatLng position) {
+    widget.onTerrainClick?.call(point, position);
+  }
+
+  @override
+  void onTerrainLongClick(KPoint point, LatLng position) {
+    widget.onTerrainLongClick?.call(point, position);
   }
 }

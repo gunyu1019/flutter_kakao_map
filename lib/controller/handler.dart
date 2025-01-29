@@ -62,4 +62,16 @@ mixin KakaoMapControllerHandler {
   void onCameraMoveStart(GestureType gestureType);
 
   void onCameraMoveEnd(CameraPosition position,GestureType gestureType);
+
+  void onCompassClick();
+
+  void onPoiClick(String layerId, String poiId);
+
+  void onLodPoiClick(String layerId, String poiId);
+
+  void onMapClick(KPoint point, LatLng position);
+
+  void onTerrainClick(KPoint point, LatLng position);
+
+  void onTerrainLongClick(KPoint point, LatLng position);
 }
