@@ -9,6 +9,7 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
+  collection: ^1.19.0
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
