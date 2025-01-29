@@ -66,6 +66,24 @@ class RouteController extends OverlayController {
     return route;
   }
 
+  Route? getRoute(String id) => _route[id];
+
+  MultipleRoute? getMultipleRoute(String id) => _multiple_route[id];
+
+  Future<void> removeRoute(Route route) async {
+    await _invokeMethod("removeRoute", {
+      "routeId": route.id
+    });
+    _route.remove(route.id);
+  }
+
+  Future<void> removeMultipleRoute(MultipleRoute route) async {
+    await _invokeMethod("removeRoute", {
+      "routeId": route.id
+    });
+    _multiple_route.remove(route.id);
+  }
+
   static const String defaultId = "route_layer_0";
   static const int defaultZOrder = 10000;
 }
