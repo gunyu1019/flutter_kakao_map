@@ -24,3 +24,5 @@ flutter:
       android:
         package: kr.yhs.flutter_kakao_maps
         pluginClass: FlutterKakaoMapsPlugin
+      ios:
+        pluginClass: FlutterKakaoMapsPlugin
