@@ -14,6 +14,7 @@ class RouteController extends OverlayController {
   final int zOrder;
 
   final Map<String, Route> _route = {};
+  final Map<String, MultipleRoute> _multiple_route = {};
 
   RouteController._(this.channel, this.manager, this.id, {
     this.zOrder = defaultZOrder
@@ -51,6 +52,19 @@ class RouteController extends OverlayController {
     String routeId = await _invokeMethod("addRoute", payload);
     final route = Route._(this, routeId, points: points, style: style, curveType: curveType);
     _route[routeId] = route;
+    return route;
+  }
+
+  Future<MultipleRoute> addMultipleRoute(MultipleRouteOption option) async {
+    if (!option._isStyleAdded()) {
+      await manager.addMultipleRouteStyle(option._styles);
+    }
+    Map<String, dynamic> payload = {
+      "route": option.toMessageable()
+    };
+    String routeId = await _invokeMethod("addMultipleRoute", payload);
+    final route = MultipleRoute._(this, routeId, points: points, style: style, curveType: curveType);
+    _multiple_route[routeId] = route;
     return route;
   }
     
