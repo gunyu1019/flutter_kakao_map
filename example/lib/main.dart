@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: 'assets/config/.env');
-  await KakaoMapSdk.instance.initialize(dotenv.env['KAKAO_API_KEY']!);
+  // await KakaoMapSdk.instance.initialize(dotenv.env['KAKAO_API_KEY']!);
 
   DebugOverlay.enabled = true;
 
