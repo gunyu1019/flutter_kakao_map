@@ -2,7 +2,10 @@ part of '../../flutter_kakao_maps.dart';
 
 /// 위도(Latitude)와 경도(longitude)를 사용하여 좌표를 나타내는 객체입니다.
 class LatLng with KMessageable {
+  /// 위도
   final double latitude;
+
+  /// 경도
   final double longitude;
 
   const LatLng(
