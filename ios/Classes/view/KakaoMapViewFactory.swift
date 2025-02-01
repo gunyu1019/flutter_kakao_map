@@ -15,4 +15,8 @@ class KakaoMapViewFactory: NSObject, FlutterPlatformViewFactory {
     ) -> any FlutterPlatformView {
         return KakaoMapView(frame: frame);
     }
+    
+    func createArgsCodec() -> any FlutterMessageCodec & NSObjectProtocol {
+        FlutterStandardMessageCodec.sharedInstance()
+    }
 }
