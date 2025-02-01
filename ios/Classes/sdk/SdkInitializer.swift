@@ -2,10 +2,12 @@ import Flutter
 import KakaoMapsSDK
 
 internal class SdkInitializer: NSObject {
-    let channel: FlutterMethodChannel
+    private let channel: FlutterMethodChannel
+    private var isInitialzed: Bool
     
     init (channel: FlutterMethodChannel) {
         self.channel = channel
+        self.isInitialzed = false
         super.init()
         
         channel.setMethodCallHandler(self.handle)
@@ -16,6 +18,8 @@ internal class SdkInitializer: NSObject {
         switch call.method {
         case "initialize":
             initalize(appKey: asString(arguments["appKey"]), onSuccess: result)
+        case "isInitialize":
+            result(isInitialzed)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -23,6 +27,7 @@ internal class SdkInitializer: NSObject {
     
     private func initalize(appKey: String, onSuccess: (Any?) -> Void) {
         SDKInitializer.InitSDK(appKey: appKey)
+        self.isInitialzed = true
         onSuccess(nil)
     }
 }
