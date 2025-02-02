@@ -47,6 +47,33 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
       "enable": enable
     });
   }
+  
+
+  @override
+  Future<void> clearCache() async {
+    await channel.invokeMethod("clearCache");
+  }
+
+  @override
+  Future<void> clearDiskCache() async {
+    await channel.invokeMethod("clearDiskCache");
+  }
+
+  @override
+  Future<bool> canShowPosition(int zoomLevel, List<LatLng> position) async {
+    final result = await channel.invokeMethod("canShowPosition", {
+      "zoomLevel": zoomLevel,
+      "position": position.map((e) => e.toMessageable()).toList()
+    });
+    return result;
+  }
+
+  @override
+  Future<void> changeMapType(MapType mapType) async {
+    await channel.invokeMethod("changeMapType", {
+      "mapType": mapType.value
+    });
+  }
 
   @override
   Future<String> addPoiStyle(PoiStyle style) async {
