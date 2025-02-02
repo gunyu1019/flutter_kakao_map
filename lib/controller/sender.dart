@@ -31,4 +31,12 @@ abstract class KakaoMapControllerSender {
 
   /// 지도 형태를 변경합니다.
   Future<void> changeMapType(MapType mapType);
+
+  // Future<void> getBuildingHeightScale();
+
+  // Future<void> setBuildingHeightScale();
+
+  // Future<void> showOverlay();
+
+  // Future<void> hideOverlay();
 }
