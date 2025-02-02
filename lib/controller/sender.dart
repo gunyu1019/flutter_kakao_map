@@ -19,13 +19,16 @@ abstract class KakaoMapControllerSender {
   /// [gesture]는 사용 유무를 설정한 제스쳐입니다.
   Future<void> setGesture(GestureType gesture, bool enable);
 
-  // Future<void> clearCache();
+  /// 캐시 데이터를 지웁니다.
+  Future<void> clearCache();
 
-  // Future<void> clearDiskCache();
+  /// 디스크에 저장된 캐시 데이터를 지웁니다.
+  Future<void> clearDiskCache();
 
-  // Future<bool> canShowPosition(int zoomLevel, List<LatLng> position);
+  /// 주어진 [zoomLevel]과 [position]에 담긴 위/경도 배열이 카메라 모두 담을 수 있는지 확인합니다.
+  /// 확인된 결과는 [bool] 형태로 반환받으며, 모두 스크린에 표현할 수 있을 경우 [True]를 반환합니다.
+  Future<bool> canShowPosition(int zoomLevel, List<LatLng> position);
 
-  // Future<void> changeMapType(MapType mapType);
-
-  // 
+  /// 지도 형태를 변경합니다.
+  Future<void> changeMapType(MapType mapType);
 }
