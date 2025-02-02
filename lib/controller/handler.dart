@@ -3,6 +3,7 @@ part of '../flutter_kakao_maps.dart';
 
 mixin KakaoMapControllerHandler {
   Future<dynamic> handle(MethodCall method) async {
+    final arguments = method.arguments;
     switch(method.method) {
       case "onMapReady": 
         onMapReady();
@@ -28,7 +29,6 @@ mixin KakaoMapControllerHandler {
         }
         break;
       case "onCameraMoveStart":
-        final arguments = method.arguments;
         final gesture = GestureType.values.firstWhere(
           (el) => arguments['gesture'] as int == el.value,
           orElse: () => GestureType.unknown
@@ -36,13 +36,39 @@ mixin KakaoMapControllerHandler {
         onCameraMoveStart(gesture);
         break;
       case "onCameraMoveEnd":
-        final arguments = method.arguments;
         final position = CameraPosition.fromMessageable(arguments['position']);
         final gesture = GestureType.values.firstWhere(
           (el) => arguments['gesture'] as int == el.value,
           orElse: () => GestureType.unknown
         );
         onCameraMoveEnd(position, gesture);
+        break;
+      case "onCompassClick":
+        onCompassClick();
+        break;
+      case "onPoiClick":
+        onPoiClick(arguments['layerId'], arguments['poiId']);
+        break;
+      case "onLodPoiClick":
+        onLodPoiClick(arguments['layerId'], arguments['poiId']);
+        break;
+      case "onMapClick":
+        final rawPoint = arguments['point'];
+        final point = KPoint(rawPoint['x'], rawPoint['y']);
+        final position = LatLng.fromMessageable(arguments['position']);
+        onMapClick(point, position);
+        break;
+      case "onTerrainClick":
+        final rawPoint = arguments['point'];
+        final point = KPoint(rawPoint['x'], rawPoint['y']);
+        final position = LatLng.fromMessageable(arguments['position']);
+        onTerrainClick(point, position);
+        break;
+      case "onTerrainLongClick":
+        final rawPoint = arguments['point'];
+        final point = KPoint(rawPoint['x'], rawPoint['y']);
+        final position = LatLng.fromMessageable(arguments['position']);
+        onTerrainLongClick(point, position);
         break;
       default:
         break;
