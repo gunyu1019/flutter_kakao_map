@@ -76,6 +76,22 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<void> showOverlay(MapOverlay overlay) async {
+    await channel.invokeMethod("overlayVisible", {
+      "overlayType": overlay.value,
+      "visible": true
+    });
+  }
+
+  @override
+  Future<void> hideOverlay(MapOverlay overlay) async {
+    await channel.invokeMethod("overlayVisible", {
+      "overlayType": overlay.value,
+      "visible": false
+    });
+  }
+
+  @override
   Future<String> addPoiStyle(PoiStyle style) async {
     String styleId = await labelLayer._invokeMethod(
         "addPoiStyle", {"styleId": style.id, "styles": style.toMessageable()});
