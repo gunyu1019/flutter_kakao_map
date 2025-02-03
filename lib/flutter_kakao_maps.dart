@@ -68,6 +68,7 @@ part 'models/route/route_style.dart';
 
 /* model(enumerate) */
 part 'models/enums/event_type.dart';
+part 'models/enums/map_overlay.dart';
 part 'models/enums/map_type.dart';
 part 'models/enums/camera_update_type.dart';
 part 'models/enums/gesture_type.dart';

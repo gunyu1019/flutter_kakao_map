@@ -32,11 +32,13 @@ abstract class KakaoMapControllerSender {
   /// 지도 형태를 변경합니다.
   Future<void> changeMapType(MapType mapType);
 
-  // Future<void> getBuildingHeightScale();
+  /// 지도에서 제공하는 오버레이를 활성화합니다.
+  Future<void> showOverlay(MapOverlay overlay);
 
-  // Future<void> setBuildingHeightScale();
+  /// 지도에서 제공하는 오버레이를 비활성화합니다.
+  Future<void> hideOverlay(MapOverlay overlay);
 
-  // Future<void> showOverlay();
+  Future<double> getBuildingHeightScale();
 
-  // Future<void> hideOverlay();
+  Future<void> setBuildingHeightScale(double scale);
 }
