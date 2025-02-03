@@ -92,6 +92,19 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Future<double> getBuildingHeightScale() async {
+    final result = await channel.invokeMethod("getBuildingHeightScale");
+    return result;
+  }
+
+  @override
+  Future<void> setBuildingHeightScale(double scale) async {
+    await channel.invokeMethod("setBuildingHeightScale", {
+      "scale": scale
+    });
+  }
+
+  @override
   Future<String> addPoiStyle(PoiStyle style) async {
     String styleId = await labelLayer._invokeMethod(
         "addPoiStyle", {"styleId": style.id, "styles": style.toMessageable()});
