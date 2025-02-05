@@ -11,7 +11,9 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraAnimation
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraUpdate
+import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asList
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_maps.model.KakaoMapEvent
@@ -32,6 +34,32 @@ interface KakaoMapControllerHandler {
             setGestureEnable(gestureType, enable, result::success)
         }
         "setEventHandler" -> setEventHandler(call.arguments!!.asInt())
+        "fromScreenPoint" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            fromScreenPoint(
+                arguments["x"]!!.asInt(), 
+                arguments["y"]!!.asInt(), 
+                result::success
+            )
+        }
+        "toScreenPoint" -> toScreenPoint(call.arguments!!.asLatLng(), result::success)
+        "clearCache" -> clearCache(result::success)
+        "clearDiskCache" -> clearDiskCache(result::success)
+        /* "canPositionVisible" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            canPositionVisible(
+                arguments["zoomLevel"]!!.asInt(),
+                arguments["position"]!!.asList<Any>().map { (e: Any) => e.asLatLng() },
+                result::success
+            )
+        } */
+        "changeMapType" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            changeMapType(
+                arguments["mapType"]!!.toString().let(MapType::getEnum),
+                result::success
+            )
+        }
         else -> result.notImplemented()
     }
 
