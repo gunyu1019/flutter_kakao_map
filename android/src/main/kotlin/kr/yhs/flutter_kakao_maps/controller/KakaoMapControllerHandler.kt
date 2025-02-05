@@ -4,6 +4,9 @@ import com.kakao.vectormap.GestureType
 import com.kakao.vectormap.camera.CameraPosition
 import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraAnimation
+import com.kakao.vectormap.LatLng
+import com.kakao.vectormap.MapType
+import com.kakao.vectormap.MapOverlay
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraAnimation
@@ -48,5 +51,46 @@ interface KakaoMapControllerHandler {
 
     fun setEventHandler(
         event: Int
+    )
+
+    fun fromScreenPoint(
+        x: Int,
+        y: Int,
+        onSuccess: (Map<String, Any>?) -> Unit
+    )
+
+    fun toScreenPoint(
+        position: LatLng,
+        onSuccess: (Map<String, Any>?) -> Unit
+    )
+
+    fun clearCache(onSuccess: (Any?) -> Unit)
+
+    fun clearDiskCache(onSuccess: (Any?) -> Unit)
+
+    fun canPositionVisible(
+        zoomLevel: Int,
+        position: List<LatLng>,
+        onSuccess: (Boolean) -> Unit
+    )
+
+    fun changeMapType(
+        mapType: MapType,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun overlayVisible(
+        overlayType: MapOverlay,
+        visible: Boolean,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun getBuildingHeightScale(
+        onSuccess: (Float) -> Unit
+    )
+
+    fun setBuildingHeightScale(
+        scale: Float,
+        onSuccess: (Any?) -> Unit
     )
 }
