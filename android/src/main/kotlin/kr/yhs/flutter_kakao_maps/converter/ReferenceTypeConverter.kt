@@ -8,6 +8,7 @@ import kr.yhs.flutter_kakao_maps.FlutterKakaoMapsPlugin
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PointF
+import android.graphics.Point
 import java.io.ByteArrayInputStream
 
 
@@ -39,4 +40,9 @@ object ReferenceTypeConverter {
     fun Any.asPoint(): PointF = asMap<Float>().let { rawPayload: Map<String, Float> ->
         PointF(rawPayload["x"]!!, rawPayload["y"]!!)
     }
+
+    fun Point.toMessageable(): Map<String, Int> = mapOf(
+        "x" to this.x,
+        "y" to this.y
+    )
 }
