@@ -8,6 +8,7 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   KakaoMapController(this.channel, {required this.overlayChannel}) {
     _initalizeOverlayController();
+    fetchBuildingHeightScale();
   }
 
   /* Sender */
@@ -27,16 +28,22 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<LatLng> fromScreenPoint(double x, double y) async {
+  Future<LatLng?> fromScreenPoint(int x, int y) async {
     final position =
         await channel.invokeMethod("fromScreenPoint", {"x": x, "y": y});
+    if (position == null) {
+      return null;
+    }
     return LatLng.fromMessageable(position);
   }
 
   @override
-  Future<KPoint> toScreenPoint(LatLng position) async {
+  Future<KPoint?> toScreenPoint(LatLng position) async {
     final point =
         await channel.invokeMethod("toScreenPoint", position.toMessageable());
+    if (point == null) {
+      return null;
+    }
     return KPoint(point['x'], point['y']);
   }
 
@@ -92,8 +99,9 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<double> getBuildingHeightScale() async {
+  Future<double> fetchBuildingHeightScale() async {
     final result = await channel.invokeMethod("getBuildingHeightScale");
+    buildingHeightScale = result;
     return result;
   }
 
