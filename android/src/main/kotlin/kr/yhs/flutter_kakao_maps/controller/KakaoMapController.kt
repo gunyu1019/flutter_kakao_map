@@ -13,10 +13,13 @@ import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.MapAuthException
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.GestureType
+import com.kakao.vectormap.MapOverlay
+import com.kakao.vectormap.MapType
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraPosition
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraAnimation
+import kr.yhs.flutter_kakao_maps.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_maps.model.KakaoMapEvent
 import kr.yhs.flutter_kakao_maps.listener.CameraListener
 import kr.yhs.flutter_kakao_maps.controller.KakaoMapController
@@ -76,6 +79,73 @@ class KakaoMapController(
         if(KakaoMapEvent.CameraMoveEnd.compare(event)) {
             kakaoMap.setOnCameraMoveEndListener(cameraListener)
         }
+    }
+    
+    override fun fromScreenPoint(
+        x: Int,
+        y: Int,
+        onSuccess: (Map<String, Any>?) -> Unit
+    ) {
+        kakaoMap.fromScreenPoint(x, y)?.toMessageable().let(onSuccess::invoke)
+    }
+
+    override fun toScreenPoint(
+        position: LatLng,
+        onSuccess: (Map<String, Any>?) -> Unit
+    ) {
+        kakaoMap.toScreenPoint(position)?.toMessageable().let(onSuccess::invoke)
+    }
+
+    override fun clearCache(onSuccess: (Any?) -> Unit) {
+        kakaoMap.clearAllCache()
+        onSuccess.invoke(null)
+    }
+
+    override fun clearDiskCache(onSuccess: (Any?) -> Unit) {
+        kakaoMap.clearDiskCache()
+        onSuccess.invoke(null)
+    }
+
+    override fun canPositionVisible(
+        zoomLevel: Int,
+        position: List<LatLng>,
+        onSuccess: (Boolean) -> Unit
+    ) {
+        kakaoMap.canShowMapPoints(zoomLevel, *position.toTypedArray()).let(onSuccess::invoke)
+    }
+
+    override fun changeMapType(
+        mapType: MapType,
+        onSuccess: (Any?) -> Unit
+    ) {
+        kakaoMap.changeMapType(mapType)
+        onSuccess.invoke(null)
+    }
+
+    override fun overlayVisible(
+        overlayType: MapOverlay,
+        visible: Boolean,
+        onSuccess: (Any?) -> Unit
+    ) {
+        if (visible) {
+            kakaoMap.showOverlay(overlayType)
+        } else {
+            kakaoMap.hideOverlay(overlayType)
+        }
+        onSuccess.invoke(null)
+    }
+
+    override fun getBuildingHeightScale(
+        onSuccess: (Float) -> Unit
+    ) {
+        kakaoMap.buildingHeightScale.let(onSuccess::invoke)
+    }
+
+    override fun setBuildingHeightScale(
+        scale: Float,
+        onSuccess: (Any?) -> Unit
+    ) {
+        kakaoMap.buildingHeightScale = scale
     }
 
     /* Sender */
