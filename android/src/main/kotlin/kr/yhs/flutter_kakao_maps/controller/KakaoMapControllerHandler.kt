@@ -13,7 +13,9 @@ import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraAnimation
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asCameraUpdate
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asLatLng
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asFloat
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asList
+import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asString
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_maps.model.KakaoMapEvent
@@ -45,18 +47,34 @@ interface KakaoMapControllerHandler {
         "toScreenPoint" -> toScreenPoint(call.arguments!!.asLatLng(), result::success)
         "clearCache" -> clearCache(result::success)
         "clearDiskCache" -> clearDiskCache(result::success)
-        /* "canPositionVisible" -> {
+        "canPositionVisible" -> {
             val arguments = call.arguments!!.asMap<Any?>()
             canPositionVisible(
                 arguments["zoomLevel"]!!.asInt(),
-                arguments["position"]!!.asList<Any>().map { (e: Any) => e.asLatLng() },
+                arguments["position"]!!.asList<Any>().map { it.asLatLng() },
                 result::success
             )
-        } */
+        }
         "changeMapType" -> {
             val arguments = call.arguments!!.asMap<Any?>()
             changeMapType(
                 arguments["mapType"]!!.toString().let(MapType::getEnum),
+                result::success
+            )
+        }
+        "overlayVisible" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            overlayVisible(
+                arguments["overlayType"]!!.asString().let(MapOverlay::getEnum),
+                arguments["visible"]?.asBoolean() ?: true,
+                result::success
+            )
+        }
+        "getBuildingHeightScale" -> getBuildingHeightScale(result::success)
+        "setBuildingHeightScale" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            setBuildingHeightScale(
+                arguments["scale"]!!.asFloat(),
                 result::success
             )
         }
