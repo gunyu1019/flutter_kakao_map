@@ -11,10 +11,12 @@ class Compass extends DefaultGUI {
     required KakaoMapControllerSender controller,
   }) : _controller = controller;
 
+  /// 지도에 표시된 나침판을 숨깁니다.
   Future<void> hide() async {
     await _controller._defaultGUIvisible(type, false);
   }
 
+  /// 지도에 표시된 나침판을 표시합니다.
   Future<void> show() async {
     await _controller._defaultGUIvisible(type, true);
   }

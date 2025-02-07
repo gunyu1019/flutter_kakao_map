@@ -140,7 +140,7 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   
   @override
   Future<void> _scaleAnimationTime(int fadeIn, int fadeOut, int retention) async {
-    await channel.invokeMethod("scaleAutohide", {
+    await channel.invokeMethod("scaleAnimationTime", {
       "fadeIn": fadeIn,
       "fadeOut": fadeOut,
       "retention": retention,
