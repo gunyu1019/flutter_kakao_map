@@ -40,7 +40,17 @@ abstract class KakaoMapControllerSender {
   /// 지도에서 제공하는 오버레이를 비활성화합니다.
   Future<void> hideOverlay(MapOverlay overlay);
 
+  /// 최신 [buildingHeightScale] 값을 카카오맵에서 불러옵니다.
   Future<double> fetchBuildingHeightScale();
 
+  /// [buildingHeightScale] 값을 [scale] 값에 맞게 업데이트 합니다.
   Future<void> setBuildingHeightScale(double scale);
+
+  Future<void> _defaultGUIvisible(DefaultGUIType type, bool visible);
+  
+  Future<void> _defaultGUIposition(DefaultGUIType type, MapGravity gravity, double x, double y);
+
+  Future<void> _scaleAutohide(bool autohide);
+
+  Future<void> _scaleAnimationTime(int fadeIn, int fadeOut, int retention);
 }

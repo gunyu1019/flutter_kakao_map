@@ -110,6 +110,41 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
     await channel.invokeMethod("setBuildingHeightScale", {
       "scale": scale
     });
+    buildingHeightScale = scale;
+  }
+  
+  @override
+  Future<void> _defaultGUIvisible(DefaultGUIType type, bool visible) async {
+    await channel.invokeMethod("defaultGUIvisible", {
+      "type": type.value,
+      "visible": visible
+    });
+  }
+  
+  @override
+  Future<void> _defaultGUIposition(DefaultGUIType type, MapGravity gravity, double x, double y) async {
+    await channel.invokeMethod("defaultGUIposition", {
+      "type": type.value,
+      "gravity": gravity.value,
+      "x": x,
+      "y": y
+    });
+  }
+  
+  @override
+  Future<void> _scaleAutohide(bool autohide) async {
+    await channel.invokeMethod("scaleAutohide", {
+      "autohide": autohide
+    });
+  }
+  
+  @override
+  Future<void> _scaleAnimationTime(int fadeIn, int fadeOut, int retention) async {
+    await channel.invokeMethod("scaleAutohide", {
+      "fadeIn": fadeIn,
+      "fadeOut": fadeOut,
+      "retention": retention,
+    });
   }
 
   @override
