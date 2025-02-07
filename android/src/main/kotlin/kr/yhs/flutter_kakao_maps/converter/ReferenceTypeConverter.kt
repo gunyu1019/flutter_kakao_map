@@ -45,4 +45,9 @@ object ReferenceTypeConverter {
         "x" to this.x,
         "y" to this.y
     )
+
+    fun PointF.toMessageable(): Map<String, Float> = mapOf(
+        "x" to this.x,
+        "y" to this.y
+    )
 }
