@@ -16,6 +16,8 @@ import kr.yhs.flutter_kakao_maps.controller.overlay.OverlayController
 import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_maps.converter.ReferenceTypeConverter.toMessageable
 import kr.yhs.flutter_kakao_maps.listener.CameraListener
+import kr.yhs.flutter_kakao_maps.listener.PoiClickListener
+import kr.yhs.flutter_kakao_maps.listener.MapClickListener
 import kr.yhs.flutter_kakao_maps.model.DefaultGUIType
 import kr.yhs.flutter_kakao_maps.model.KakaoMapEvent
 
@@ -30,6 +32,8 @@ class KakaoMapController(
 
     // listener
     private val cameraListener = CameraListener(channel)
+    private val poiClickListener = PoiClickListener(channel)
+    private val mapClickListener = MapClickListener(channel)
 
     init {
         channel.setMethodCallHandler(::handle)
@@ -74,6 +78,24 @@ class KakaoMapController(
         }
         if (KakaoMapEvent.CameraMoveEnd.compare(event)) {
             kakaoMap.setOnCameraMoveEndListener(cameraListener)
+        }
+        if (KakaoMapEvent.CompassClick.compare(event)) {
+            kakaoMap.setOnCompassClickListener(mapClickListener)
+        }
+        if (KakaoMapEvent.MapClick.compare(event)) {
+            kakaoMap.setOnViewportClickListener(mapClickListener)
+        }
+        if (KakaoMapEvent.TerrainClick.compare(event)) {
+            kakaoMap.setOnTerrainClickListener(mapClickListener)
+        }
+        if (KakaoMapEvent.TerrainLongClick.compare(event)) {
+            kakaoMap.setOnTerrainLongClickListener(mapClickListener)
+        }
+        if (KakaoMapEvent.PoiClick.compare(event)) {
+            kakaoMap.setOnLabelClickListener(poiClickListener)
+        }
+        if (KakaoMapEvent.LodPoiClick.compare(event)) {
+            kakaoMap.setOnLodLabelClickListener(poiClickListener)
         }
     }
 
