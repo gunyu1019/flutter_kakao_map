@@ -6,6 +6,7 @@ import com.kakao.vectormap.camera.CameraUpdate
 import com.kakao.vectormap.camera.CameraAnimation
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapType
+import com.kakao.vectormap.MapGravity
 import com.kakao.vectormap.MapOverlay
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodCall
@@ -19,6 +20,7 @@ import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asString
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asInt
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asBoolean
 import kr.yhs.flutter_kakao_maps.model.KakaoMapEvent
+import kr.yhs.flutter_kakao_maps.model.DefaultGUIType
 
 interface KakaoMapControllerHandler {
     fun handle(call: MethodCall, result: MethodChannel.Result) = when (call.method) {
@@ -75,6 +77,38 @@ interface KakaoMapControllerHandler {
             val arguments = call.arguments!!.asMap<Any?>()
             setBuildingHeightScale(
                 arguments["scale"]!!.asFloat(),
+                result::success
+            )
+        }
+        "defaultGUIvisible" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            val guiType = DefaultGUIType.values().filter { it.value == arguments["type"]!!.asString() }.first()
+            defaultGUIvisible(guiType, arguments["visible"]!!.asBoolean(), result::success)
+        }
+        "defaultGUIposition" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            val guiType = DefaultGUIType.values().filter { it.value == arguments["type"]!!.asString() }.first()
+            defaultGUIposition(
+                guiType,
+                arguments["gravity"]!!.asInt(), 
+                arguments["x"]!!.asFloat(), 
+                arguments["y"]!!.asFloat(), 
+                result::success
+            )
+        }
+        "scaleAutohide" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            scaleAutohide(
+                arguments["autohide"]!!.asBoolean(),
+                result::success
+            )
+        }
+        "scaleAnimationTime" -> {
+            val arguments = call.arguments!!.asMap<Any?>()
+            scaleAnimationTime(
+                arguments["fadeIn"]!!.asInt(),
+                arguments["fadeOut"]!!.asInt(),
+                arguments["retention"]!!.asInt(),
                 result::success
             )
         }
@@ -137,6 +171,32 @@ interface KakaoMapControllerHandler {
 
     fun setBuildingHeightScale(
         scale: Float,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun defaultGUIvisible(
+        type: DefaultGUIType,
+        visible: Boolean,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun defaultGUIposition(
+        type: DefaultGUIType,
+        gravity: Int,
+        x: Float,
+        y: Float,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun scaleAutohide(
+        autohide: Boolean,
+        onSuccess: (Any?) -> Unit
+    )
+
+    fun scaleAnimationTime(
+        fadeIn: Int,
+        fadeOut: Int,
+        retention: Int,
         onSuccess: (Any?) -> Unit
     )
 }
