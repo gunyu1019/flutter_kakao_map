@@ -66,7 +66,13 @@ part 'models/route/route.dart';
 part 'models/route/route_pattern.dart';
 part 'models/route/route_style.dart';
 
+part 'models/gui/default_gui.dart';
+part 'models/gui/compass.dart';
+part 'models/gui/scale_bar.dart';
+part 'models/gui/logo.dart';
+
 /* model(enumerate) */
+part 'models/enums/default_gui_type.dart';
 part 'models/enums/event_type.dart';
 part 'models/enums/map_overlay.dart';
 part 'models/enums/map_type.dart';

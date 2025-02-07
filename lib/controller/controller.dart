@@ -148,6 +148,15 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
+  Compass get compass => Compass._(controller: this);
+
+  @override
+  ScaleBar get scaleBar => ScaleBar._(controller: this);
+
+  @override
+  Logo get logo => Logo._(controller: this);
+
+  @override
   Future<String> addPoiStyle(PoiStyle style) async {
     String styleId = await labelLayer._invokeMethod(
         "addPoiStyle", {"styleId": style.id, "styles": style.toMessageable()});

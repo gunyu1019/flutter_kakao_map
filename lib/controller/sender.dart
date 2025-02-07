@@ -46,6 +46,15 @@ abstract class KakaoMapControllerSender {
   /// [buildingHeightScale] 값을 [scale] 값에 맞게 업데이트 합니다.
   Future<void> setBuildingHeightScale(double scale);
 
+  /// 지도에 표시된 나침판을 불러옵니다.
+  Compass get compass;
+
+  /// 지도에 표시된 축적바를 불러옵니다.
+  ScaleBar get scaleBar;
+
+  /// 지도에 표시된 로고를 불러옵니다.
+  Logo get logo;
+
   Future<void> _defaultGUIvisible(DefaultGUIType type, bool visible);
   
   Future<void> _defaultGUIposition(DefaultGUIType type, MapGravity gravity, double x, double y);
