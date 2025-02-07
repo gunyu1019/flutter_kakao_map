@@ -19,6 +19,7 @@ class ScaleBar extends DefaultGUI {
     await _controller._defaultGUIvisible(type, true);
   }
 
+  /// 지도에 표시된 축적도의 위치를 조정합니다.
   Future<void> changePosition(MapGravity gravity, double x, double y) async {
     await _controller._defaultGUIposition(type, gravity, x, y);
   }
