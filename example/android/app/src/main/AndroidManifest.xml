@@ -6,7 +6,7 @@
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
     <application
-        android:label="flutter_kakaomaps_example"
+        android:label="kakao_map_sdk_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

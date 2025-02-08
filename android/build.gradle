@@ -1,4 +1,4 @@
-group = "kr.yhs.flutter_kakaomaps"
+group = "kr.yhs.flutter_kakao_maps"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -28,7 +28,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "kr.yhs.flutter_kakaomaps"
+    namespace = "kr.yhs.flutter_kakao_maps"
 
     compileSdk = 34
 

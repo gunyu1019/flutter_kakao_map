@@ -1,4 +1,4 @@
-part of '../flutter_kakaomaps.dart';
+part of '../flutter_kakao_map.dart';
 
 class KakaoMapSdkImplement implements KakaoMapSdk {
   MethodChannel channel = ChannelType.sdk.channel;

@@ -1,6 +1,6 @@
-# flutter_kakaomaps_example
+# kakao_map_sdk_example
 
-Demonstrates how to use the flutter_kakaomaps plugin.
+Demonstrates how to use the kakao_map_sdk plugin.
 
 ## Getting Started
 

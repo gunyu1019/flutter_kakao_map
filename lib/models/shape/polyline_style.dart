@@ -1,4 +1,4 @@
-part of '../../flutter_kakaomaps.dart';
+part of '../../flutter_kakao_map.dart';
 
 class PolylineStyle with KMessageable {
   String? _id;

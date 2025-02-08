@@ -1,4 +1,4 @@
-part of '../../flutter_kakaomaps.dart';
+part of '../../flutter_kakao_map.dart';
 
 
 /// 카메라 이동의 애니메이션을 정의하는 객체입니다.
