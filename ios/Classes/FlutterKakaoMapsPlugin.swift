@@ -4,7 +4,11 @@ import UIKit
 
 
 public class FlutterKakaoMapsPlugin: NSObject, FlutterPlugin {
+    private static var registrar: FlutterPluginRegistrar!
+
     public static func register(with registrar: FlutterPluginRegistrar) {
+        self.registrar = registrar;
+
         let kakaoMapFactory = KakaoMapViewFactory(messagenger: registrar.messenger())
         registrar.register(kakaoMapFactory, withId: MAP_VIEW_TYPE_ID)
         
@@ -17,4 +21,16 @@ public class FlutterKakaoMapsPlugin: NSObject, FlutterPlugin {
     private static let SDK_CHANNEL_NAME = "flutter_kakao_maps_sdk"
     private static let OVERLAY_CHANNEL_NAME = "flutter_kakao_maps_overlay"
     private static let VIEW_CHANNEL_NAME = "flutter_kakao_maps_view"
+
+    internal static func createViewMethodChannelName(id: Int64) -> String {
+        "\(VIEW_CHANNEL_NAME)#\(id)"
+    }
+
+    internal static func createOverlayMethodChannelName(id: Int64) -> String {
+        "\(OVERLAY_CHANNEL_NAME)#\(id)"
+    }
+
+    internal static func getAssets(path: String) -> String {
+        registrar.lookupKey(forAsset: path)
+    }
 }
