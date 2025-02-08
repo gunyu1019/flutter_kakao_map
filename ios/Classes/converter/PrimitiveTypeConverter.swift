@@ -22,6 +22,15 @@ internal func asDict(_ v: Any) -> Dictionary<String, Any> {
     v as! Dictionary<String, Any>
 }
 
+internal func asDictTyped<T>(_ v: Any, caster: (Any) throws -> T) -> Dictionary<String, T> {
+    let dict = asDict(v)
+    var newDict: Dictionary<String, T> = [:]
+    for (k, v) in dict {
+        newDict[k] = try! caster(v)
+    }
+    return newDict
+}
+
 internal func castSafty<T>(_ v: Any?, caster: (Any) throws -> T) -> T? {
     if v == nil {
         return nil
