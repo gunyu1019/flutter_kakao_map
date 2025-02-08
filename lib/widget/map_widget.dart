@@ -172,7 +172,7 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   void onPoiClick(String layerId, String poiId) {
     final layer = controller.getLabelLayer(layerId);
     final poi = layer!.getPoi(poiId);
-    poi?._onClick?.call();
+    poi?.onClick?.call();
     widget.onPoiClick?.call(layer, poi!);
   }
 
@@ -180,7 +180,7 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   void onLodPoiClick(String layerId, String poiId) {
     final layer = controller.getLodLabelLayer(layerId);
     final poi = layer!.getLodPoi(poiId);
-    poi?._onClick?.call();
+    poi?.onClick?.call();
     widget.onLodPoiClick?.call(layer, poi!);
   }
 
