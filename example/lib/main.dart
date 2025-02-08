@@ -141,6 +141,7 @@ class _MyAppState extends State<MyApp> {
         position = result.position;
       });
     });
+    return;
 
     controller.lodLabelLayer.addLodPoi(
         const LatLng(37.395763313860826, 127.11048591050786),
