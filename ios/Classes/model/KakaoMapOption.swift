@@ -1,35 +1,17 @@
 import KakaoMapsSDK
 
 
-internal class KakaoMapOption: MapviewInfo {
-    init (
-        viewName: String,
-        appName: String = "openmap",
-        viewInfoName: String = "map",
-        defaultPosition: MapPoint?,
-        defaultLevel: Int = 17,
-        enabled: Bool = true
-    ) { 
-        super.init(
-            viewName: viewName, 
-            appName: appName, 
-            viewInfoName: viewInfoName, 
-            defaultPosition: defaultPosition, 
-            defaultLevel: defaultLevel, 
-            enabled: enabled
-        )
-    }
-
-    init (
-        paylaod: Dictionary<String, Any>
+internal extension MapviewInfo {
+    convenience init (
+        payload: Dictionary<String, Any>
     ) {
-        super.init(
-            viewName: paylaod["viewName"], 
-            appName: "openmap", 
-            viewInfoName: paylaod["mapType"], 
-            defaultPosition: payload["position"], // need MapPoints struction
-            defaultLevel: payload["zoomLevel"], 
-            enabled: payload["visible"]
+        self.init(
+            viewName:"mapView",
+            appName: "openmap",
+            viewInfoName: asString(payload["mapType"] ?? "openmap"),
+            defaultPosition: MapPoint(payload: payload),
+            defaultLevel: asInt(payload["zoomLevel"] ?? 15),
+            enabled: asBool(payload["visible"] ?? true)
         )
     }
 }
