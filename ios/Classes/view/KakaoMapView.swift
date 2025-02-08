@@ -3,23 +3,36 @@ import KakaoMapsSDK
 
 
 internal class KakaoMapView: NSObject, FlutterPlatformView {
-    private let kakaoMap: KMViewContainer;
-    private let controller: KMController;
+    private let KMView: KMViewContainer;
+    private let kakaoMap: KMController;
     private var eventDelegate: KakaoMapDelegate!
     
-    init(frame: CGRect) {
-        self.kakaoMap = KMViewContainer()
-        self.controller = KMController(viewContainer: kakaoMap)
+    private let controller: KakaoMapController
+    
+    init(
+        frame: CGRect,
+        channel: FlutterMethodChannel,
+        overlayChannel: FlutterMethodChannel,
+        option: MapviewInfo
+    ) {
+        self.KMView = KMViewContainer()
+        self.kakaoMap = KMController(viewContainer: KMView)
+        self.controller = KakaoMapController(
+            channel: channel,
+            overlayChannel: overlayChannel,
+            kmController: self.kakaoMap
+        )
         super.init()
         
-        eventDelegate = KakaoMapDelegate(controller: self.controller)
-        self.controller.delegate = eventDelegate
+        eventDelegate = KakaoMapDelegate(controller: self.kakaoMap, sender: controller, option: option)
+        self.kakaoMap.delegate = eventDelegate
+        
     }
     
     func view() -> UIView {
-        self.controller.prepareEngine()
-        self.controller.activateEngine()
-        return kakaoMap
+        self.kakaoMap.prepareEngine()
+        self.kakaoMap.activateEngine()
+        return KMView
     }
 }
 
