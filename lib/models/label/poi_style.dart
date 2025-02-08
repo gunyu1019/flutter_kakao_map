@@ -17,31 +17,33 @@ class PoiStyle with KMessageable {
   final List<PoiStyle> _styles = [];
   final bool _isSecondaryStyle;
 
-  PoiStyle({
-    String? id,
-    this.applyDpScale = true,
-    this.anchor = const KPoint(0.5, 1.0),
-    this.padding = 0.0,
-    this.icon,
-    this.iconTransition = const PoiTransition(),
-    this.textGravity = 8,
-    this.textStyle = const [],
-    this.textTransition = const PoiTransition(),
-    this.zoomLevel = 0
-  }) : _isSecondaryStyle = false, _id = id;
+  PoiStyle(
+      {String? id,
+      this.applyDpScale = true,
+      this.anchor = const KPoint(0.5, 1.0),
+      this.padding = 0.0,
+      this.icon,
+      this.iconTransition = const PoiTransition(),
+      this.textGravity = 8,
+      this.textStyle = const [],
+      this.textTransition = const PoiTransition(),
+      this.zoomLevel = 0})
+      : _isSecondaryStyle = false,
+        _id = id;
 
-  PoiStyle._({
-    String? id,
-    this.applyDpScale = true,
-    this.anchor = const KPoint(0.5, 1.0),
-    this.padding = 0.0,
-    this.icon,
-    this.iconTransition = const PoiTransition(),
-    this.textGravity = 8,
-    this.textStyle = const [],
-    this.textTransition = const PoiTransition(),
-    this.zoomLevel = 0
-  }) : _isSecondaryStyle = true, _id = id;
+  PoiStyle._(
+      {String? id,
+      this.applyDpScale = true,
+      this.anchor = const KPoint(0.5, 1.0),
+      this.padding = 0.0,
+      this.icon,
+      this.iconTransition = const PoiTransition(),
+      this.textGravity = 8,
+      this.textStyle = const [],
+      this.textTransition = const PoiTransition(),
+      this.zoomLevel = 0})
+      : _isSecondaryStyle = true,
+        _id = id;
 
   void _setStyleId(String id) {
     _id = id;
@@ -65,17 +67,16 @@ class PoiStyle with KMessageable {
   }) {
     if (_isSecondaryStyle) return;
     final otherStyle = PoiStyle._(
-      id: id,
-      applyDpScale: applyDpScale ?? this.applyDpScale,
-      anchor: anchor ?? this.anchor,
-      padding: padding ?? this.padding,
-      icon: icon ?? this.icon,
-      iconTransition: iconTransition ?? this.iconTransition,
-      textGravity: textGravity ?? this.textGravity,
-      textStyle: textStyle ?? this.textStyle,
-      textTransition: textTransition ?? this.textTransition,
-      zoomLevel: zoomLevel
-    );
+        id: id,
+        applyDpScale: applyDpScale ?? this.applyDpScale,
+        anchor: anchor ?? this.anchor,
+        padding: padding ?? this.padding,
+        icon: icon ?? this.icon,
+        iconTransition: iconTransition ?? this.iconTransition,
+        textGravity: textGravity ?? this.textGravity,
+        textStyle: textStyle ?? this.textStyle,
+        textTransition: textTransition ?? this.textTransition,
+        zoomLevel: zoomLevel);
     _styles.add(otherStyle);
   }
 
@@ -88,7 +89,7 @@ class PoiStyle with KMessageable {
     if (_isSecondaryStyle) return;
     _styles.removeWhere((e) => e.zoomLevel == zoomLevel);
   }
-  
+
   @override
   Map<String, dynamic> toMessageable() {
     final payload = <String, dynamic>{

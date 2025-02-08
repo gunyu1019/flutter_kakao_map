@@ -13,8 +13,8 @@ enum MapOverlay {
 
   /// (스카이뷰 한정) 도로선
   hybrid(value: "SKYVIEW_HYBRID");
-  
+
   final String value;
-  
+
   const MapOverlay({required this.value});
 }

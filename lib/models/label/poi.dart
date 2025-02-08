@@ -40,15 +40,12 @@ class Poi {
 
   // void addBadge();
 
-  void addSharePosition(Poi poi) {
+  void addSharePosition(Poi poi) {}
 
-  }
+  void addShareTransform(Poi poi) {}
 
-  void addShareTransform(Poi poi) {
-
-  }
-
-  Future<void> changeOffsetPosition(double x, double y, [bool forceDpScale = false]) async {
+  Future<void> changeOffsetPosition(double x, double y,
+      [bool forceDpScale = false]) async {
     final prePosition = _position;
     _position = LatLng(prePosition.latitude + x, prePosition.longitude + y);
     await _controller._changePoiOffsetPosition(id, x, y, forceDpScale);
@@ -63,7 +60,7 @@ class Poi {
     final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
     await _controller._changePoiStyle(id, styleId);
     _style = style;
-  } 
+  }
 
   Future<void> changeText(String text, [bool transition = false]) async {
     _text = text;
@@ -93,13 +90,9 @@ class Poi {
 
   // void removeAllBadge();
 
-  void removeSharePosition(Poi poi) {
+  void removeSharePosition(Poi poi) {}
 
-  }
-
-  void removeShareTransform(Poi poi) {
-
-  }
+  void removeShareTransform(Poi poi) {}
 
   Future<void> rotate(double angle, [double? millis]) async {
     await _controller._rotatePoi(id, angle, millis);

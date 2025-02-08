@@ -1,6 +1,5 @@
 part of '../../kakao_map.dart';
 
-
 /// 지도의 카메라 속성을 가지고 있는 객체입니다.
 class CameraPosition with KMessageable {
   /// 지도를 비추고 있는 카메라의 중심 위치를 가져옵니다.
@@ -18,22 +17,16 @@ class CameraPosition with KMessageable {
   /// 지도를 비추고 있는 카메라의 높이를 가져옵니다.
   final double? height = null;
 
-  const CameraPosition(
-    this.position,
-    this.zoomLevel, {
-      tiltAngle,
-      rotationAngle,
-      height
-  });
+  const CameraPosition(this.position, this.zoomLevel,
+      {tiltAngle, rotationAngle, height});
 
-  factory CameraPosition.fromMessageable(dynamic payload) 
-    => CameraPosition(
-      LatLng.fromMessageable(payload),
-      payload['zoomLevel'],
-      tiltAngle: payload['tiltAngle'],
-      rotationAngle: payload['rotationAngle'],
-      height: payload['height'],
-    );
+  factory CameraPosition.fromMessageable(dynamic payload) => CameraPosition(
+        LatLng.fromMessageable(payload),
+        payload['zoomLevel'],
+        tiltAngle: payload['tiltAngle'],
+        rotationAngle: payload['rotationAngle'],
+        height: payload['height'],
+      );
 
   @override
   Map<String, dynamic> toMessageable() {

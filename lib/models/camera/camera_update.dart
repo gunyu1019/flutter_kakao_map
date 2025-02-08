@@ -1,6 +1,5 @@
 part of '../../kakao_map.dart';
 
-
 /// 지도의 카메라의 위치를 새롭게 정의할 때 사용하는 객체입니다.
 class CameraUpdate with KMessageable {
   final CameraUpdateType type;
@@ -17,7 +16,8 @@ class CameraUpdate with KMessageable {
   final List<LatLng>? fitPoints;
   final int? padding;
 
-  CameraUpdate._(this.type, {
+  CameraUpdate._(
+    this.type, {
     this.position,
     this.zoomLevel = -1,
     this.cameraPosition,
@@ -27,49 +27,48 @@ class CameraUpdate with KMessageable {
   });
 
   /// 카메라가 새롭게 이동할 위치를 지정합니다.
-  /// 
+  ///
   /// @params position 새롭게 이동할 카메라의 좌표 값입니다.
   /// @params zoomLevel 새롭게 지정할 확대/축솟 값입니다. (선택 값입니다.)
-  factory CameraUpdate.newCenterPosition(LatLng position, {int? zoomLevel})
-    => CameraUpdate._(CameraUpdateType.newCenterPoint, position: position, zoomLevel: zoomLevel ?? -1);
+  factory CameraUpdate.newCenterPosition(LatLng position, {int? zoomLevel}) =>
+      CameraUpdate._(CameraUpdateType.newCenterPoint,
+          position: position, zoomLevel: zoomLevel ?? -1);
 
   /// [CameraPosition] 객체로 카메라가 이동할 위치를 설정합니다.
-  /// 
+  ///
   /// @params cameraPosition [CameraPosition] 카메라의 위치가 담긴 객체입니다.
-  factory CameraUpdate.newCameraPos(CameraPosition cameraPosition)
-    => CameraUpdate._(CameraUpdateType.newCameraPos, cameraPosition: cameraPosition);
-
+  factory CameraUpdate.newCameraPos(CameraPosition cameraPosition) =>
+      CameraUpdate._(CameraUpdateType.newCameraPos,
+          cameraPosition: cameraPosition);
 
   /// 카메라의 줌레벨을 [zoomLevel]에 따라 확대 또는 축소를 합니다.
-  factory CameraUpdate.zoomTo(int zoomLevel)
-    => CameraUpdate._(CameraUpdateType.zoomTo, zoomLevel: zoomLevel);
+  factory CameraUpdate.zoomTo(int zoomLevel) =>
+      CameraUpdate._(CameraUpdateType.zoomTo, zoomLevel: zoomLevel);
 
   /// 카메라가 더 자세한 정보를 담아낼 수 있도록, 한 단계 확대합니다.
-  factory CameraUpdate.zoomIn()
-    => CameraUpdate._(CameraUpdateType.zoomIn);
+  factory CameraUpdate.zoomIn() => CameraUpdate._(CameraUpdateType.zoomIn);
 
   /// 카메라가 더 넓은 정보를 담아낼 수 있도록, 한 단계 축소합니다.
-  factory CameraUpdate.zoomOut()
-    => CameraUpdate._(CameraUpdateType.zoomOut);
+  factory CameraUpdate.zoomOut() => CameraUpdate._(CameraUpdateType.zoomOut);
 
   /// 카메라를 [angle] 각도만큼 따라 회전합니다.
-  factory CameraUpdate.rotate(double angle)
-    => CameraUpdate._(CameraUpdateType.rotate, angle: angle);
+  factory CameraUpdate.rotate(double angle) =>
+      CameraUpdate._(CameraUpdateType.rotate, angle: angle);
 
   /// 카메라를 [angle] 각도만큼 기울기 각도를 수정합니다.
-  factory CameraUpdate.tilt(double angle)
-    => CameraUpdate._(CameraUpdateType.tilt, angle: angle);
+  factory CameraUpdate.tilt(double angle) =>
+      CameraUpdate._(CameraUpdateType.tilt, angle: angle);
 
   /// [fitPoints]에 주어진 위치(좌표)들이 화면의 가장자리에 맞춰 보여지도록 카메라의 위치를 변경합니다.
-  factory CameraUpdate.fitMapPoints(List<LatLng> fitPoints, int? padding, int? zoomLevel)
-    => CameraUpdate._(CameraUpdateType.tilt, fitPoints: fitPoints, padding: padding, zoomLevel: zoomLevel ?? -1);
+  factory CameraUpdate.fitMapPoints(
+          List<LatLng> fitPoints, int? padding, int? zoomLevel) =>
+      CameraUpdate._(CameraUpdateType.tilt,
+          fitPoints: fitPoints, padding: padding, zoomLevel: zoomLevel ?? -1);
 
   @override
   Map<String, dynamic> toMessageable() {
-    Map<String, dynamic> payload = {
-      "type": type.value
-    };
-    switch(type) {
+    Map<String, dynamic> payload = {"type": type.value};
+    switch (type) {
       case CameraUpdateType.newCenterPoint:
         payload.addAll(position!.toMessageable());
       case CameraUpdateType.zoomTo:
@@ -87,7 +86,9 @@ class CameraUpdate with KMessageable {
         payload['angle'] = angle;
         break;
       case CameraUpdateType.fitMapPoints:
-        payload['points'] = fitPoints!.map((latlng) { latlng.toMessageable(); });
+        payload['points'] = fitPoints!.map((latlng) {
+          latlng.toMessageable();
+        });
         payload['padding'] = padding ?? 0;
         payload['zoomLevel'] = zoomLevel;
         break;

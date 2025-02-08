@@ -49,12 +49,9 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<void> setGesture(GestureType gesture, bool enable) async {
-    await channel.invokeMethod("setGestureEnable", {
-      "gestureType": gesture.value,
-      "enable": enable
-    });
+    await channel.invokeMethod(
+        "setGestureEnable", {"gestureType": gesture.value, "enable": enable});
   }
-  
 
   @override
   Future<void> clearCache() async {
@@ -77,25 +74,19 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<void> changeMapType(MapType mapType) async {
-    await channel.invokeMethod("changeMapType", {
-      "mapType": mapType.value
-    });
+    await channel.invokeMethod("changeMapType", {"mapType": mapType.value});
   }
 
   @override
   Future<void> showOverlay(MapOverlay overlay) async {
-    await channel.invokeMethod("overlayVisible", {
-      "overlayType": overlay.value,
-      "visible": true
-    });
+    await channel.invokeMethod(
+        "overlayVisible", {"overlayType": overlay.value, "visible": true});
   }
 
   @override
   Future<void> hideOverlay(MapOverlay overlay) async {
-    await channel.invokeMethod("overlayVisible", {
-      "overlayType": overlay.value,
-      "visible": false
-    });
+    await channel.invokeMethod(
+        "overlayVisible", {"overlayType": overlay.value, "visible": false});
   }
 
   @override
@@ -107,39 +98,31 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   @override
   Future<void> setBuildingHeightScale(double scale) async {
-    await channel.invokeMethod("setBuildingHeightScale", {
-      "scale": scale
-    });
+    await channel.invokeMethod("setBuildingHeightScale", {"scale": scale});
     buildingHeightScale = scale;
   }
-  
+
   @override
   Future<void> _defaultGUIvisible(DefaultGUIType type, bool visible) async {
-    await channel.invokeMethod("defaultGUIvisible", {
-      "type": type.value,
-      "visible": visible
-    });
+    await channel.invokeMethod(
+        "defaultGUIvisible", {"type": type.value, "visible": visible});
   }
-  
+
   @override
-  Future<void> _defaultGUIposition(DefaultGUIType type, MapGravity gravity, double x, double y) async {
-    await channel.invokeMethod("defaultGUIposition", {
-      "type": type.value,
-      "gravity": gravity.value,
-      "x": x,
-      "y": y
-    });
+  Future<void> _defaultGUIposition(
+      DefaultGUIType type, MapGravity gravity, double x, double y) async {
+    await channel.invokeMethod("defaultGUIposition",
+        {"type": type.value, "gravity": gravity.value, "x": x, "y": y});
   }
-  
+
   @override
   Future<void> _scaleAutohide(bool autohide) async {
-    await channel.invokeMethod("scaleAutohide", {
-      "autohide": autohide
-    });
+    await channel.invokeMethod("scaleAutohide", {"autohide": autohide});
   }
-  
+
   @override
-  Future<void> _scaleAnimationTime(int fadeIn, int fadeOut, int retention) async {
+  Future<void> _scaleAnimationTime(
+      int fadeIn, int fadeOut, int retention) async {
     await channel.invokeMethod("scaleAnimationTime", {
       "fadeIn": fadeIn,
       "fadeOut": fadeOut,

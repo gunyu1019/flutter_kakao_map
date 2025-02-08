@@ -4,11 +4,13 @@ class RoutePattern with KMessageable {
   final KImage patternImage;
   final KImage? symbolImage;
   final double distance;
-  
+
   bool pinStart;
   bool pinEnd;
 
-  RoutePattern(this.patternImage, this.distance, {
+  RoutePattern(
+    this.patternImage,
+    this.distance, {
     this.symbolImage,
     this.pinStart = false,
     this.pinEnd = false,

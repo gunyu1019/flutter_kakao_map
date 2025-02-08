@@ -30,7 +30,9 @@ class RouteController extends OverlayController {
   Future<void> _changePoints(String routeId, List<List<LatLng>> points) async {
     await _invokeMethod("changeRoutePoint", {
       "routeId": routeId,
-      "points": points.map((e1) => e1.map((e2) => e2.toMessageable()).toList()).toList()
+      "points": points
+          .map((e1) => e1.map((e2) => e2.toMessageable()).toList())
+          .toList()
     });
   }
 
@@ -41,7 +43,8 @@ class RouteController extends OverlayController {
     });
   }
 
-  Future<void> _changeCurveType(String routeId, List<CurveType> curveType) async {
+  Future<void> _changeCurveType(
+      String routeId, List<CurveType> curveType) async {
     await _invokeMethod("changeRouteCurveType", {
       "routeId": routeId,
       "curveType": curveType.map((e) => e.value).toList(),
@@ -49,10 +52,8 @@ class RouteController extends OverlayController {
   }
 
   Future<void> _changeRouteVisible(String routeId, bool visible) async {
-    await _invokeMethod("changeRouteVisible", {
-      "routeId": routeId,
-      "visible": visible
-    });
+    await _invokeMethod(
+        "changeRouteVisible", {"routeId": routeId, "visible": visible});
   }
 
   @override

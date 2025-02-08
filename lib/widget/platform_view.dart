@@ -12,8 +12,7 @@ StatefulWidget _createPlatformView({
         surfaceFactory: (context, controller) => AndroidViewSurface(
             controller: controller as AndroidViewController,
             hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-            gestureRecognizers: gestureRecognizers
-        ),
+            gestureRecognizers: gestureRecognizers),
         onCreatePlatformView: (params) {
           return PlatformViewsService.initSurfaceAndroidView(
             id: params.id,

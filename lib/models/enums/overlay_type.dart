@@ -6,7 +6,7 @@ enum OverlayType {
   shape(value: 3),
   route(value: 4);
 
-  final int value;  
+  final int value;
 
   const OverlayType({required this.value});
 }

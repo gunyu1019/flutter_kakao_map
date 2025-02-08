@@ -11,8 +11,8 @@ enum GestureType {
   rotateZoom(value: 10),
   oneFingerZoom(value: 11),
   unknown(value: 17);
-  
+
   final int value;
-  
+
   const GestureType({required this.value});
 }

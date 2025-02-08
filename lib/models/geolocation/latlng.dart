@@ -8,22 +8,13 @@ class LatLng with KMessageable {
   /// 경도
   final double longitude;
 
-  const LatLng(
-    this.latitude,
-    this.longitude
-  );
+  const LatLng(this.latitude, this.longitude);
 
-  factory LatLng.fromMessageable(dynamic payload) 
-    => LatLng(
-      payload['latitude'],
-      payload['longitude']
-    );
+  factory LatLng.fromMessageable(dynamic payload) =>
+      LatLng(payload['latitude'], payload['longitude']);
 
   @override
   Map<String, dynamic> toMessageable() {
-    return {
-      "latitude": latitude,
-      "longitude": longitude
-    };
+    return {"latitude": latitude, "longitude": longitude};
   }
 }

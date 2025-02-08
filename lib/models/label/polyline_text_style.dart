@@ -12,37 +12,34 @@ class PolylineTextStyle {
   final List<PolylineTextStyle> _styles = [];
   final bool _isSecondaryStyle;
 
-  PolylineTextStyle(this.size, this.color, {
-    this.strokeSize,
-    this.strokeColor,
-    this.applyDpScale = true,
-    this.zoomLevel = 0
-  }) : _isSecondaryStyle = false;
+  PolylineTextStyle(this.size, this.color,
+      {this.strokeSize,
+      this.strokeColor,
+      this.applyDpScale = true,
+      this.zoomLevel = 0})
+      : _isSecondaryStyle = false;
 
-  PolylineTextStyle._(this.size, this.color, {
-    this.strokeSize,
-    this.strokeColor,
-    this.applyDpScale = true,
-    this.zoomLevel = 0
-  }) : _isSecondaryStyle = true;
+  PolylineTextStyle._(this.size, this.color,
+      {this.strokeSize,
+      this.strokeColor,
+      this.applyDpScale = true,
+      this.zoomLevel = 0})
+      : _isSecondaryStyle = true;
 
-  void addStyle(int zoomLevel, {
-    int? size,
-    Color? color,
-    bool? applyDpScale,
-    int? strokeSize,
-    Color? strokeColor
-  }) {
+  void addStyle(int zoomLevel,
+      {int? size,
+      Color? color,
+      bool? applyDpScale,
+      int? strokeSize,
+      Color? strokeColor}) {
     if (_isSecondaryStyle) return;
 
     final otherStyle = PolylineTextStyle._(
-      size ?? this.size,
-      color ?? this.color,
-      applyDpScale: applyDpScale ?? this.applyDpScale,
-      strokeSize: strokeSize ?? this.strokeSize,
-      strokeColor: strokeColor ?? this.strokeColor,
-      zoomLevel: zoomLevel
-    );
+        size ?? this.size, color ?? this.color,
+        applyDpScale: applyDpScale ?? this.applyDpScale,
+        strokeSize: strokeSize ?? this.strokeSize,
+        strokeColor: strokeColor ?? this.strokeColor,
+        zoomLevel: zoomLevel);
     _styles.add(otherStyle);
   }
 

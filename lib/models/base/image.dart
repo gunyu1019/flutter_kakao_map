@@ -21,7 +21,7 @@ class KImage {
   })  : _path = path,
         _data = data;
 
-  /// Assets으로 이미지 객체를 생성합니다.  
+  /// Assets으로 이미지 객체를 생성합니다.
   factory KImage.fromAsset(String asset, int width, int height) =>
       KImage._(ImageType.assets, path: asset, width: width, height: height);
 
@@ -40,7 +40,7 @@ class KImage {
       "height": height
     };
 
-    switch(type) {
+    switch (type) {
       case ImageType.data:
         payload['data'] = _data;
         break;

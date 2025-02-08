@@ -15,14 +15,10 @@ abstract class BaseLabelController extends OverlayController {
   int _zOrder;
   int get zOrder => _zOrder;
 
-  BaseLabelController._(
-    this.competitionType, 
-    this.competitionUnit, 
-    this.orderingType,
-    this.visible,
-    bool clickable,
-    int zOrder
-  ) : _clickable = clickable, _zOrder = zOrder;
+  BaseLabelController._(this.competitionType, this.competitionUnit,
+      this.orderingType, this.visible, bool clickable, int zOrder)
+      : _clickable = clickable,
+        _zOrder = zOrder;
 
   @override
   Future<T> _invokeMethod<T>(String method, Map<String, dynamic> payload) {
@@ -31,16 +27,12 @@ abstract class BaseLabelController extends OverlayController {
   }
 
   Future<void> setClickable(bool clickable) async {
-    await _invokeMethod("setLayerClickable", {
-      "clickable": clickable
-    });
+    await _invokeMethod("setLayerClickable", {"clickable": clickable});
     _clickable = clickable;
   }
 
   Future<void> setZOrder(int zOrder) async {
-    await _invokeMethod("setLayerClickable", {
-      "zOrder": zOrder
-    });
+    await _invokeMethod("setLayerClickable", {"zOrder": zOrder});
     _zOrder = zOrder;
   }
 

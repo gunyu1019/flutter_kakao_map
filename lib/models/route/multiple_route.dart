@@ -1,6 +1,5 @@
 part of '../../kakao_map.dart';
 
-
 class MultipleRoute {
   final RouteController _controller;
   final String id;
@@ -24,12 +23,10 @@ class MultipleRoute {
         _styleIndex = styleIndex,
         _visible = true;
 
-  Route getRoute(int index) => Route._fromMultiple(
-    _controller, id, this, 
-    points: _points[index],
-    style: _styles[_styleIndex[index]], 
-    curveType: _curveType[index]
-  );
+  Route getRoute(int index) => Route._fromMultiple(_controller, id, this,
+      points: _points[index],
+      style: _styles[_styleIndex[index]],
+      curveType: _curveType[index]);
 
   Future<void> show() async {
     await _controller._changeRouteVisible(id, true);
@@ -65,7 +62,8 @@ class MultipleRoute {
     if (styles.isEmpty) {
       throw Exception("styles parameter is empty.");
     }
-    final styleId = styles[0].id ?? await _controller.manager.addMultipleRouteStyle(styles);
+    final styleId =
+        styles[0].id ?? await _controller.manager.addMultipleRouteStyle(styles);
     await _controller._changeStyle(id, styleId);
     _styles = styles;
   }

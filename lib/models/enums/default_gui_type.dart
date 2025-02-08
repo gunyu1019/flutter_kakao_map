@@ -5,7 +5,7 @@ enum DefaultGUIType {
   scale(value: "scale"),
   logo(value: "logo");
 
-  final String value;  
+  final String value;
 
   const DefaultGUIType({required this.value});
 }

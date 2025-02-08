@@ -10,8 +10,8 @@ enum CameraUpdateType {
   rotate(value: 6),
   tilt(value: 7),
   fitMapPoints(value: 8);
-  
-  final int value;  
+
+  final int value;
 
   const CameraUpdateType({required this.value});
 }

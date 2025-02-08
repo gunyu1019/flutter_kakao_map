@@ -12,18 +12,18 @@ enum MapGravity {
   centerHorizontal(value: 2),
 
   /// 지도의 세로에서 중앙부분
-  centerVertical(value: 3), 
+  centerVertical(value: 3),
 
   /// 지도의 왼쪽 부분
-  left(value: 4), 
+  left(value: 4),
 
   /// 지도의 오른쪽 부분
-  right(value: 5), 
+  right(value: 5),
 
   /// 지도의 위쪽 부분
   top(value: 6);
-  
+
   final int value;
-  
+
   const MapGravity({required this.value});
 }

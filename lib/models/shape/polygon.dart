@@ -21,7 +21,8 @@ class Polygon<T extends BasePoint> {
         _visible = true;
 
   Future<void> changeStyle(PolygonStyle style) async {
-    final styleId = style.id ?? await _controller.manager.addPolygonShapeStyle(style);
+    final styleId =
+        style.id ?? await _controller.manager.addPolygonShapeStyle(style);
     await _controller._changePolygonStyle(id, styleId);
     _style = style;
   }

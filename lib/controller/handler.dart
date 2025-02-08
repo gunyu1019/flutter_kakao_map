@@ -1,46 +1,44 @@
 part of '../kakao_map.dart';
 
-
 mixin KakaoMapControllerHandler {
   Future<dynamic> handle(MethodCall method) async {
     final arguments = method.arguments;
-    switch(method.method) {
-      case "onMapReady": 
+    switch (method.method) {
+      case "onMapReady":
         onMapReady();
         break;
-      case "onMapDestroy": 
+      case "onMapDestroy":
         onMapDestroy();
         break;
-      case "onMapPaused": 
+      case "onMapPaused":
         onMapPaused();
         break;
-      case "onMapResumed": 
+      case "onMapResumed":
         onMapResumed();
         break;
-      case "onMapError": 
+      case "onMapError":
         final String className = method.arguments['className'];
         switch (className) {
           case 'MapAuthException':
             onMapError(KakaoAuthException.fromMessageable(method.arguments));
             break;
           default:
-            onMapError(Exception("${method.arguments['className']}(${method.arguments['message']})"));
+            onMapError(Exception(
+                "${method.arguments['className']}(${method.arguments['message']})"));
             break;
         }
         break;
       case "onCameraMoveStart":
         final gesture = GestureType.values.firstWhere(
-          (el) => arguments['gesture'] as int == el.value,
-          orElse: () => GestureType.unknown
-        );
+            (el) => arguments['gesture'] as int == el.value,
+            orElse: () => GestureType.unknown);
         onCameraMoveStart(gesture);
         break;
       case "onCameraMoveEnd":
         final position = CameraPosition.fromMessageable(arguments['position']);
         final gesture = GestureType.values.firstWhere(
-          (el) => arguments['gesture'] as int == el.value,
-          orElse: () => GestureType.unknown
-        );
+            (el) => arguments['gesture'] as int == el.value,
+            orElse: () => GestureType.unknown);
         onCameraMoveEnd(position, gesture);
         break;
       case "onCompassClick":
@@ -82,12 +80,12 @@ mixin KakaoMapControllerHandler {
   void onMapResumed();
 
   void onMapPaused();
-  
+
   void onMapError(Exception exception);
 
   void onCameraMoveStart(GestureType gestureType);
 
-  void onCameraMoveEnd(CameraPosition position,GestureType gestureType);
+  void onCameraMoveEnd(CameraPosition position, GestureType gestureType);
 
   void onCompassClick();
 

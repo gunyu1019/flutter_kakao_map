@@ -19,7 +19,7 @@ mixin OverlayManager {
   final Map<String, List<RouteStyle>> _routeStyle = {};
 
   /// Poi 스타일을 등록합니다. [style] 매개변수에는 Poi에 사용될 스타일 객체([PoiStyle])가 입력됩니다.
-  /// 등록한 Poi 스타일은 [Poi]와 [LodPoi]에서 사용할 수 있습니다. 
+  /// 등록한 Poi 스타일은 [Poi]와 [LodPoi]에서 사용할 수 있습니다.
   /// 메소드를 사용하면 등록된 스타일의 고유ID가 반환됩니다.
   Future<String> addPoiStyle(PoiStyle style);
 
@@ -35,7 +35,8 @@ mixin OverlayManager {
   /// 등록된 Polygon Shape 스타일은 [PolylineShape]에서 사용됩니다.
   /// [polylineCap] 매개변수는 Polyline 도형의 꼭지점을 설정합니다.
   /// 메소드를 사용하면 등록된 스타일의 고유ID가 반환됩니다.
-  Future<String> addPolylineShapeStyle(PolylineStyle style, PolylineCap polylineCap);
+  Future<String> addPolylineShapeStyle(
+      PolylineStyle style, PolylineCap polylineCap);
 
   /// 고유 ID를 통해 Polygon Shape 스타일 객체를 불러옵니다.
   PolygonStyle? getPolygonShapeStyle(String id);
@@ -50,7 +51,8 @@ mixin OverlayManager {
 
   /// Multiple Polyline Shape의 스타일을 등록합니다. [style] 매개변수에는 다중 Polyline 도형에 사용될 스타일 객체를 배열 형태로 입력합니다.
   /// ID 값은 [id] 매개변수를 주어서 사전에 정의할 수 있지만, 입력하지 않으면 임의로 생성된 고유ID가 반환됩니다.
-  Future<String> addMultiplePolylineShapeStyle(List<PolylineStyle> style, PolylineCap polylineCap,
+  Future<String> addMultiplePolylineShapeStyle(
+      List<PolylineStyle> style, PolylineCap polylineCap,
       [String? id]);
 
   /// 고유 ID를 통해 Multiple Polygon 스타일 객체를 불러옵니다.
@@ -68,7 +70,7 @@ mixin OverlayManager {
   RouteStyle? getRotueStyle(String id);
 
   /// 다중 Route 스타일을 등록합니다. [style] 매개변수에는 경로선 스타일에 사용되는 스타일 객체([RouteStyle])가 배열 형태로 입력됩니다.
-  /// 등록된 Route Style은 [MultipleRoute]에서 사용됩니다. 
+  /// 등록된 Route Style은 [MultipleRoute]에서 사용됩니다.
   /// ID 값은 [id] 매개변수를 주어서 사전에 정의할 수 있지만, 입력하지 않으면 임의로 생성된 고유ID가 반환됩니다.
   /// 배열에 등록된 순서로 [MultipleRouteOption.addRouteWithIndex] 메소드에서 index 값으로 경로선의 스타일을 정의할 수 있습니다.
   Future<String> addMultipleRouteStyle(List<RouteStyle> styles, [String? id]);
@@ -79,8 +81,8 @@ mixin OverlayManager {
   void _initalizeOverlayController() {
     _labelController[_defaultKey] =
         LabelController._(overlayChannel, this, LabelController.defaultId);
-    _lodLabelController[_defaultKey] =
-        LodLabelController._(overlayChannel, this, LodLabelController.defaultId);
+    _lodLabelController[_defaultKey] = LodLabelController._(
+        overlayChannel, this, LodLabelController.defaultId);
     _shapeController[_defaultKey] =
         ShapeController._(overlayChannel, this, ShapeController.defaultId);
     _routeController[_defaultKey] =
