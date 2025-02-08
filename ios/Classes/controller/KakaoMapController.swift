@@ -5,21 +5,14 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     private let channel: FlutterMethodChannel
     private let overlayChannel: FlutterMethodChannel
     
-    private var kakaoMap: KakaoMap {
-        get {
-            return (kmController.getView("mapView") as! KakaoMap)
-        }
-    }
-    private let kmController: KMController
+    private lazy var kakaoMap: KakaoMap? = nil
 
     init (
         channel: FlutterMethodChannel,
-        overlayChannel: FlutterMethodChannel,
-        kmController: KMController
+        overlayChannel: FlutterMethodChannel
     ) {
         self.channel = channel
         self.overlayChannel = overlayChannel
-        self.kmController = kmController
 
         channel.setMethodCallHandler(handle)
     }
@@ -50,7 +43,8 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         return
     }
 
-    func onMapReady() {
+    func onMapReady(kakaoMap: KakaoMap) {
+        self.kakaoMap = kakaoMap
         channel.invokeMethod("onMapReady", arguments: nil)
     }
 
