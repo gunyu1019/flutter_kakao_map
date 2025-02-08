@@ -9,8 +9,8 @@ class Poi {
   LatLng _position;
   LatLng get position => _position;
 
-  void Function()? _onClick;
-  bool get clickable => _onClick != null;
+  void Function()? onClick;
+  bool get clickable => onClick != null;
 
   String? _text;
   String? get text => _text;
@@ -31,9 +31,8 @@ class Poi {
       required String? text,
       required int rank,
       required bool visible,
-      void Function()? onClick})
+      this.onClick})
       : _position = position,
-        _onClick = onClick,
         _style = style,
         _text = text,
         _rank = rank,

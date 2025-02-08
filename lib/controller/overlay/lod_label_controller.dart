@@ -106,7 +106,8 @@ class LodLabelController extends BaseLabelController {
         style: style,
         text: text,
         rank: rank ?? 0,
-        visible: visible);
+        visible: visible,
+        onClick: onClick);
     _poi[poiId] = poi;
     return poi;
   }
