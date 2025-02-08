@@ -1,16 +1,25 @@
+import Flutter
+import KakaoMapsSDK
+
 internal class KakaoMapController : KakaoMapControllerSender, KakaoMapControllerHandler {
     private let channel: FlutterMethodChannel
     private let overlayChannel: FlutterMethodChannel
-    private let kakaoMap: KakaoMap
+    
+    private var kakaoMap: KakaoMap {
+        get {
+            return (kmController.getView("mapView") as! KakaoMap)
+        }
+    }
+    private let kmController: KMController
 
     init (
         channel: FlutterMethodChannel,
         overlayChannel: FlutterMethodChannel,
-        kakaoMap: KakaoMap
+        kmController: KMController
     ) {
         self.channel = channel
         self.overlayChannel = overlayChannel
-        self.kakaoMap = kakaoMap
+        self.kmController = kmController
 
         channel.setMethodCallHandler(handle)
     }
@@ -29,29 +38,32 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     func moveCamera(
         cameraUpdate: CameraUpdate,
         cameraAnimation: CameraAnimationOptions?,
-        onSuccess: () -> Void
+        onSuccess: (Any?) -> Void
     ) {
         if (cameraAnimation == nil) {
-            kakaoMap.moveCamera(cameraUpdate, callback: onSuccess)
+            kakaoMap.moveCamera(cameraUpdate)
+            onSuccess(nil)
+            return
         }
-        kakaoMap.animateCamera(cameraUpdate, cameraAnimation, callback: onSuccess)
+        kakaoMap.animateCamera(cameraUpdate: cameraUpdate, options: cameraAnimation!)
+        onSuccess(nil)
         return
     }
 
     func onMapReady() {
-        channel.invokeMethod("onMapReady")
+        channel.invokeMethod("onMapReady", arguments: nil)
     }
 
     func onMapDestroy() {
-        channel.invokeMethod("onMapDestroy")
+        channel.invokeMethod("onMapDestroy", arguments: nil)
     }
 
     func onMapResumed() {
-        channel.invokeMethod("onMapResumed")
+        channel.invokeMethod("onMapResumed", arguments: nil)
     }
 
     func onMapPaused() {
-        channel.invokeMethod("onMapPaused")
+        channel.invokeMethod("onMapPaused", arguments: nil)
     }
 
     func onMapError(error: Error) {
