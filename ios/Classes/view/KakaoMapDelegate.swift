@@ -2,23 +2,32 @@ import KakaoMapsSDK
 
 
 internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
-    init(controller: KMController) {
+    private let option: KakaoMapOption
+    private let sender: KakaoMapControllerSender
+
+    init(
+        controller: KMController,
+        option: KakaoMapOption
+    ) {
         self.controller = controller
+        self.option = option
         super.init()
     }
     
     func addViews() {
-        let mapViewInfo = MapviewInfo(viewName: "map_view", defaultPosition: nil)
-        
-        controller.addView(mapViewInfo)
+        controller.addView(option)
     }
     
     func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-        print("GOOD")
+        sender.onMapReady()
     }
     
     func addViewFailed(_ viewName: String, viewInfoName: String) {
-        print("bad")
+        sender.onMapReady()
+    }
+    
+    func authenticationFailed(_ errorCode: Int, desc: String) {
+        sender.onMapReady()
     }
     
     func containerDidResized(_ size: CGSize) {
