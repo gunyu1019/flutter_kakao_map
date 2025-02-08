@@ -20,7 +20,7 @@ Flutter Kakao Maps 플러그인은 정식으로 배포되는 [Kakao Map SDK](htt
 ### 1-1. `pubspec.yml`에 패키지 를 추가합니다.
 ```yml
 dependencies:
-  kakao_map_sdk: v0.1.0
+  kakao_map_sdk: ^0.1.0
 ```
 
 ### 1-2. Kakao Developers 네이티브 앱 키 추가
@@ -29,6 +29,8 @@ dependencies:
 
 앱키는 아래와 같이 `KakaoMapSdk.instance.initialize` 함수를 호출하여 인증하실 수 있습니다.
 ```dart
+import 'package:kakao_map_sdk/kakao_map.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await KakaoMapSdk.instance.initialize('KAKAO_API_KEY');
