@@ -1,7 +1,7 @@
 import KakaoMapsSDK
 
 
-class KakaoMapOption: MapviewInfo {
+internal class KakaoMapOption: MapviewInfo {
     init (
         viewName: String,
         appName: String = "openmap",
