@@ -1,4 +1,5 @@
 import Flutter
+import KakaoMapsSDK
 
 class KakaoMapViewFactory: NSObject, FlutterPlatformViewFactory {
     private let messenger: FlutterBinaryMessenger
@@ -14,14 +15,18 @@ class KakaoMapViewFactory: NSObject, FlutterPlatformViewFactory {
         arguments args: Any?
     ) -> any FlutterPlatformView {
         let channel = FlutterMethodChannel(
-            name: FlutterKakaoMapsPlugin.createViewMethodChannelName(viewId),
+            name: FlutterKakaoMapsPlugin.createViewMethodChannelName(id: viewId),
+            binaryMessenger: messenger
+        )
+        let overlayChannel = FlutterMethodChannel(
+            name: FlutterKakaoMapsPlugin.createOverlayMethodChannelName(id: viewId),
             binaryMessenger: messenger
         )
 
         let arguments = asDict(args!)
-        let option = KakaoMapOption(arguments)
+        let option = MapviewInfo(payload: arguments)
 
-        return KakaoMapView(frame: frame, option: option)
+        return KakaoMapView(frame: frame, channel: channel, overlayChannel: overlayChannel, option: option)
     }
 
     func createArgsCodec() -> any FlutterMessageCodec & NSObjectProtocol {
