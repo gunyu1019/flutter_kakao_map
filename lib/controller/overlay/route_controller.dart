@@ -14,7 +14,7 @@ class RouteController extends OverlayController {
   final int zOrder;
 
   final Map<String, Route> _route = {};
-  final Map<String, MultipleRoute> _multiple_route = {};
+  final Map<String, MultipleRoute> _multipleRoute = {};
 
   RouteController._(this.channel, this.manager, this.id,
       {this.zOrder = defaultZOrder});
@@ -90,13 +90,13 @@ class RouteController extends OverlayController {
         style: option._styles,
         curveType: option._curveType,
         styleIndex: option._styleIndex);
-    _multiple_route[routeId] = route;
+    _multipleRoute[routeId] = route;
     return route;
   }
 
   Route? getRoute(String id) => _route[id];
 
-  MultipleRoute? getMultipleRoute(String id) => _multiple_route[id];
+  MultipleRoute? getMultipleRoute(String id) => _multipleRoute[id];
 
   Future<void> removeRoute(Route route) async {
     await _invokeMethod("removeRoute", {"routeId": route.id});
@@ -105,7 +105,7 @@ class RouteController extends OverlayController {
 
   Future<void> removeMultipleRoute(MultipleRoute route) async {
     await _invokeMethod("removeRoute", {"routeId": route.id});
-    _multiple_route.remove(route.id);
+    _multipleRoute.remove(route.id);
   }
 
   static const String defaultId = "route_layer_0";

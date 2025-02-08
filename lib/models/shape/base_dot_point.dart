@@ -1,7 +1,7 @@
 part of '../../flutter_kakaomaps.dart';
 
 
-sealed class _BaseDotPoint extends _BasePoint {
+sealed class _BaseDotPoint extends BasePoint {
   final LatLng? basePoint;
   final List<_BaseDotPoint> _holes = [];
 

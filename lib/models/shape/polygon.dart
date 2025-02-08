@@ -1,6 +1,6 @@
 part of '../../flutter_kakaomaps.dart';
 
-class Polygon<T extends _BasePoint> {
+class Polygon<T extends BasePoint> {
   final ShapeController _controller;
   final String id;
 

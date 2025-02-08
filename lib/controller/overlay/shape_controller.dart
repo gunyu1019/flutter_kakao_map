@@ -65,7 +65,7 @@ class ShapeController extends OverlayController {
     });
   }
 
-  Future<void> _changePolylinePosition<T extends _BasePoint>(
+  Future<void> _changePolylinePosition<T extends BasePoint>(
       String shapeId, T position) async {
     await _invokeMethod("changePolylinePosition", {
       "shapeId": shapeId,
@@ -73,7 +73,7 @@ class ShapeController extends OverlayController {
     });
   }
 
-  Future<void> _changePolygonPosition<T extends _BasePoint>(
+  Future<void> _changePolygonPosition<T extends BasePoint>(
       String shapeId, T position) async {
     await _invokeMethod("changePolygonPosition", {
       "shapeId": shapeId,
@@ -87,7 +87,7 @@ class ShapeController extends OverlayController {
     return super._invokeMethod(method, payload);
   }
 
-  Future<Polyline> addPolylineShape<T extends _BasePoint>(T position, PolylineStyle style, PolylineCap polylineCap, {String? id}) async {
+  Future<Polyline> addPolylineShape<T extends BasePoint>(T position, PolylineStyle style, PolylineCap polylineCap, {String? id}) async {
     final styleId = style._id ?? await manager.addPolylineShapeStyle(style, polylineCap);
     final payload = <String, dynamic>{
       "polyline": <String, dynamic>{
@@ -102,7 +102,7 @@ class ShapeController extends OverlayController {
     return polyline;
   }
   
-  Future<Polygon> addPolygonShape<T extends _BasePoint>(T position, PolygonStyle style, {String? id}) async {
+  Future<Polygon> addPolygonShape<T extends BasePoint>(T position, PolygonStyle style, {String? id}) async {
     final styleId = style._id ?? await manager.addPolygonShapeStyle(style);
     final payload = <String, dynamic>{
       "polygon": <String, dynamic>{

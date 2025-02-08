@@ -1,6 +1,6 @@
 part of '../../flutter_kakaomaps.dart';
 
-class Polyline<T extends _BasePoint> {
+class Polyline<T extends BasePoint> {
   final ShapeController _controller;
   final String id;
 
