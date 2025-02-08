@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../kakao_map.dart';
 
 /// 지도에 개체(나침판 등)을 배치하기 위한 기준을 설정합니다.
 enum MapGravity {

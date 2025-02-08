@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../kakao_map.dart';
 
 class Poi {
   final LabelController _controller;

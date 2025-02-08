@@ -1,4 +1,4 @@
-part of '../flutter_kakao_map.dart';
+part of '../kakao_map.dart';
 
 /// 카카오 맵을 제공하기 위한 위젯이 담긴 객체입니다.
 class KakaoMap extends StatefulWidget {

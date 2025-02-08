@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../kakao_map.dart';
 
 
 /// 지도의 카메라의 위치를 새롭게 정의할 때 사용하는 객체입니다.

@@ -1,4 +1,4 @@
-part of '../flutter_kakao_map.dart';
+part of '../kakao_map.dart';
 
 /// 카카오 인증에 실패하면 호출되는 예외 객체입니다.
 class KakaoAuthException implements Exception {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_debug_overlay/flutter_debug_overlay.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:kakao_map_sdk/flutter_kakao_maps.dart';
+import 'package:kakao_map_sdk/kakao_map.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

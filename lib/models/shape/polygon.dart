@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_map.dart';
+part of '../../kakao_map.dart';
 
 class Polygon<T extends BasePoint> {
   final ShapeController _controller;
