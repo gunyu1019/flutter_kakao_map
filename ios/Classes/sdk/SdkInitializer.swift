@@ -17,7 +17,7 @@ internal class SdkInitializer: NSObject {
         let arguments = asDict(call.arguments!)
         switch call.method {
         case "initialize":
-            initalize(appKey: asString(arguments["appKey"]), onSuccess: result)
+            initalize(appKey: asString(arguments["appKey"]!), onSuccess: result)
         case "isInitialize":
             result(isInitialzed)
         default:
