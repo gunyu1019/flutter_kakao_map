@@ -1,4 +1,4 @@
-package kr.yhs.flutter_kakao_maps_example
+package kr.yhs.flutter_kakaomaps_example
 
 import io.flutter.embedding.android.FlutterActivity
 

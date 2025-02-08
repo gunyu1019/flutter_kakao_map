@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../flutter_kakaomaps.dart';
 
 class PolygonStyle with KMessageable {
   String? _id;

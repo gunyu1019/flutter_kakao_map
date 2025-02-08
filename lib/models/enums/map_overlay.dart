@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../flutter_kakaomaps.dart';
 
 /// 지도에 사용되는 오버레이 객체입니다.
 enum MapOverlay {

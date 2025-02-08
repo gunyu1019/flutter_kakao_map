@@ -1,0 +1,178 @@
+package kr.yhs.flutter_kakaomaps.controller.overlay.handler
+
+import com.kakao.vectormap.LatLng
+import com.kakao.vectormap.label.Label
+import com.kakao.vectormap.label.LabelLayer
+import com.kakao.vectormap.label.LabelLayerOptions
+import com.kakao.vectormap.label.LabelManager
+import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.label.PolylineLabel
+import com.kakao.vectormap.label.PolylineLabelOptions
+import com.kakao.vectormap.label.PolylineLabelStyles
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import kr.yhs.flutter_kakaomaps.converter.CameraTypeConverter.asLatLng
+import kr.yhs.flutter_kakaomaps.converter.LabelTypeConverter.asLabelLayerOptions
+import kr.yhs.flutter_kakaomaps.converter.LabelTypeConverter.asLabelOptions
+import kr.yhs.flutter_kakaomaps.converter.LabelTypeConverter.asLabelStyles
+import kr.yhs.flutter_kakaomaps.converter.LabelTypeConverter.asPolylineTextOption
+import kr.yhs.flutter_kakaomaps.converter.LabelTypeConverter.asPolylineTextStyles
+import kr.yhs.flutter_kakaomaps.converter.PrimitiveTypeConverter.asBoolean
+import kr.yhs.flutter_kakaomaps.converter.PrimitiveTypeConverter.asFloat
+import kr.yhs.flutter_kakaomaps.converter.PrimitiveTypeConverter.asInt
+import kr.yhs.flutter_kakaomaps.converter.PrimitiveTypeConverter.asLong
+import kr.yhs.flutter_kakaomaps.converter.PrimitiveTypeConverter.asMap
+import kr.yhs.flutter_kakaomaps.converter.PrimitiveTypeConverter.asString
+
+interface LabelControllerHandler {
+    val labelManager: LabelManager?
+
+    fun labelHandle(call: MethodCall, result: MethodChannel.Result) {
+        val arguments = call.arguments!!.asMap<Any?>()
+        if (labelManager == null) {
+            throw NullPointerException("LabelManager is null.")
+        }
+
+        val layer =
+                arguments["layerId"]?.asString()?.let<String, LabelLayer> {
+                    labelManager!!.getLayer(it)
+                }
+        val poi = layer?.run { arguments["poiId"]?.asString()?.let(layer::getLabel) }
+        val polylineText =
+                layer?.run { arguments["labelId"]?.asString()?.let(layer::getPolylineLabel) }
+
+        when (call.method) {
+            "createLabelLayer" -> {
+                createLabelLayer(arguments.asLabelLayerOptions(), result::success)
+            }
+            "removeLabelLayer" -> {
+                removeLabelLayer(layer!!, result::success)
+            }
+            "addPoiStyle" -> {
+                addPoiStyle(arguments.asLabelStyles()!!, result::success)
+            }
+            "addPoi" -> {
+                val poiOption = arguments["poi"]!!.asLabelOptions(labelManager!!)
+                addPoi(layer!!, poiOption, result::success)
+            }
+            "addPolylineText" -> {
+                val labelOption = arguments["label"]!!.asPolylineTextOption()
+                addPolylineText(layer!!, labelOption, result::success)
+            }
+            "removePoi" -> removePoi(layer!!, poi!!, result::success)
+            "removePolylineText" -> removePolylineText(layer!!, polylineText!!, result::success)
+            // poi Handler
+            "changePoiOffsetPosition" -> {
+                val x = arguments["x"]?.asFloat()!!
+                val y = arguments["y"]?.asFloat()!!
+                val forceDpScale = arguments["forceDpScale"]?.asBoolean()
+                changePoiOffsetPosition(poi!!, x, y, forceDpScale, result::success)
+            }
+            "changePoiVisible" -> {
+                val visible = arguments["visible"]?.asBoolean()!!
+                changePoiVisible(poi!!, visible, result::success)
+            }
+            "changePoiStyle" -> {
+                val styleId = arguments["styleId"]?.asString()!!
+                changePoiStyle(poi!!, styleId, result::success)
+            }
+            "changePoiText" -> {
+                val text = arguments["text"]?.asString()!!
+                changePoiText(poi!!, text, result::success)
+            }
+            "invalidatePoi" -> {
+                val styleId = arguments["styleId"]?.asString()!!
+                val text = arguments["text"]?.asString()!!
+                val transition = arguments["transition"]?.asBoolean() ?: false
+                invalidatePoi(poi!!, styleId, text, transition, result::success)
+            }
+            "movePoi" -> {
+                val position = arguments.asLatLng()
+                val millis = arguments["millis"]?.asInt()
+                movePoi(poi!!, position, millis, result::success)
+            }
+            "rotatePoi" -> {
+                val angle = arguments["angle"]?.asFloat()!!
+                val millis = arguments["millis"]?.asInt()
+                rotatePoi(poi!!, angle, millis, result::success)
+            }
+            "scalePoi" -> {
+                val x = arguments["x"]?.asFloat()!!
+                val y = arguments["y"]?.asFloat()!!
+                val millis = arguments["millis"]?.asInt()
+                scalePoi(poi!!, x, y, millis, result::success)
+            }
+            "rankPoi" -> {
+                val rank = arguments["x"]?.asLong()!!
+                rankPoi(poi!!, rank, result::success)
+            }
+            // polyline text handler
+            "changePolylineTextStyle" -> {
+                val style = arguments["styles"]?.asPolylineTextStyles()
+                val text = arguments["text"]?.asString()
+                changePolylineTextAndStyle(polylineText!!, style!!, text, result::success)
+            }
+            "changePolylineTextVisible" -> {
+                val visible = arguments["visible"]?.asBoolean()!!
+                changePolylineTextVisible(polylineText!!, visible, result::success)
+            }
+            else -> result.notImplemented()
+        }
+    }
+
+    fun createLabelLayer(options: LabelLayerOptions, onSuccess: (Any?) -> Unit)
+
+    fun removeLabelLayer(layer: LabelLayer, onSuccess: (Any?) -> Unit)
+
+    fun addPoiStyle(style: LabelStyles, onSuccess: (Any?) -> Unit)
+
+    fun addPoi(layer: LabelLayer, poi: LabelOptions, onSuccess: (String) -> Unit)
+
+    fun removePoi(layer: LabelLayer, poi: Label, onSuccess: (Any?) -> Unit)
+
+    fun addPolylineText(layer: LabelLayer, label: PolylineLabelOptions, onSuccess: (String) -> Unit)
+
+    fun removePolylineText(layer: LabelLayer, label: PolylineLabel, onSuccess: (Any?) -> Unit)
+
+    // Poi Controller
+    fun changePoiOffsetPosition(
+            poi: Label,
+            x: Float,
+            y: Float,
+            forceDpScale: Boolean?,
+            onSuccess: (Any?) -> Unit
+    )
+
+    fun changePoiVisible(poi: Label, visible: Boolean, onSuccess: (Any?) -> Unit)
+
+    fun changePoiStyle(poi: Label, styleId: String, onSuccess: (Any?) -> Unit)
+
+    fun changePoiText(poi: Label, text: String, onSuccess: (Any?) -> Unit)
+
+    fun invalidatePoi(
+            poi: Label,
+            styleId: String,
+            text: String,
+            transition: Boolean,
+            onSuccess: (Any?) -> Unit
+    )
+
+    fun movePoi(poi: Label, position: LatLng, millis: Int?, onSuccess: (Any?) -> Unit)
+
+    fun rotatePoi(poi: Label, angle: Float, millis: Int?, onSuccess: (Any?) -> Unit)
+
+    fun scalePoi(poi: Label, x: Float, y: Float, millis: Int?, onSuccess: (Any?) -> Unit)
+
+    fun rankPoi(poi: Label, rank: Long, onSuccess: (Any?) -> Unit)
+
+    // Polyline Text Controller
+    fun changePolylineTextAndStyle(
+            label: PolylineLabel,
+            style: PolylineLabelStyles,
+            text: String?,
+            onSuccess: (Any?) -> Unit
+    )
+
+    fun changePolylineTextVisible(label: PolylineLabel, visible: Boolean, onSuccess: (Any?) -> Unit)
+}

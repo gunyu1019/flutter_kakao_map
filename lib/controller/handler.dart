@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../flutter_kakaomaps.dart';
 
 
 mixin KakaoMapControllerHandler {

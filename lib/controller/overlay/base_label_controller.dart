@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../flutter_kakaomaps.dart';
 
 abstract class BaseLabelController extends OverlayController {
   abstract final String id;

@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../flutter_kakaomaps.dart';
 
 /// 지도에서 사용할 수 있는 이미지를 생성하는 객체입니다.
 class KImage {

@@ -1,8 +1,8 @@
-# flutter_kakao_maps
-![Pub Version](https://img.shields.io/pub/v/flutter_kakao_maps)
-![Pub Monthly Downloads](https://img.shields.io/pub/dm/flutter_kakao_maps)
-![Pub Points](https://img.shields.io/pub/points/flutter_kakao_maps)
-![Pub Popularity](https://img.shields.io/pub/popularity/flutter_kakao_maps)
+# flutter_kakaomaps
+![Pub Version](https://img.shields.io/pub/v/flutter_kakaomaps)
+![Pub Monthly Downloads](https://img.shields.io/pub/dm/flutter_kakaomaps)
+![Pub Points](https://img.shields.io/pub/points/flutter_kakaomaps)
+![Pub Popularity](https://img.shields.io/pub/popularity/flutter_kakaomaps)
 
 네이티브 기반의 [카카오맵](https://map.kakao.com/)을 구동할 수 있는 Flutter 플러그인입니다.
 
@@ -20,7 +20,7 @@ Flutter Kakao Maps 플러그인은 정식으로 배포되는 [Kakao Map SDK](htt
 ### 1-1. `pubspec.yml`에 패키지 를 추가합니다.
 ```yml
 dependencies:
-  flutter_kakao_maps: v0.1.0
+  flutter_kakaomaps: v0.1.0
 ```
 
 ### 1-2. Kakao Developers 네이티브 앱 키 추가

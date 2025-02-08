@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../flutter_kakaomaps.dart';
 
 /// 지도를 시작될 때, 지도의 기본 정보를 정의하는 객체입니다.
 class KakaoMapOption {

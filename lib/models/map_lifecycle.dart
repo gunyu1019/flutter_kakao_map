@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../flutter_kakaomaps.dart';
 
 /// 지도의 상태관리를 관리하는 Mixin 객체입니다.
 mixin KakaoMapLifecycle {

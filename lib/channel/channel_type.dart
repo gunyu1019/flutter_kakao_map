@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../flutter_kakaomaps.dart';
 
 enum ChannelType {
   sdk("${_baseChannelId}_sdk"),
@@ -12,5 +12,5 @@ enum ChannelType {
 
   const ChannelType(this.id);
 
-  static const String _baseChannelId = "flutter_kakao_maps";
+  static const String _baseChannelId = "flutter_kakaomaps";
 }
