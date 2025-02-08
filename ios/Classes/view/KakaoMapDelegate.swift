@@ -7,9 +7,11 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
 
     init(
         controller: KMController,
+        sender: KakaoMapControllerSender,
         option: KakaoMapOption
     ) {
         self.controller = controller
+        self.sender = sender
         self.option = option
         super.init()
     }
@@ -23,11 +25,15 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
     }
     
     func addViewFailed(_ viewName: String, viewInfoName: String) {
-        sender.onMapReady()
+        sender.onMapError(
+            error: MapViewLoadFailed()
+        )
     }
     
     func authenticationFailed(_ errorCode: Int, desc: String) {
-        sender.onMapReady()
+        sender.onMapError(
+            error: AuthenticatedFailed(errorCode, desc)
+        )
     }
     
     func containerDidResized(_ size: CGSize) {
