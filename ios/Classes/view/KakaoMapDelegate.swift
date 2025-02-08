@@ -2,13 +2,13 @@ import KakaoMapsSDK
 
 
 internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
-    private let option: KakaoMapOption
+    private let option: MapviewInfo
     private let sender: KakaoMapControllerSender
 
     init(
         controller: KMController,
         sender: KakaoMapControllerSender,
-        option: KakaoMapOption
+        option: MapviewInfo
     ) {
         self.controller = controller
         self.sender = sender
@@ -32,7 +32,7 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
     
     func authenticationFailed(_ errorCode: Int, desc: String) {
         sender.onMapError(
-            error: AuthenticatedFailed(errorCode, desc)
+            error: AuthenticatedFailed(errorCode: errorCode, message: desc)
         )
     }
     
