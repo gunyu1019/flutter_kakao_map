@@ -7,14 +7,19 @@ import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asLong
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asMap
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asString
 import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asInt
+import kr.yhs.flutter_kakao_maps.converter.PrimitiveTypeConverter.asList
 import kr.yhs.flutter_kakao_maps.converter.RouteTypeConverter.asRouteStylesSet
 import kr.yhs.flutter_kakao_maps.converter.RouteTypeConverter.asRouteOption
 import kr.yhs.flutter_kakao_maps.converter.RouteTypeConverter.asRouteMultipleOption
+import kr.yhs.flutter_kakao_maps.converter.CameraTypeConverter.asLatLng
 import com.kakao.vectormap.route.RouteLineManager
 import com.kakao.vectormap.route.RouteLineLayer
 import com.kakao.vectormap.route.RouteLineStylesSet
 import com.kakao.vectormap.route.RouteLineOptions
 import com.kakao.vectormap.route.RouteLine
+import com.kakao.vectormap.route.RouteLineSegment
+import com.kakao.vectormap.CurveType
+import com.kakao.vectormap.LatLng
 
 interface RouteControllerHandler {
     val routeManager: RouteLineManager?
@@ -29,7 +34,7 @@ interface RouteControllerHandler {
         }
 
         val routeLine = layer?.run {
-            arguments["id"]?.asString()?.let(layer::getRouteLine)
+            arguments["routeId"]?.asString()?.let(layer::getRouteLine)
         }
 
         when(call.method) {
@@ -43,6 +48,20 @@ interface RouteControllerHandler {
             "addRoute" -> addRoute(layer!!, arguments["route"]!!.asRouteOption(routeManager!!), result::success)
             "addMultipleRoute" -> addRoute(layer!!, arguments["route"]!!.asRouteMultipleOption(routeManager!!), result::success)
             "removeRoute" -> removeRoute(layer!!, routeLine!!, result::success)
+            "changeRouteStlye" -> changeRouteStyle(routeLine!!, arguments["styleId"]!!.asString() , result::success)
+            "changeRoutePoint" -> {
+                changeRoutePoint(
+                    routeLine!!, 
+                    arguments["points"]!!.asList<Any>().map<Any, List<LatLng>> {
+                         it.asList<Any>().map{ it.asLatLng() } 
+                    }, 
+                    result::success
+                )
+            }
+            "changeRouteCurveType" -> {
+                changeRouteCurveType(routeLine!!, arguments["curvedType"]!!.asList<Any>().map{ it.asInt().let{ CurveType.getEnum(it) }}, result::success)
+            }
+            "changeRouteVisible" -> changeRouteVisible(routeLine!!, arguments["visible"]!!.asBoolean(), result::success)
             else -> result.notImplemented()
         }
     }
@@ -56,4 +75,12 @@ interface RouteControllerHandler {
     fun addRoute(layer: RouteLineLayer, route: RouteLineOptions, onSuccess: (String) -> Unit);
     
     fun removeRoute(layer: RouteLineLayer, route: RouteLine, onSuccess: (Any?) -> Unit);
+
+    fun changeRouteStyle(route: RouteLine, styleId: String, onSuccess: (Any?) -> Unit);
+
+    fun changeRouteCurveType(route: RouteLine, curveType: List<CurveType>, onSuccess: (Any?) -> Unit);
+
+    fun changeRoutePoint(route: RouteLine, points: List<List<LatLng>>, onSuccess: (Any?) -> Unit);
+
+    fun changeRouteVisible(route: RouteLine, visible: Boolean, onSuccess: (Any?) -> Unit);
 }

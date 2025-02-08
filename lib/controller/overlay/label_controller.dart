@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 class LabelController extends BaseLabelController {
   @override
@@ -23,7 +23,8 @@ class LabelController extends BaseLabelController {
       bool visible = true,
       bool clickable = false,
       int zOrder = BaseLabelController.defaultZOrder})
-      : super._(competitionType, competitionUnit, orderingType, visible, clickable, zOrder);
+      : super._(competitionType, competitionUnit, orderingType, visible,
+            clickable, zOrder);
 
   Future<void> _createLabelLayer() async {
     await _invokeMethod("createLabelLayer", {
@@ -35,47 +36,32 @@ class LabelController extends BaseLabelController {
       "clickable": _clickable,
     });
   }
-  
+
   Future<void> _removeLabelLayer() async {
     await _invokeMethod("removeLabelLayer", {});
   }
 
   Future<void> _changePoiOffsetPosition(
       String poiId, double x, double y, bool forceDpScale) async {
-    await _invokeMethod("changePoiOffsetPosition", {
-      "poiId": poiId,
-      "x": x,
-      "y": y,
-      "forceDpScale": forceDpScale
-    });
+    await _invokeMethod("changePoiOffsetPosition",
+        {"poiId": poiId, "x": x, "y": y, "forceDpScale": forceDpScale});
   }
 
-  Future<void> _changePoiVisible(
-      String poiId, bool visible) async {
-    await _invokeMethod("changePoiVisible", {
-      "poiId": poiId,
-      "visible": visible
-    });
+  Future<void> _changePoiVisible(String poiId, bool visible) async {
+    await _invokeMethod(
+        "changePoiVisible", {"poiId": poiId, "visible": visible});
   }
 
-  Future<void> _changePoiStyle(
-      String poiId, String styleId) async {
-    await _invokeMethod("changePoiStyle", {
-      "poiId": poiId,
-      "styleId": styleId
-    });
+  Future<void> _changePoiStyle(String poiId, String styleId) async {
+    await _invokeMethod("changePoiStyle", {"poiId": poiId, "styleId": styleId});
   }
 
-  Future<void> _changePoiText(
-      String poiId, String text) async {
-    await _invokeMethod("changePoiText", {
-      "poiId": poiId,
-      "text": text
-    });
+  Future<void> _changePoiText(String poiId, String text) async {
+    await _invokeMethod("changePoiText", {"poiId": poiId, "text": text});
   }
 
-  Future<void> _invalidatePoi(
-      String poiId, String styleId, String? text, [bool transition = false]) async {
+  Future<void> _invalidatePoi(String poiId, String styleId, String? text,
+      [bool transition = false]) async {
     await _invokeMethod("invalidatePoi", {
       "poiId": poiId,
       "styleId": styleId,
@@ -84,58 +70,36 @@ class LabelController extends BaseLabelController {
     });
   }
 
-  Future<void> _movePoi(
-      String poiId, LatLng position, [double? millis]) async {
-    final payload = {
-      "poiId": poiId,
-      "millis": millis
-    };
+  Future<void> _movePoi(String poiId, LatLng position, [double? millis]) async {
+    final payload = {"poiId": poiId, "millis": millis};
     payload.addAll(position.toMessageable());
     await _invokeMethod("movePoi", payload);
   }
 
-  Future<void> _rotatePoi(
-      String poiId, double angle, [double? millis]) async {
-    await _invokeMethod("rotatePoi", {
-      "poiId": poiId,
-      "angle": angle,
-      "millis": millis
-    });
+  Future<void> _rotatePoi(String poiId, double angle, [double? millis]) async {
+    await _invokeMethod(
+        "rotatePoi", {"poiId": poiId, "angle": angle, "millis": millis});
   }
 
-  Future<void> _scalePoi(
-      String poiId, double x, double y, [double? millis]) async {
-    await _invokeMethod("scalePoi", {
-      "poiId": poiId,
-      "x": x,
-      "y": y,
-      "millis": millis
-    });
+  Future<void> _scalePoi(String poiId, double x, double y,
+      [double? millis]) async {
+    await _invokeMethod(
+        "scalePoi", {"poiId": poiId, "x": x, "y": y, "millis": millis});
   }
 
-  Future<void> _rankPoi(
-      String poiId, int rank) async {
-    await _invokeMethod("rankPoi", {
-      "poiId": poiId,
-      "rank": rank
-    });
+  Future<void> _rankPoi(String poiId, int rank) async {
+    await _invokeMethod("rankPoi", {"poiId": poiId, "rank": rank});
   }
 
-  Future<void> _changePolylineTextStyle(
-      String poiId, PolylineTextStyle style, [String? text]) async {
-    await _invokeMethod("changePolylineTextStyle", {
-      "poiId": poiId,
-      "styles": style.toMessageable(),
-      "text": text
-    });
+  Future<void> _changePolylineTextStyle(String poiId, PolylineTextStyle style,
+      [String? text]) async {
+    await _invokeMethod("changePolylineTextStyle",
+        {"poiId": poiId, "styles": style.toMessageable(), "text": text});
   }
 
-  Future<void> _changePolylineTextVisible(
-      String labelId, bool visible) async {
-    await _invokeMethod("changePolylineTextVisible", {
-      "labelId": labelId,
-      "visible": visible
-    });
+  Future<void> _changePolylineTextVisible(String labelId, bool visible) async {
+    await _invokeMethod(
+        "changePolylineTextVisible", {"labelId": labelId, "visible": visible});
   }
 
   Future<Poi> addPoi(
@@ -152,7 +116,6 @@ class LabelController extends BaseLabelController {
     Map<String, dynamic> payload = {
       "poi": <String, dynamic>{
         "id": id,
-        "clickable": onClick != null,
         "text": text,
         "rank": rank,
         "styleId": styleId,
@@ -165,11 +128,11 @@ class LabelController extends BaseLabelController {
     final poi = Poi._(this, poiId,
         transform: transform,
         position: position,
-        clickable: clickable,
         style: style,
         text: text,
         rank: rank ?? 0,
-        visible: visible);
+        visible: visible,
+        onClick: onClick);
     _poi[poiId] = poi;
     return poi;
   }
@@ -194,11 +157,11 @@ class LabelController extends BaseLabelController {
   }
 
   Future<PolylineText> addPolylineText(
-    String text, 
+    String text,
     List<LatLng> position, {
-      required PolylineTextStyle style,
-      String? id,
-      bool visible = true,
+    required PolylineTextStyle style,
+    String? id,
+    bool visible = true,
   }) async {
     Map<String, dynamic> payload = {
       "label": <String, dynamic>{
@@ -210,7 +173,8 @@ class LabelController extends BaseLabelController {
       }
     };
     String labelId = await _invokeMethod("addPolylineText", payload);
-    final label = PolylineText._(this, labelId, style: style, text: text, points: position);
+    final label = PolylineText._(this, labelId,
+        style: style, text: text, points: position);
     _polylineText[labelId] = label;
     return label;
   }
@@ -236,6 +200,6 @@ class LabelController extends BaseLabelController {
 
   int get poiCount => _poi.length;
   int get polylineCount => _polylineText.length;
-  
+
   static const String defaultId = "label_default_layer";
 }

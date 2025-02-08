@@ -1,5 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
-
+part of '../../kakao_map.dart';
 
 class RouteStyle with KMessageable {
   String? _id;
@@ -18,21 +17,31 @@ class RouteStyle with KMessageable {
   final List<RouteStyle> _styles = [];
   final bool _isSecondaryStyle;
 
-  RouteStyle(this.color, this.lineWidth, {
-    String? id,
-    this.strokeColor = Colors.black, 
-    this.strokeWidth = 0,
-    this.pattern,
-    this.zoomLevel = 0
-  }) : _id = id, _isSecondaryStyle = false;
+  RouteStyle(this.color, this.lineWidth,
+      {String? id,
+      this.strokeColor = Colors.black,
+      this.strokeWidth = 0,
+      this.pattern,
+      this.zoomLevel = 0})
+      : _id = id,
+        _isSecondaryStyle = false;
 
-  RouteStyle._(this.color, this.lineWidth, {
-    String? id,
-    this.strokeColor = Colors.black, 
-    this.strokeWidth = 0,
-    this.pattern,
-    this.zoomLevel = 0
-  }) : _id = id, _isSecondaryStyle = true;
+  RouteStyle.withPattern(this.pattern, {String? id, this.zoomLevel = 0})
+      : _id = id,
+        _isSecondaryStyle = false,
+        color = Colors.black,
+        lineWidth = 0,
+        strokeColor = Colors.black,
+        strokeWidth = 0;
+
+  RouteStyle._(this.color, this.lineWidth,
+      {String? id,
+      this.strokeColor = Colors.black,
+      this.strokeWidth = 0,
+      this.pattern,
+      this.zoomLevel = 0})
+      : _id = id,
+        _isSecondaryStyle = true;
 
   void _setStyleId(String id) {
     _id = id;
@@ -43,20 +52,21 @@ class RouteStyle with KMessageable {
     }
   }
 
-  void addStyle(int zoomLevel, Color? color, double? lineWidth, {
+  void addStyle(
+    int zoomLevel,
+    Color? color,
+    double? lineWidth, {
     Color? strokeColor,
     double? strokeWidth,
     RoutePattern? pattern,
   }) {
     if (_isSecondaryStyle) return;
     final otherStyle = RouteStyle._(
-      color ?? this.color, 
-      lineWidth ?? this.lineWidth,
-      strokeColor: strokeColor ?? this.strokeColor,
-      strokeWidth: strokeWidth ?? this.strokeWidth,
-      pattern: pattern ?? this.pattern,
-      zoomLevel: zoomLevel
-    );
+        color ?? this.color, lineWidth ?? this.lineWidth,
+        strokeColor: strokeColor ?? this.strokeColor,
+        strokeWidth: strokeWidth ?? this.strokeWidth,
+        pattern: pattern ?? this.pattern,
+        zoomLevel: zoomLevel);
     _styles.add(otherStyle);
   }
 

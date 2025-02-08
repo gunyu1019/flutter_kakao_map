@@ -1,5 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
-
+part of '../../kakao_map.dart';
 
 class PolylineText {
   final LabelController _controller;
@@ -15,24 +14,26 @@ class PolylineText {
   bool _visible;
   bool get visible => _visible;
 
-  PolylineText._(this._controller, this.id, {
-    required PolylineTextStyle style,
-    required String text,
-    required this.points,
-    bool visible = true
-  }) : _style = style, _text = text, _visible = visible;
+  PolylineText._(this._controller, this.id,
+      {required PolylineTextStyle style,
+      required String text,
+      required this.points,
+      bool visible = true})
+      : _style = style,
+        _text = text,
+        _visible = visible;
 
   Future<void> changeStyles(PolylineTextStyle style) async {
     _style = style;
     await _controller._changePolylineTextStyle(id, style);
   }
-  
+
   Future<void> changeTextAndStyles(String text, PolylineTextStyle style) async {
     _style = style;
     _text = text;
     await _controller._changePolylineTextStyle(id, style, text);
   }
-  
+
   Future<void> changeText(String text) async {
     _text = text;
     await _controller._changePolylineTextStyle(id, _style, text);

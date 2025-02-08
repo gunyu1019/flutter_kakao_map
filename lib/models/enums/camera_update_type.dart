@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 enum CameraUpdateType {
   newCenterPoint(value: 0),
@@ -10,8 +10,8 @@ enum CameraUpdateType {
   rotate(value: 6),
   tilt(value: 7),
   fitMapPoints(value: 8);
-  
-  final int value;  
+
+  final int value;
 
   const CameraUpdateType({required this.value});
 }

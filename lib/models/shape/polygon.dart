@@ -1,6 +1,6 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
-class Polygon<T extends _BasePoint> {
+class Polygon<T extends BasePoint> {
   final ShapeController _controller;
   final String id;
 
@@ -21,7 +21,8 @@ class Polygon<T extends _BasePoint> {
         _visible = true;
 
   Future<void> changeStyle(PolygonStyle style) async {
-    final styleId = style.id ?? await _controller.manager.addPolygonShapeStyle(style);
+    final styleId =
+        style.id ?? await _controller.manager.addPolygonShapeStyle(style);
     await _controller._changePolygonStyle(id, styleId);
     _style = style;
   }

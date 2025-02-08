@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_debug_overlay/flutter_debug_overlay.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:flutter_kakao_maps/flutter_kakao_maps.dart';
+import 'package:kakao_map_sdk/kakao_map.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -92,34 +92,7 @@ class _MyAppState extends State<MyApp> {
                     style: textStyle),
                 ToggleButtons(
                     isSelected: isSelected,
-                    onPressed: (int index) {
-                      setState(() {
-                        for (int buttonIndex = 0;
-                            buttonIndex < isSelected.length;
-                            buttonIndex++) {
-                          if (buttonIndex == index) {
-                            isSelected[buttonIndex] = true;
-                          } else {
-                            isSelected[buttonIndex] = false;
-                          }
-                        }
-
-                        switch (index) {
-                          case 1:
-                            controller.moveCamera(
-                                CameraUpdate.newCenterPosition(const LatLng(
-                                    37.395763313860826, 127.11048591050786)),
-                                animation: const CameraAnimation(5000));
-                            break;
-                          case 0:
-                            controller.moveCamera(
-                                CameraUpdate.newCenterPosition(
-                                    const LatLng(37.867489, 127.745273)),
-                                animation: const CameraAnimation(5000));
-                            break;
-                        }
-                      });
-                    },
+                    onPressed: onToggleClicked,
                     children: const <Widget>[
                       Text("강원대학교"),
                       Text("판교아지트"),
@@ -130,6 +103,37 @@ class _MyAppState extends State<MyApp> {
         ));
   }
 
+  void onToggleClicked(int index) {
+    setState(() {
+      for (int buttonIndex = 0;
+          buttonIndex < isSelected.length;
+          buttonIndex++) {
+        if (buttonIndex == index) {
+          isSelected[buttonIndex] = true;
+        } else {
+          isSelected[buttonIndex] = false;
+        }
+      }
+
+      switch (index) {
+        case 1:
+          controller.moveCamera(
+              CameraUpdate.newCenterPosition(
+                  const LatLng(37.395763313860826, 127.11048591050786)),
+              animation: const CameraAnimation(5000));
+          break;
+        case 0:
+          controller.moveCamera(
+              CameraUpdate.newCenterPosition(
+                  const LatLng(37.867489, 127.745273)),
+              animation: const CameraAnimation(5000));
+          break;
+      }
+    });
+  }
+
+  /// 지도가 문제없이 불러와지면 호출되는 함수
+  /// [controller]에는 지도를 조작하기 위한 컨트롤러 객체가 담겨있다.
   void onMapReady(KakaoMapController controller) {
     this.controller = controller;
     MyApp.logBucket.add(LogEvent(
@@ -143,15 +147,23 @@ class _MyAppState extends State<MyApp> {
     });
     return;
 
-    controller.lodLabelLayer.addLodPoi(
-        const LatLng(37.395763313860826, 127.11048591050786),
-        text: "KAKAO LABEL",
-        style: PoiStyle(
-              icon: KImage.fromAsset("assets/image/location.png", 68, 100),
-              anchor: const KPoint(0.5, 0.9),
-              textStyle: const [PoiTextStyle(size: 28, color: Colors.blue, stroke: 2, strokeColor: Colors.white)])
-        ).then((poi) => poi.changeText("KAKAO MAP LABEL"));
+    /// 카카오 판교캠퍼스 지점에 Poi를 그린다.
+    controller.labelLayer
+        .addPoi(const LatLng(37.395763313860826, 127.11048591050786),
+            text: "KAKAO LABEL",
+            style: PoiStyle(
+                icon: KImage.fromAsset("assets/image/location.png", 68, 100),
+                anchor: const KPoint(0.5, 0.9),
+                textStyle: const [
+                  PoiTextStyle(
+                      size: 28,
+                      color: Colors.blue,
+                      stroke: 2,
+                      strokeColor: Colors.white)
+                ]))
+        .then((poi) => poi.changeText("KAKAO MAP LABEL"));
 
+    /// 카카오 판교캠퍼스 주변에 "휘어지는 글씨 테스트"를 그린다.
     controller.labelLayer.addPolylineText(
         "휘어지는 글씨 테스트",
         const [
@@ -159,27 +171,29 @@ class _MyAppState extends State<MyApp> {
           LatLng(37.39623174904037, 127.10968366570474),
           LatLng(37.396289088551704, 127.1129315279461)
         ],
-        style: PolylineTextStyle(28, Colors.blue)
-    );
+        style: PolylineTextStyle(28, Colors.blue));
 
+    /// 카카오 판교캠퍼스 주변에 원형과 사각형을 그린다.
     controller.shapeLayer.addPolylineShape(
-      RectanglePoint(100, 100, const LatLng(37.396289088551704, 127.1129315279461)),
-      PolylineStyle(Colors.green, 10.0),
-      PolylineCap.round
-    );
-
+        RectanglePoint(
+            100, 100, const LatLng(37.396289088551704, 127.1129315279461)),
+        PolylineStyle(Colors.green, 10.0),
+        PolylineCap.round);
     controller.shapeLayer.addPolygonShape(
-      CirclePoint(200, const LatLng(37.39375894087694, 127.10964757834647)),
-      PolygonStyle(Colors.green)
-    );
+        CirclePoint(200, const LatLng(37.39375894087694, 127.10964757834647)),
+        PolygonStyle(Colors.green));
 
+    /// 경부고속도로를 따라 경로선을 그린다.
     controller.routeLayer.addRoute(const [
       LatLng(37.32428751919564, 127.10361027597592),
       LatLng(37.38433356340711, 127.10312961558715),
       LatLng(37.40049196436421, 127.09982509355939),
       LatLng(37.40605078821915, 127.09458697605862),
       LatLng(37.43918161748264, 127.06078195006104),
-    ], RouteStyle(Colors.yellow, 10));
+    ], RouteStyle(Colors.blue, 10));
+
+    controller.compass.show();
+    controller.scaleBar.show();
   }
 
   void onMapError(Exception exception) {

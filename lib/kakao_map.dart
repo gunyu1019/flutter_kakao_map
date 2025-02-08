@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math show Point;
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -59,13 +60,23 @@ part 'models/shape/polygon_style.dart';
 part 'models/shape/polyline_style.dart';
 part 'models/shape/rectangle_point.dart';
 
+part 'models/route/multiple_route.dart';
+part 'models/route/multiple_route_option.dart';
 part 'models/route/route.dart';
 part 'models/route/route_pattern.dart';
 part 'models/route/route_style.dart';
 
+part 'models/gui/default_gui.dart';
+part 'models/gui/compass.dart';
+part 'models/gui/scale_bar.dart';
+part 'models/gui/logo.dart';
+
 /* model(enumerate) */
+part 'models/enums/default_gui_type.dart';
 part 'models/enums/event_type.dart';
+part 'models/enums/map_overlay.dart';
 part 'models/enums/map_type.dart';
+part 'models/enums/map_gravity.dart';
 part 'models/enums/camera_update_type.dart';
 part 'models/enums/gesture_type.dart';
 part 'models/enums/image_type.dart';
@@ -81,7 +92,7 @@ part 'models/enums/shape/point_shape_type.dart';
 part 'models/enums/shape/polyline_cap.dart';
 part 'models/enums/shape/shape_layer_pass.dart';
 
-part 'models/enums/route/curved_type.dart';
+part 'models/enums/route/curve_type.dart';
 
 /* widget */
 part 'widget/map_widget.dart';

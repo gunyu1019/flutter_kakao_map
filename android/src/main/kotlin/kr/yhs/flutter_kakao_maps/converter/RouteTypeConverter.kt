@@ -60,7 +60,7 @@ object RouteTypeConverter {
         )
     }
 
-    fun Any.asRouteSegment(routeManager: RouteLineManager, index: Int = 0): RouteLineSegment = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
+    fun Any.asRouteSegment(routeManager: RouteLineManager, index: Int? = null): RouteLineSegment = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
         // val styleSets = routeManager.getStylesSet(rawPayload["styleId"]!!.asString())
         //
         // Temporary Actions 
@@ -68,9 +68,10 @@ object RouteTypeConverter {
         val styleSets = routeManager.addStylesSet(
             RouteLineStylesSet.from(rawPayload["styleId"]!!.asString(), listOf())
         )
-
+        val styleIndex = index ?: rawPayload["styleIndex"]?.asInt() ?: 0
+ 
         return RouteLineSegment.from().apply { 
-            styleSets.styles[index].let(::setStyles)
+            styleSets.styles[styleIndex].let(::setStyles)
             rawPayload["points"]!!.asList<Any>().map { element: Any -> 
                 element.asLatLng()
             }.let(::setPoints)
@@ -86,8 +87,8 @@ object RouteTypeConverter {
     }
     
     fun Any.asRouteMultipleOption(routeManager: RouteLineManager): RouteLineOptions = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
-        val segment = rawPayload["routes"]!!.asList<Any>().mapIndexed { index, payload -> 
-            payload.asRouteSegment(routeManager, index)
+        val segment = rawPayload["routes"]!!.asList<Any>().map { payload -> 
+            payload.asRouteSegment(routeManager)
         }
         return (rawPayload["id"]?.asString()?.let {
             RouteLineOptions.from(it, segment)

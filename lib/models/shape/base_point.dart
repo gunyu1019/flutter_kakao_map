@@ -1,6 +1,5 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
-
-abstract class _BasePoint with KMessageable {
+abstract class BasePoint with KMessageable {
   abstract final int type;
 }

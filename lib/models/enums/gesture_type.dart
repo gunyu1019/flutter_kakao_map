@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 enum GestureType {
   oneFingerDoubleTap(value: 1),
@@ -11,8 +11,8 @@ enum GestureType {
   rotateZoom(value: 10),
   oneFingerZoom(value: 11),
   unknown(value: 17);
-  
+
   final int value;
-  
+
   const GestureType({required this.value});
 }

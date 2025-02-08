@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 class PolygonStyle with KMessageable {
   String? _id;
@@ -21,31 +21,31 @@ class PolygonStyle with KMessageable {
     }
   }
 
-  PolygonStyle(this.color, {
+  PolygonStyle(
+    this.color, {
     String? id,
     this.strokeWidth = .0,
     this.strokeColor = Colors.black,
     this.zoomLevel = 0,
-  }) : _id = id, _isSecondaryStyle = false;
+  })  : _id = id,
+        _isSecondaryStyle = false;
 
-  PolygonStyle._(this.color, {
+  PolygonStyle._(
+    this.color, {
     String? id,
     this.strokeWidth = .0,
     this.strokeColor = Colors.black,
     this.zoomLevel = 0,
-  }) : _id = id, _isSecondaryStyle = true;
+  })  : _id = id,
+        _isSecondaryStyle = true;
 
-  void addStyle(int zoomLevel, Color? color, {
-    double? strokeWidth,
-    Color? strokeColor
-  }) {
+  void addStyle(int zoomLevel, Color? color,
+      {double? strokeWidth, Color? strokeColor}) {
     if (_isSecondaryStyle) return;
-    final otherStyle = PolygonStyle._(
-      color ?? this.color, 
-      strokeColor: strokeColor ?? this.strokeColor,
-      strokeWidth: strokeWidth ?? this.strokeWidth,
-      zoomLevel: zoomLevel
-    );
+    final otherStyle = PolygonStyle._(color ?? this.color,
+        strokeColor: strokeColor ?? this.strokeColor,
+        strokeWidth: strokeWidth ?? this.strokeWidth,
+        zoomLevel: zoomLevel);
     _styles.add(otherStyle);
   }
 

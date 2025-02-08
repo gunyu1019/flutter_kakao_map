@@ -1,17 +1,12 @@
-part of '../../flutter_kakao_maps.dart';
-
+part of '../../kakao_map.dart';
 
 class RectanglePoint extends _BaseDotPoint {
   final double width;
   final double height;
   final bool clockwise;
 
-  RectanglePoint(
-    this.width,
-    this.height, 
-    super.basePoint, {
-      this.clockwise = false
-  });
+  RectanglePoint(this.width, this.height, super.basePoint,
+      {this.clockwise = false});
 
   @override
   Map<String, dynamic> toMessageable([bool isHole = false]) {

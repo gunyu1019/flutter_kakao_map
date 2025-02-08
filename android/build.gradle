@@ -51,6 +51,6 @@ android {
 
     dependencies {
         implementation 'com.kakao.maps.open:android:2.12.11'
-        implementation files('libs/flutter.jar')
+        // implementation files('libs/flutter.jar')
     }
 }

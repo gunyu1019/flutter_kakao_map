@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 enum OverlayType {
   label(value: 1),
@@ -6,7 +6,7 @@ enum OverlayType {
   shape(value: 3),
   route(value: 4);
 
-  final int value;  
+  final int value;
 
   const OverlayType({required this.value});
 }

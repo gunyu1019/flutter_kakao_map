@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../kakao_map.dart';
 
 class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   final MethodChannel channel;
@@ -8,6 +8,7 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   KakaoMapController(this.channel, {required this.overlayChannel}) {
     _initalizeOverlayController();
+    fetchBuildingHeightScale();
   }
 
   /* Sender */
@@ -25,6 +26,118 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
       "cameraAnimation": animation?.toMessageable()
     });
   }
+
+  @override
+  Future<LatLng?> fromScreenPoint(int x, int y) async {
+    final position =
+        await channel.invokeMethod("fromScreenPoint", {"x": x, "y": y});
+    if (position == null) {
+      return null;
+    }
+    return LatLng.fromMessageable(position);
+  }
+
+  @override
+  Future<KPoint?> toScreenPoint(LatLng position) async {
+    final point =
+        await channel.invokeMethod("toScreenPoint", position.toMessageable());
+    if (point == null) {
+      return null;
+    }
+    return KPoint(point['x'], point['y']);
+  }
+
+  @override
+  Future<void> setGesture(GestureType gesture, bool enable) async {
+    await channel.invokeMethod(
+        "setGestureEnable", {"gestureType": gesture.value, "enable": enable});
+  }
+
+  @override
+  Future<void> clearCache() async {
+    await channel.invokeMethod("clearCache");
+  }
+
+  @override
+  Future<void> clearDiskCache() async {
+    await channel.invokeMethod("clearDiskCache");
+  }
+
+  @override
+  Future<bool> canShowPosition(int zoomLevel, List<LatLng> position) async {
+    final result = await channel.invokeMethod("canShowPosition", {
+      "zoomLevel": zoomLevel,
+      "position": position.map((e) => e.toMessageable()).toList()
+    });
+    return result;
+  }
+
+  @override
+  Future<void> changeMapType(MapType mapType) async {
+    await channel.invokeMethod("changeMapType", {"mapType": mapType.value});
+  }
+
+  @override
+  Future<void> showOverlay(MapOverlay overlay) async {
+    await channel.invokeMethod(
+        "overlayVisible", {"overlayType": overlay.value, "visible": true});
+  }
+
+  @override
+  Future<void> hideOverlay(MapOverlay overlay) async {
+    await channel.invokeMethod(
+        "overlayVisible", {"overlayType": overlay.value, "visible": false});
+  }
+
+  @override
+  Future<double> fetchBuildingHeightScale() async {
+    final result = await channel.invokeMethod("getBuildingHeightScale");
+    buildingHeightScale = result;
+    return result;
+  }
+
+  @override
+  Future<void> setBuildingHeightScale(double scale) async {
+    await channel.invokeMethod("setBuildingHeightScale", {"scale": scale});
+    buildingHeightScale = scale;
+  }
+
+  @override
+  Future<void> _defaultGUIvisible(DefaultGUIType type, bool visible) async {
+    await channel.invokeMethod(
+        "defaultGUIvisible", {"type": type.value, "visible": visible});
+  }
+
+  @override
+  Future<void> _defaultGUIposition(
+      DefaultGUIType type, MapGravity gravity, double x, double y) async {
+    await channel.invokeMethod("defaultGUIposition",
+        {"type": type.value, "gravity": gravity.value, "x": x, "y": y});
+  }
+
+  @override
+  Future<void> _scaleAutohide(bool autohide) async {
+    await channel.invokeMethod("scaleAutohide", {"autohide": autohide});
+  }
+
+  @override
+  Future<void> _scaleAnimationTime(
+      int fadeIn, int fadeOut, int retention) async {
+    await channel.invokeMethod("scaleAnimationTime", {
+      "fadeIn": fadeIn,
+      "fadeOut": fadeOut,
+      "retention": retention,
+    });
+  }
+
+  @override
+  Compass get compass => Compass._(controller: this);
+
+  @override
+  ScaleBar get scaleBar => ScaleBar._(controller: this);
+
+  @override
+  Logo get logo => Logo._(controller: this);
 
   @override
   Future<String> addPoiStyle(PoiStyle style) async {
@@ -82,7 +195,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   }
 
   @override
-  Future<String> addMultipleRouteStyle(List<RouteStyle> styles, [String? id]) async {
+  Future<String> addMultipleRouteStyle(List<RouteStyle> styles,
+      [String? id]) async {
     String styleId = await routeLayer._invokeMethod("addRouteStyle", {
       "styleId": id,
       "styles": styles.map((e) => e.toMessageable()).toList()
@@ -175,7 +289,8 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
   @override
   Future<RouteController> addRouteLayer(String id,
       {int zOrder = ShapeController.defaultZOrder}) async {
-    final routeLayer = RouteController._(overlayChannel, this, id, zOrder: zOrder);
+    final routeLayer =
+        RouteController._(overlayChannel, this, id, zOrder: zOrder);
     await routeLayer._createRouteLayer();
     _routeController[id] = routeLayer;
     return routeLayer;

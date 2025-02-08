@@ -1,4 +1,4 @@
-part of '../../../flutter_kakao_maps.dart';
+part of '../../../kakao_map.dart';
 
 enum OrderingType {
   rank(0),

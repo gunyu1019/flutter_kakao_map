@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../kakao_map.dart';
 
 enum ChannelType {
   sdk("${_baseChannelId}_sdk"),
@@ -6,7 +6,7 @@ enum ChannelType {
   view("${_baseChannelId}_view");
 
   final String id;
-  
+
   MethodChannel get channel => MethodChannel(id);
   MethodChannel channelWithId(int id) => MethodChannel("${this.id}#$id");
 

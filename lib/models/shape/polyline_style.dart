@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 class PolylineStyle with KMessageable {
   String? _id;
@@ -22,34 +22,37 @@ class PolylineStyle with KMessageable {
     }
   }
 
-  PolylineStyle(this.color, this.lineWidth, {
+  PolylineStyle(
+    this.color,
+    this.lineWidth, {
     String? id,
     this.strokeWidth = .0,
     this.strokeColor = Colors.black,
     this.zoomLevel = 0,
-  }) : _id = id, _isSecondaryStyle = false;
+  })  : _id = id,
+        _isSecondaryStyle = false;
 
-  PolylineStyle._(this.color, this.lineWidth, {
+  PolylineStyle._(
+    this.color,
+    this.lineWidth, {
     String? id,
     this.strokeWidth = .0,
     this.strokeColor = Colors.black,
     this.zoomLevel = 0,
-  }) : _id = id, _isSecondaryStyle = true;
+  })  : _id = id,
+        _isSecondaryStyle = true;
 
-  void addStyle(int zoomLevel, {
-    Color? color,
-    double? lineWidth,
-    double? strokeWidth,
-    Color? strokeColor
-  }) {
+  void addStyle(int zoomLevel,
+      {Color? color,
+      double? lineWidth,
+      double? strokeWidth,
+      Color? strokeColor}) {
     if (_isSecondaryStyle) return;
     final otherStyle = PolylineStyle._(
-      color ?? this.color, 
-      lineWidth ?? this.lineWidth,
-      strokeColor: strokeColor ?? this.strokeColor,
-      strokeWidth: strokeWidth ?? this.strokeWidth,
-      zoomLevel: zoomLevel
-    );
+        color ?? this.color, lineWidth ?? this.lineWidth,
+        strokeColor: strokeColor ?? this.strokeColor,
+        strokeWidth: strokeWidth ?? this.strokeWidth,
+        zoomLevel: zoomLevel);
     _styles.add(otherStyle);
   }
 

@@ -1,4 +1,4 @@
-part of '../../../flutter_kakao_maps.dart';
+part of '../../../kakao_map.dart';
 
 enum TransformMethod {
   one(-1),

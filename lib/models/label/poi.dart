@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 class Poi {
   final LabelController _controller;
@@ -9,8 +9,8 @@ class Poi {
   LatLng _position;
   LatLng get position => _position;
 
-  void Function()? _onClick;
-  bool get clickable => _onClick != null;
+  void Function()? onClick;
+  bool get clickable => onClick != null;
 
   String? _text;
   String? get text => _text;
@@ -27,14 +27,12 @@ class Poi {
   Poi._(this._controller, this.id,
       {required this.transform,
       required LatLng position,
-      required bool clickable,
       required PoiStyle style,
       required String? text,
       required int rank,
       required bool visible,
-      void Function()? onClick})
+      this.onClick})
       : _position = position,
-        _onClick = onClick,
         _style = style,
         _text = text,
         _rank = rank,
@@ -42,15 +40,12 @@ class Poi {
 
   // void addBadge();
 
-  void addSharePosition(Poi poi) {
+  void addSharePosition(Poi poi) {}
 
-  }
+  void addShareTransform(Poi poi) {}
 
-  void addShareTransform(Poi poi) {
-
-  }
-
-  Future<void> changeOffsetPosition(double x, double y, [bool forceDpScale = false]) async {
+  Future<void> changeOffsetPosition(double x, double y,
+      [bool forceDpScale = false]) async {
     final prePosition = _position;
     _position = LatLng(prePosition.latitude + x, prePosition.longitude + y);
     await _controller._changePoiOffsetPosition(id, x, y, forceDpScale);
@@ -65,7 +60,7 @@ class Poi {
     final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
     await _controller._changePoiStyle(id, styleId);
     _style = style;
-  } 
+  }
 
   Future<void> changeText(String text, [bool transition = false]) async {
     _text = text;
@@ -95,13 +90,9 @@ class Poi {
 
   // void removeAllBadge();
 
-  void removeSharePosition(Poi poi) {
+  void removeSharePosition(Poi poi) {}
 
-  }
-
-  void removeShareTransform(Poi poi) {
-
-  }
+  void removeShareTransform(Poi poi) {}
 
   Future<void> rotate(double angle, [double? millis]) async {
     await _controller._rotatePoi(id, angle, millis);

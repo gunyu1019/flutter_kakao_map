@@ -1,4 +1,4 @@
-part of '../flutter_kakao_maps.dart';
+part of '../kakao_map.dart';
 
 StatefulWidget _createPlatformView({
   required String viewType,
@@ -12,8 +12,7 @@ StatefulWidget _createPlatformView({
         surfaceFactory: (context, controller) => AndroidViewSurface(
             controller: controller as AndroidViewController,
             hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-            gestureRecognizers: gestureRecognizers
-        ),
+            gestureRecognizers: gestureRecognizers),
         onCreatePlatformView: (params) {
           return PlatformViewsService.initSurfaceAndroidView(
             id: params.id,

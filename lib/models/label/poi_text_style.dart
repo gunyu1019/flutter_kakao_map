@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 class PoiTextStyle with KMessageable {
   final double aspectRatio;
@@ -10,16 +10,15 @@ class PoiTextStyle with KMessageable {
   final int stroke;
   final Color strokeColor;
 
-  const PoiTextStyle({
-    this.aspectRatio = 0.0,
-    this.characterSpace = 0,
-    this.color = Colors.black,
-    this.font = "",
-    this.lineSpace = 1.0,
-    this.size = 24,
-    this.stroke = 0,
-    this.strokeColor = Colors.black
-  });
+  const PoiTextStyle(
+      {this.aspectRatio = 0.0,
+      this.characterSpace = 0,
+      this.color = Colors.black,
+      this.font = "",
+      this.lineSpace = 1.0,
+      this.size = 24,
+      this.stroke = 0,
+      this.strokeColor = Colors.black});
 
   @override
   Map<String, dynamic> toMessageable() {

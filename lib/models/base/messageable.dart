@@ -1,4 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
 mixin KMessageable {
   Map<String, dynamic> toMessageable();

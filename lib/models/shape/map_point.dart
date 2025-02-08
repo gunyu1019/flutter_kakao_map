@@ -1,7 +1,6 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
-
-class MapPoint extends _BasePoint {
+class MapPoint extends BasePoint {
   final List<LatLng> points;
   final List<List<LatLng>> _holes = [];
 
@@ -18,12 +17,14 @@ class MapPoint extends _BasePoint {
   @override
   Map<String, dynamic> toMessageable() {
     return <String, dynamic>{
-      "type": type,  // point type
+      "type": type, // point type
       "points": points.map((e) => e.toMessageable()).toList(),
-      "holes": _holes.map((e1) => e1.map((e2) => e2.toMessageable()).toList()).toList()
+      "holes": _holes
+          .map((e1) => e1.map((e2) => e2.toMessageable()).toList())
+          .toList()
     };
   }
-  
+
   @override
   int get type => 0;
 }

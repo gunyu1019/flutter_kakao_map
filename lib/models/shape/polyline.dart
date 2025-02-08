@@ -1,6 +1,6 @@
-part of '../../flutter_kakao_maps.dart';
+part of '../../kakao_map.dart';
 
-class Polyline<T extends _BasePoint> {
+class Polyline<T extends BasePoint> {
   final ShapeController _controller;
   final String id;
 
@@ -17,16 +17,20 @@ class Polyline<T extends _BasePoint> {
   PolylineCap get polylineCap => _polylineCap;
 
   Polyline._(ShapeController controller, this.id,
-      {required T position, required PolylineStyle style, required PolylineCap polylineCap})
+      {required T position,
+      required PolylineStyle style,
+      required PolylineCap polylineCap})
       : _controller = controller,
         _style = style,
         _position = position,
         _polylineCap = polylineCap,
         _visible = true;
 
-  Future<void> changeStyle(PolylineStyle style, PolylineCap? polylineCap) async {
+  Future<void> changeStyle(
+      PolylineStyle style, PolylineCap? polylineCap) async {
     _polylineCap = polylineCap ?? _polylineCap;
-    final styleId = style.id ?? await _controller.manager.addPolylineShapeStyle(style, _polylineCap);
+    final styleId = style.id ??
+        await _controller.manager.addPolylineShapeStyle(style, _polylineCap);
     await _controller._changePolylineStyle(id, styleId);
     _style = style;
   }

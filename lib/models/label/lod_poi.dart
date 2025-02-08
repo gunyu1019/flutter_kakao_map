@@ -1,5 +1,4 @@
-part of '../../flutter_kakao_maps.dart';
-
+part of '../../kakao_map.dart';
 
 class LodPoi {
   final LodLabelController _controller;
@@ -8,8 +7,8 @@ class LodPoi {
   final TransformMethod? transform;
   final LatLng position;
 
-  void Function()? _onClick;
-  bool get clickable => _onClick != null;
+  void Function()? onClick;
+  bool get clickable => onClick != null;
 
   String? _text;
   String? get text => _text;
@@ -26,14 +25,12 @@ class LodPoi {
   LodPoi._(this._controller, this.id,
       {required this.transform,
       required this.position,
-      required bool clickable,
       required PoiStyle style,
       required String? text,
       required int rank,
       required bool visible,
-      void Function()? onClick})
-      : _onClick = onClick,
-        _style = style,
+      this.onClick})
+      : _style = style,
         _text = text,
         _rank = rank,
         _visible = visible;
@@ -48,7 +45,7 @@ class LodPoi {
     await _controller._changePoiStyle(id, styleId);
     _style = style;
   }
-  
+
   Future<void> changeText(String text) async {
     _text = text;
     await _controller._changePoiText(id, text);
