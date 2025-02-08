@@ -4,7 +4,6 @@ class ScaleBar extends DefaultGUI {
   @override
   DefaultGUIType get type => DefaultGUIType.scale;
 
-  @override
   KakaoMapControllerSender _controller;
 
   ScaleBar._({

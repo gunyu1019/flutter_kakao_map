@@ -4,7 +4,6 @@ class Logo extends DefaultGUI {
   @override
   DefaultGUIType get type => DefaultGUIType.logo;
 
-  @override
   KakaoMapControllerSender _controller;
 
   Logo._({
