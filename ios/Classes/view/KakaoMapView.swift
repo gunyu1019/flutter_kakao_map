@@ -39,10 +39,10 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+        self.kakaoMap.prepareEngine()
     }
     
     func view() -> UIView {
-        self.kakaoMap.prepareEngine()
         self.kakaoMap.activateEngine()
         return KMView
     }
