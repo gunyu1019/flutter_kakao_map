@@ -38,9 +38,17 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
         )
     }
     
-    /* func containerDidResized(_ size: CGSize) {
-        (controller.getView("map_view") as? KakaoMap)?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-    } */
+    func containerDidResized(_ size: CGSize) {
+        let kakaoMap = controller.getView(option.viewName) as? KakaoMap
+        let isInit = kakaoMap?.viewRect == CGRect(x: 0, y: 0, width: 1, height: 1)
+        kakaoMap?.keepLevelOnResize = true
+        kakaoMap?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
+        
+        // (TEMP) re-rendering
+        if isInit {
+            kakaoMap?.moveCamera(CameraUpdate.make(zoomLevel: kakaoMap!.zoomLevel, mapView: kakaoMap!))
+        }
+    }
     
     var controller: KMController;
 }
