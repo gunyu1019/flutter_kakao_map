@@ -29,13 +29,23 @@ internal func asCameraUpdate(kakaoMap: KakaoMap, payload: Dictionary<String, Any
     let angle = castSafty(payload["angle"], caster: asDouble)
     switch cameraUpdateType {
     case 0: return CameraUpdate.make(target: MapPoint(payload: payload), zoomLevel: zoomLevel!, mapView: kakaoMap)
-    // case 1: return CameraUpdate.make(mapView: kakaoMap)
+    case 1: 
+        return CameraUpdate.make(
+            target: MapPoint(payload: payload),
+            zoomLevel: zoomLevel!,
+            rotation: asDouble(payload["rotationAngle"] ?? -1.0),
+            tilt: asDouble(payload["tiltAngle"] ?? -1.0),
+            mapView: kakaoMap
+        )
     case 3: return CameraUpdate.make(zoomLevel: zoomLevel!, mapView: kakaoMap)
     case 4: return CameraUpdate.make(zoomLevel: kakaoMap.zoomLevel+1, mapView: kakaoMap)
     case 5: return CameraUpdate.make(zoomLevel: kakaoMap.zoomLevel-1, mapView: kakaoMap)
     case 6: return CameraUpdate.make(rotation: angle!, tilt: kakaoMap.tiltAngle, mapView: kakaoMap)
     case 7: return CameraUpdate.make(rotation: kakaoMap.rotationAngle, tilt: angle!, mapView: kakaoMap)
-    // case 8: return CameraUpdate.make(zoomLevel: zoomLevel!, mapView: kakaoMap)
+    case 8: return CameraUpdate.make(
+        area: AreaRect(asArray<MapPoint>(payload["points"], caster: MapPoint)),
+        levelLimit: zoomLevel ?? -1
+    )
     default: return CameraUpdate.make(mapView: kakaoMap)
     }
 }
