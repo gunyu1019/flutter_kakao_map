@@ -27,6 +27,18 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
         self.kakaoMap.delegate = eventDelegate
         
         // FlutterKakaoMapsPlugin.registrar.addApplicationDelegate()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
     
     func view() -> UIView {
@@ -35,7 +47,17 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
         return KMView
     }
 
-    func dispose() {
+    @objc func appDidEnterBackground() {
+        self.kakaoMap.pauseEngine()
+    }
+
+    @objc func appWillEnterForeground() {
+        self.kakaoMap.activateEngine()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        self.kakaoMap.pauseEngine()
         self.kakaoMap.resetEngine()
     }
 }
