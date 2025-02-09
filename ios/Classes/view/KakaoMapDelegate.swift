@@ -21,7 +21,9 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
     }
     
     func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-        sender.onMapReady()
+        sender.onMapReady(
+            kakaoMap: self.controller.getView(viewName) as! KakaoMap
+        )
     }
     
     func addViewFailed(_ viewName: String, viewInfoName: String) {
