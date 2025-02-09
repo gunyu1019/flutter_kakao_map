@@ -2,8 +2,14 @@
 * First Deploy
 
 ## 0.2.0-dev.1
-* Support iOS Platform 
-  * Kakao Map View
-  * `moveCamera` method to update camera 
-  * `getCameraPosition` method to provide current camera position
-  * Implement automatic Kakao Map Lifecycle.
+* Implement Kakao Map View to iOS Platform
+  * Kakao Map Lifecycle in native environment
+  * Support responsive frame
+  * Split delegate instance to `KakaoMapViewDelegate.swift`
+* Implement Kakao Map Plugin in iOS Platform (based cocoapod)
+  * Implement converter (PrimitiveTypeConverter, CameraTypeConverter) with extension and internal function.
+  * Implement `MapviewType` object to setup kakao map with extension.
+* Implement some feature in Kakao Map Controller
+  * `moveCamera` method to control camera looking at a kakao map.
+  * `getCameraPosition` method to get camera position looking at a kakao map.
+* Implement `SDKInitializer` class in iOS Platform
