@@ -145,6 +145,7 @@ class _MyAppState extends State<MyApp> {
         position = result.position;
       });
     });
+    return;
 
     /// 카카오 판교캠퍼스 지점에 Poi를 그린다.
     controller.labelLayer

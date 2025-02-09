@@ -1,6 +1,6 @@
 name: kakao_map_sdk
 description: "A natvie based kakao maps plugin."
-version: 0.1.0-dev.5
+version: 0.2.0-dev.1
 repository: https://github.com/gunyu1019/flutter_kakao_maps
 issue_tracker: https://github.com/gunyu1019/flutter_kakao_maps/issues
 
@@ -24,4 +24,6 @@ flutter:
     platforms:
       android:
         package: kr.yhs.flutter_kakao_maps
+        pluginClass: FlutterKakaoMapsPlugin
+      ios:
         pluginClass: FlutterKakaoMapsPlugin

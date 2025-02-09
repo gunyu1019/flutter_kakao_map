@@ -1,0 +1,5 @@
+{
+    "swift.swiftEnvironmentVariables": {},
+    "lldb.library": "/home/vscode/.local/share/swiftly/toolchains/6.0.3/usr/lib/liblldb.so",
+    "lldb.launch.expressions": "native"
+}

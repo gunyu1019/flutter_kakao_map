@@ -32,8 +32,13 @@ StatefulWidget _createPlatformView({
         },
         viewType: viewType);
   } else if (Platform.isIOS) {
-    // TODO
-    throw UnimplementedError("TODO");
+    return UiKitView(
+      viewType: viewType,
+      layoutDirection: TextDirection.ltr,
+      creationParams: creationParams,
+      creationParamsCodec: const StandardMessageCodec(),
+      onPlatformViewCreated: onPlatformViewCreated,
+    );
   } else {
     throw PlatformException(code: "unsupportedPlatform");
   }
