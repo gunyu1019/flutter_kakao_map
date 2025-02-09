@@ -1,5 +1,6 @@
 part of '../../kakao_map_sdk.dart';
 
+/// 지도에 표시된 로고을 관리하는 객체입니다.
 class Logo extends DefaultGUI {
   @override
   DefaultGUIType get type => DefaultGUIType.logo;
