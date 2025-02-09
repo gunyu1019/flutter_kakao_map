@@ -41,7 +41,7 @@ internal func asArray<T>(_ v: Any, caster: (Any) throws -> T) -> Array<T> {
 }
 
 internal func castSafty<T>(_ v: Any?, caster: (Any) throws -> T) -> T? {
-    if v == nil {
+    if v == nil || v is NSNull {
         return nil
     } else {
         return try! caster(v!)
