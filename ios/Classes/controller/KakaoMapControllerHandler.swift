@@ -17,11 +17,12 @@ internal extension KakaoMapControllerHandler {
     func handle(call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
             case "getCameraPosition": getCameraPosition(onSuccess: result)
-            case "moveCamera": moveCamera(
-                cameraUpdate: asCameraUpdate(kakaoMap: self.kakaoMap, payload: asDict(call.arguments["cameraUpdate"]!)),
-                cameraAnimation: call.arguments["cameraAnimation"] == nil ? nil : CameraAnimationOptions(payload: asDict(call.arguments["cameraAnimation"]!)),
-                onSuccess: result
-            )
+            case "moveCamera":
+            let arguments = asDict(call.arguments!)
+            let cameraUpdate = asCameraUpdate(kakaoMap: self.kakaoMap, payload: asDict(arguments["cameraUpdate"]!))
+            let rawCameraAnimation = castSafty(arguments["cameraAnimation"], caster: asDict)
+            let cameraAnimation = rawCameraAnimation != nil ? CameraAnimationOptions(payload: rawCameraAnimation!) : nil
+            moveCamera(cameraUpdate: cameraUpdate, cameraAnimation: cameraAnimation, onSuccess: result)
             default: result(FlutterMethodNotImplemented)
         }
     }
