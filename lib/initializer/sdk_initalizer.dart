@@ -1,5 +1,7 @@
 part of '../kakao_map_sdk.dart';
 
+/// Kakao Map을 이용하기 전에 호출하는 객체입니다.
+/// 애플리케이션 인증을 위해 사용됩니다.
 abstract class KakaoMapSdk {
   static final instance = KakaoMapSdkImplement();
 
