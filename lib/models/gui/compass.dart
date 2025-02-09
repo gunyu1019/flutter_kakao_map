@@ -1,5 +1,6 @@
 part of '../../kakao_map_sdk.dart';
 
+/// 지도에 표시된 나침판을 관리하는 객체입니다.
 class Compass extends DefaultGUI {
   @override
   DefaultGUIType get type => DefaultGUIType.compass;
