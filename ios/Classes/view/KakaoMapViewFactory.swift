@@ -26,7 +26,7 @@ class KakaoMapViewFactory: NSObject, FlutterPlatformViewFactory {
         )
 
         let arguments = asDict(args!)
-        let option = MapviewInfo(payload: arguments)
+        let option = MapviewInfo(payload: arguments, viewId: viewId)
 
         return KakaoMapView(frame: frame, channel: channel, overlayChannel: overlayChannel, option: option)
     }
