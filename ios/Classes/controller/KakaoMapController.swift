@@ -6,12 +6,12 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     private let overlayChannel: FlutterMethodChannel
     
     private var lateinitKakaoMap: KakaoMap? = nil
-    private var kakaoMap: KakaoMap = {
+    internal var kakaoMap: KakaoMap {
         get {
-            return lateinitkakaoMap!
+            return self.lateinitKakaoMap!
         }
-        set(value: KakaoMap) {
-            lateinitKakaoMap = value
+        set(value) {
+            self.lateinitKakaoMap = value
         }
     }
 
@@ -31,7 +31,7 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
             "zoomLevel": kakaoMap.zoomLevel,
             "tiltAngle": kakaoMap.tiltAngle,
             "rotationAngle": kakaoMap.rotationAngle,
-            "height": kakaoMap.height
+            "height": kakaoMap.cameraHeight
         ]
         payload.merge(position.toMessageable()) { current, _ in current }
         onSuccess(payload)
