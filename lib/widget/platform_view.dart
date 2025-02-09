@@ -37,6 +37,7 @@ StatefulWidget _createPlatformView({
       layoutDirection: TextDirection.ltr,
       creationParams: creationParams,
       creationParamsCodec: const StandardMessageCodec(),
+      onPlatformViewCreated: onPlatformViewCreated,
     );
   } else {
     throw PlatformException(code: "unsupportedPlatform");
