@@ -1,4 +1,4 @@
-part of '../../kakao_map.dart';
+part of '../../kakao_map_sdk.dart';
 
 /// 지도의 카메라 속성을 가지고 있는 객체입니다.
 class CameraPosition with KMessageable {

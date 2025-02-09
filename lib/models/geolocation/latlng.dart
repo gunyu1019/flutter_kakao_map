@@ -1,4 +1,4 @@
-part of '../../kakao_map.dart';
+part of '../../kakao_map_sdk.dart';
 
 /// 위도(Latitude)와 경도(longitude)를 사용하여 좌표를 나타내는 객체입니다.
 class LatLng with KMessageable {

@@ -1,4 +1,4 @@
-part of '../../../kakao_map.dart';
+part of '../../../kakao_map_sdk.dart';
 
 /// [LabelController] 간 우선순위를 설정할 수 있는 클래스입니다.
 enum CompetitionType {

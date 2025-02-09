@@ -1,4 +1,4 @@
-part of '../../../kakao_map.dart';
+part of '../../../kakao_map_sdk.dart';
 
 /// Poi 간에서 경쟁 처리 단위를 정의합니다.
 enum CompetitionUnit {

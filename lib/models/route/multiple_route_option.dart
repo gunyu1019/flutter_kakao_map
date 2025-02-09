@@ -1,4 +1,4 @@
-part of '../../kakao_map.dart';
+part of '../../kakao_map_sdk.dart';
 
 class MultipleRouteOption with KMessageable {
   final String? id;

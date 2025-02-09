@@ -1,4 +1,4 @@
-part of '../../kakao_map.dart';
+part of '../../kakao_map_sdk.dart';
 
 /// 카메라 이동의 애니메이션을 정의하는 객체입니다.
 class CameraAnimation with KMessageable {

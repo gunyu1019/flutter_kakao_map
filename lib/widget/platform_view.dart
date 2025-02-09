@@ -1,4 +1,4 @@
-part of '../kakao_map.dart';
+part of '../kakao_map_sdk.dart';
 
 StatefulWidget _createPlatformView({
   required String viewType,

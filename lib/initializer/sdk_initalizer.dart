@@ -1,4 +1,4 @@
-part of '../kakao_map.dart';
+part of '../kakao_map_sdk.dart';
 
 abstract class KakaoMapSdk {
   static final instance = KakaoMapSdkImplement();

@@ -1,4 +1,4 @@
-part of '../../kakao_map.dart';
+part of '../../kakao_map_sdk.dart';
 
 /// 지도의 카메라의 위치를 새롭게 정의할 때 사용하는 객체입니다.
 class CameraUpdate with KMessageable {
