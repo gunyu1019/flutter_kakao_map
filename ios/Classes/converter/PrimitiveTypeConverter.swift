@@ -31,6 +31,15 @@ internal func asDictTyped<T>(_ v: Any, caster: (Any) throws -> T) -> Dictionary<
     return newDict
 }
 
+internal func asArray(_ v: Any) -> Array<Any> {
+    return v as! Array<Any>
+}
+
+internal func asArray<T>(_ v: Any, caster: (Any) throws -> T) -> Array<T> {
+    let list = asArray(v)
+    return try! list.map(caster)
+}
+
 internal func castSafty<T>(_ v: Any?, caster: (Any) throws -> T) -> T? {
     if v == nil {
         return nil
