@@ -5,7 +5,15 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     private let channel: FlutterMethodChannel
     private let overlayChannel: FlutterMethodChannel
     
-    private lazy var kakaoMap: KakaoMap? = nil
+    private var lateinitKakaoMap: KakaoMap? = nil
+    private var kakaoMap: KakaoMap = {
+        get {
+            return lateinitkakaoMap!
+        }
+        set(value: KakaoMap) {
+            lateinitKakaoMap = value
+        }
+    }
 
     init (
         channel: FlutterMethodChannel,
@@ -18,12 +26,14 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     }
 
     func getCameraPosition(onSuccess: @escaping (_ cameraPosition: Dictionary<String, Any>) -> Void) {
-        let position = kakaoMap!.getPosition(CGPoint(x: 0.5, y: 0.5))
-        var payload: Dictionary<String, Any> = position.toMessageable()
-        payload["zoomLevel"] = kakaoMap!.zoomLevel
-        payload["tiltAngle"] = kakaoMap!.tiltAngle
-        payload["rotationAngle"] = kakaoMap!.rotationAngle
-        payload["height"] = kakaoMap!.cameraHeight
+        let position = kakaoMap.getPosition(CGPoint(x: 0.5, y: 0.5))
+        var payload: Dictionary<String, Any> = [
+            "zoomLevel": kakaoMap.zoomLevel,
+            "tiltAngle": kakaoMap.tiltAngle,
+            "rotationAngle": kakaoMap.rotationAngle,
+            "height": kakaoMap.height
+        ]
+        payload.merge(position.toMessageable()) { current, _ in current }
         onSuccess(payload)
         return
     }
@@ -34,11 +44,11 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         onSuccess: (Any?) -> Void
     ) {
         if (cameraAnimation == nil) {
-            kakaoMap!.moveCamera(cameraUpdate)
+            kakaoMap.moveCamera(cameraUpdate)
             onSuccess(nil)
             return
         }
-        kakaoMap!.animateCamera(cameraUpdate: cameraUpdate, options: cameraAnimation!)
+        kakaoMap.animateCamera(cameraUpdate: cameraUpdate, options: cameraAnimation!)
         onSuccess(nil)
         return
     }
