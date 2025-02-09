@@ -22,7 +22,7 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
     
     func addViewSucceeded(_ viewName: String, viewInfoName: String) {
         sender.onMapReady(
-            kakaoMap: self.controller.getView(viewName) as! KakaoMap
+            kakaoMap: (self.controller.getView(viewName) as! KakaoMap)
         )
     }
     
@@ -38,9 +38,9 @@ internal class KakaoMapDelegate: NSObject, MapControllerDelegate {
         )
     }
     
-    func containerDidResized(_ size: CGSize) {
+    /* func containerDidResized(_ size: CGSize) {
         (controller.getView("map_view") as? KakaoMap)?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-    }
+    } */
     
     var controller: KMController;
 }

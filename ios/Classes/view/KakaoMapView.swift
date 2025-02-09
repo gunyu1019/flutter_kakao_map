@@ -15,7 +15,8 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
         overlayChannel: FlutterMethodChannel,
         option: MapviewInfo
     ) {
-        self.KMView = KMViewContainer()
+        self.KMView = KMViewContainer(frame: CGRect(x: 0, y: 0, width: 1206, height: 2097))
+        // self.KMView = KMViewContainer(frame: frame)
         self.kakaoMap = KMController(viewContainer: KMView)
         self.controller = KakaoMapController(
             channel: channel,
