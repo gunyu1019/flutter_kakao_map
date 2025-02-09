@@ -10,7 +10,7 @@
 Flutter Kakao Maps 플러그인은 정식으로 배포되는 [Kakao Map SDK](https://apis.map.kakao.com/) 요구 조건을 따릅니다.
 아래의 조건에 충족하는지 확인해주세요.
 
-| Android                           | iOS (작업 중)  |
+| Android                           | iOS            |
 |-----------------------------------|----------------|
 | * Android SDK 6.0(API lv.23) 이상 | * iOS 13 이상   |
 | * `armeabi-v7a`, `arm64-v8a` 아키텍쳐 지원<br/>(`x86`, `x64` 아키텍쳐 지원하지 않습니다.) |        |
@@ -20,7 +20,7 @@ Flutter Kakao Maps 플러그인은 정식으로 배포되는 [Kakao Map SDK](htt
 ### 1-1. `pubspec.yml`에 패키지 를 추가합니다.
 ```yml
 dependencies:
-  kakao_map_sdk: ^0.1.0
+  kakao_map_sdk: ^0.2.0
 ```
 
 ### 1-2. Kakao Developers 네이티브 앱 키 추가
