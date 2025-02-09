@@ -15,8 +15,7 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
         overlayChannel: FlutterMethodChannel,
         option: MapviewInfo
     ) {
-        self.KMView = KMViewContainer(frame: CGRect(x: 0, y: 0, width: 1206, height: 2097))
-        // self.KMView = KMViewContainer(frame: frame)
+        self.KMView = KMViewContainer()
         self.kakaoMap = KMController(viewContainer: KMView)
         self.controller = KakaoMapController(
             channel: channel,
@@ -24,20 +23,24 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
         )
         super.init()
         
-        eventDelegate = KakaoMapDelegate(controller: self.kakaoMap, sender: controller, option: option)
+        eventDelegate = KakaoMapDelegate(
+            controller: self.kakaoMap,
+            sender: controller,
+            option: option
+        )
         self.kakaoMap.delegate = eventDelegate
         
-        // FlutterKakaoMapsPlugin.registrar.addApplicationDelegate()
+        
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(appDidEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification,
+            selector: #selector(onViewPaused),
+            name: UIApplication.willResignActiveNotification,
             object: nil
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(appWillEnterForeground),
-            name: UIApplication.willEnterForegroundNotification,
+            selector: #selector(onViewResume),
+            name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
         self.kakaoMap.prepareEngine()
@@ -48,11 +51,11 @@ internal class KakaoMapView: NSObject, FlutterPlatformView {  // UIApplicationDe
         return KMView
     }
 
-    @objc func appDidEnterBackground() {
+    @objc func onViewPaused() {
         self.kakaoMap.pauseEngine()
     }
 
-    @objc func appWillEnterForeground() {
+    @objc func onViewResume() {
         self.kakaoMap.activateEngine()
     }
 
