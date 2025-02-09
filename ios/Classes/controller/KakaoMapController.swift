@@ -18,12 +18,12 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     }
 
     func getCameraPosition(onSuccess: @escaping (_ cameraPosition: Dictionary<String, Any>) -> Void) {
-        let position = kakaoMap.getPosition(CGPoint(x: 0.5, y: 0.5))
+        let position = kakaoMap!.getPosition(CGPoint(x: 0.5, y: 0.5))
         var payload: Dictionary<String, Any> = position.toMessageable()
-        payload["zoomLevel"] = kakaoMap.zoomLevel
-        payload["tiltAngle"] = kakaoMap.tiltAngle
-        payload["rotationAngle"] = kakaoMap.rotationAngle
-        payload["height"] = kakaoMap.cameraHeight
+        payload["zoomLevel"] = kakaoMap!.zoomLevel
+        payload["tiltAngle"] = kakaoMap!.tiltAngle
+        payload["rotationAngle"] = kakaoMap!.rotationAngle
+        payload["height"] = kakaoMap!.cameraHeight
         onSuccess(payload)
         return
     }
@@ -34,11 +34,11 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         onSuccess: (Any?) -> Void
     ) {
         if (cameraAnimation == nil) {
-            kakaoMap.moveCamera(cameraUpdate)
+            kakaoMap!.moveCamera(cameraUpdate)
             onSuccess(nil)
             return
         }
-        kakaoMap.animateCamera(cameraUpdate: cameraUpdate, options: cameraAnimation!)
+        kakaoMap!.animateCamera(cameraUpdate: cameraUpdate, options: cameraAnimation!)
         onSuccess(nil)
         return
     }
