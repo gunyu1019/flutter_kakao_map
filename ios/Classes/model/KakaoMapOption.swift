@@ -7,7 +7,7 @@ internal extension MapviewInfo {
         viewId: Int64
     ) {
         self.init(
-            viewName: castSafty(payload["viewName"], caster: asString) ?? "map_view_\(viewId)",
+            viewName: castSafty(payload["viewName"], caster: asString) ?? "map_\(viewId)",
             appName: "openmap",
             viewInfoName: asString(payload["mapType"] ?? "openmap"),
             defaultPosition: MapPoint(payload: payload),
