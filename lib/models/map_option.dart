@@ -13,6 +13,9 @@ class KakaoMapOption {
   final MapType mapType;
 
   /// 지도 객체의 ViewName을 정의합니다.
+  /// iOS 환경에서는 [viewName]에 따라 UIView를 정의합니다.
+  /// 따라서 중복되는 이름을 사용해서는 안됩니다.
+  /// 값을 정의하지 않는다면, 임의로 부여된 ViewName이 사용되게 됩니다.
   final String? viewName;
 
   final bool visible;
