@@ -15,6 +15,8 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         }
     }
 
+    private let cameraListener: CameraListener
+
     init (
         channel: FlutterMethodChannel,
         overlayChannel: FlutterMethodChannel
@@ -23,6 +25,8 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         self.overlayChannel = overlayChannel
 
         channel.setMethodCallHandler(handle)
+
+        self.cameraListener = CameraListener(channel: channel)
     }
 
     func getCameraPosition(onSuccess: @escaping (_ cameraPosition: Dictionary<String, Any>) -> Void) {
@@ -51,6 +55,15 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         kakaoMap.animateCamera(cameraUpdate: cameraUpdate, options: cameraAnimation!)
         onSuccess(nil)
         return
+    }
+
+    func setEventHandler(event: UInt8) {
+        if (KakaoMapEvent.CameraMoveStart.compare(event)) {
+            kakaoMap.addCameraWillMovedEventHandler(target: self.cameraListener, handle: CameraListener.onCameraWillMovedEvent)
+        }
+        if (KakaoMapEvent.CameraMoveEnd.compare(event)) {
+            kakaoMap.addCameraStoppedEventHandler(target: self.cameraListener, handle: CameraListener.onCameraStoppedEvent)
+        }
     }
 
     func onMapReady(kakaoMap: KakaoMap) {
