@@ -11,6 +11,8 @@ internal protocol KakaoMapControllerHandler {
         cameraAnimation: CameraAnimationOptions?,
         onSuccess: (Any?) -> Void
     )
+
+    func setEventHandler(event: UInt8)
 }
 
 internal extension KakaoMapControllerHandler {
@@ -24,6 +26,7 @@ internal extension KakaoMapControllerHandler {
             let cameraAnimation = rawCameraAnimation != nil ? CameraAnimationOptions(payload: rawCameraAnimation!) : nil
             moveCamera(cameraUpdate: cameraUpdate, cameraAnimation: cameraAnimation, onSuccess: result)
             default: result(FlutterMethodNotImplemented)
+            case "setEventHandler": setEventHandler(event: (call.arguments! as! UInt8))
         }
     }
 }
