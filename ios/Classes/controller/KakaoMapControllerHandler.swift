@@ -13,6 +13,8 @@ internal protocol KakaoMapControllerHandler {
     )
 
     func setEventHandler(event: UInt8)
+
+    func setGestureEnable(gestureType: GestrueType, enable: Bool, onSuccess: (Any?) -> Void)
 }
 
 internal extension KakaoMapControllerHandler {
@@ -25,8 +27,9 @@ internal extension KakaoMapControllerHandler {
             let rawCameraAnimation = castSafty(arguments["cameraAnimation"], caster: asDict)
             let cameraAnimation = rawCameraAnimation != nil ? CameraAnimationOptions(payload: rawCameraAnimation!) : nil
             moveCamera(cameraUpdate: cameraUpdate, cameraAnimation: cameraAnimation, onSuccess: result)
-            default: result(FlutterMethodNotImplemented)
             case "setEventHandler": setEventHandler(event: (call.arguments! as! UInt8))
+            // case "setGestureEnable":
+            default: result(FlutterMethodNotImplemented)
         }
     }
 }

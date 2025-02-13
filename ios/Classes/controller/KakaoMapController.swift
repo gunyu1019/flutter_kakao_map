@@ -66,6 +66,11 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         }
     }
 
+    func setGestureEnable(gestureType: GestrueType, enable: Bool, onSuccess: (Any?) -> Void) {
+        kakaoMap.setGestureEnable(gestureType: gestureType, enable: enable)
+        onSuccess(nil)
+    }
+
     func onMapReady(kakaoMap: KakaoMap) {
         self.kakaoMap = kakaoMap
         channel.invokeMethod("onMapReady", arguments: nil)
