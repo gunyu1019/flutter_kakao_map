@@ -12,28 +12,17 @@ internal extension UIColor {
 
 
 internal extension UIImage {
-    func resize(targetSize: CGSize) -> UIImage {
-        let widthRatio = targetSize.width / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        let scaleFactor = min(widthRatio, heightRatio)
-        
-        let scaledImageSize = CGSize(
-            width: size.width * scaleFactor,
-            height: size.height * scaleFactor
-        )
-
+    func resize(size: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(
-            size: scaledImageSize
+            size: size
         )
-
-        let scaledImage = renderer.image { _ in
+        let resizedImage = renderer.image { _ in
             self.draw(in: CGRect(
                 origin: .zero, 
-                size: scaledImageSize
+                size: size
             ))
         }
-        return scaledImage
+        return resizedImage
     }
 }
 
@@ -47,13 +36,13 @@ internal func asImage(payload: Dictionary<String, Any>) -> UIImage? {
     case 0:
         let rawPath = asString(payload["path"])
         let path = FlutterKakaoMapsPlugin.getAssets(path: rawPath)
-        return UIImage(contentsOfFile: path).targetSize(targetSize: size)
+        return UIImage(contentsOfFile: path).targetSize(size: size)
     case 2:
         let data = payload["data"] as! FlutterStandardTypedData
-        return UIImage(data: data.data).targetSize(targetSize: size)
+        return UIImage(data: data.data).targetSize(size: size)
     default:  // type 1
         let path = asString(payload["path"])
-        return UIImage(contentsOfFile: path).targetSize(targetSize: size)
+        return UIImage(contentsOfFile: path).targetSize(size: size)
     }
 }
 
