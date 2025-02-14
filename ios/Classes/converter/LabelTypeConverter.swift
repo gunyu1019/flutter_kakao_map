@@ -9,10 +9,10 @@ internal func asPoiTransition(payload: Dictionary<String, Any>) -> PoiTransition
 }
 
 internal extension PoiIconStyle {
-    convenience init(paylaod: Dictionary<String, Any>) {
+    convenience init(payload: Dictionary<String, Any>) {
         let transition = asPoiTransition(castSafty(payload["iconTransition"], caster: asDict))
         self.init(
-            symbol: UIImage?,
+            symbol: castSafty(payload["icon"], caster: asImage),
             anchorPoint: castSafty(payload["anchor"], caster: CGPoint(payload: $0, caster: asDouble)) ?? CGPoint(x: 0.5, y: 0.5),
             transition: transition,
             enableEntranceTransition: transition.enterence != .none,
@@ -22,10 +22,42 @@ internal extension PoiIconStyle {
     }
 }
 
+internal extension PoiTextStyle {
+    convenience init(payload: Dictionary<String, Any>) {
+        let transition = asPoiTransition(castSafty(payload["textTransition"], caster: asDict))
+        let textStyle = castSafty(payload["textStyle"], caster: asArray($0, caster: TextStyle(payload: $0))) ?? []
+        self.init(
+            transition: transition,
+            enableEntranceTransition: transition.enterence != .none,
+            enableExitTransition: transition.exit = .none,
+            textLineStyles: textStyle
+        )
+    }
+}
+
 internal extension PerLevelPoiStyle {
     convenience init(payload: Dictionary<String, Any>) {
         self.init(
+            iconStyle: PoiIconStyle(payload: payload),
+            textStyle: PoiTextStyle(payload: payload),
+            padding: castSafty(payload["paddding"], asFloat) ?? 0.0,
+            level: castSafty(payload["zoomLevel"], asInt) ?? 0
+        )
+    }
+}
 
+
+internal extension PoiStyle {
+    convenience init(payload: Dictionary<String, Any>) {
+        let styleId = payload["styleId"] ?? UUID().uuidString 
+        var styles = Array<PerLevelPoiStyle>()
+        styles.append(PerLevelPoiStyle(payload: payload))
+        styles.append(
+            constentsOf: asArray(payload["otherStyle"], caster: PerLevelPoiStyle(payload: $0))
+        )
+        self.init(
+            styleID: styleId,
+            styles: styles
         )
     }
 }
