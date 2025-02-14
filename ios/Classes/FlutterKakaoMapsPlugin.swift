@@ -31,6 +31,9 @@ public class FlutterKakaoMapsPlugin: NSObject, FlutterPlugin {
     }
 
     internal static func getAssets(path: String) -> String {
-        registrar.lookupKey(forAsset: path)
+        let key = registrar.lookupKey(forAsset: path)
+        let mainBundle = Bundle.main
+        let path = mainBundle.path(forResource: key, ofType: nil)!
+        return path
     }
 }
