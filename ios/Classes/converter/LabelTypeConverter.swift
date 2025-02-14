@@ -32,6 +32,24 @@ internal extension PoiTextStyle {
             enableExitTransition: transition.exit = .none,
             textLineStyles: textStyle
         )
+
+        if (payload["textGravity"] != nil) {
+            let gravity = asInt(payload["textGravity"])
+            switch gravity {
+            case 1:
+                self.textLayouts = [PoiTextLayout.left]
+            case 2:
+                self.textLayouts = [PoiTextLayout.right]
+            case 4:
+                self.textLayouts = [PoiTextLayout.top]
+            case 8:
+                self.textLayouts = [PoiTextLayout.bottom]
+            case 16:
+                self.textLayouts = [PoiTextLayout.center]
+            default:
+                continue
+            }
+        }
     }
 }
 
@@ -59,6 +77,27 @@ internal extension PoiStyle {
             styleID: styleId,
             styles: styles
         )
+    }
+}
+
+
+internal extension PoiOptions {
+    convenience init(payload: Dictionary<String, Any>) {
+        self.init(styleID: asString(rawPayload["styleId"]))
+        if let rank = rawPayload["rank"] {
+            self.rank = asInt(rank)
+        }
+        if let clickable = rawPayload["clickable"] {
+            self.clickable = asInt(clickable)
+        }
+        if let transformMethod = rawPayload["transformMethod"] {
+            self.transformMethod = PoiTransformType(rawValue: asInt(transformMethod))
+        }
+        if let text = rawPayload["text"] {
+            text.split(separator: "\n").enumerate().map { 
+                (index, element) in PoiText(text: element, styleIndex: index) 
+            }.map(self.addText)
+        }
     }
 }
 
