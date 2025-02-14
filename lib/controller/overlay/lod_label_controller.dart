@@ -26,7 +26,7 @@ class LodLabelController extends BaseLabelController {
     orderingType = BaseLabelController.defaultOrderingType,
     this.radius = LodLabelController.defaultRadius,
     bool visible = true,
-    bool clickable = false,
+    bool clickable = true,
     int zOrder = BaseLabelController.defaultZOrder,
   }) : super._(competitionType, competitionUnit, orderingType, visible,
             clickable, zOrder);
