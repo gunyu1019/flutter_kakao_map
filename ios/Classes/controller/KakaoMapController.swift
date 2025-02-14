@@ -23,10 +23,10 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     ) {
         self.channel = channel
         self.overlayChannel = overlayChannel
-
+        
+        self.cameraListener = CameraListener(channel: self.channel)
+        
         channel.setMethodCallHandler(handle)
-
-        self.cameraListener = CameraListener(channel: channel)
     }
 
     func getCameraPosition(onSuccess: @escaping (_ cameraPosition: Dictionary<String, Any>) -> Void) {
@@ -58,16 +58,16 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
     }
 
     func setEventHandler(event: UInt8) {
-        if (KakaoMapEvent.CameraMoveStart.compare(event)) {
-            kakaoMap.addCameraWillMovedEventHandler(target: self.cameraListener, handle: CameraListener.onCameraWillMovedEvent)
+        if (KakaoMapEvent.CameraMoveStart.compare(value: event)) {
+            kakaoMap.addCameraWillMovedEventHandler(target: self.cameraListener, handler: CameraListener.onCameraWillMovedEvent)
         }
-        if (KakaoMapEvent.CameraMoveEnd.compare(event)) {
-            kakaoMap.addCameraStoppedEventHandler(target: self.cameraListener, handle: CameraListener.onCameraStoppedEvent)
+        if (KakaoMapEvent.CameraMoveEnd.compare(value: event)) {
+            kakaoMap.addCameraStoppedEventHandler(target: self.cameraListener, handler: CameraListener.onCameraStoppedEvent)
         }
     }
 
-    func setGestureEnable(gestureType: GestrueType, enable: Bool, onSuccess: (Any?) -> Void) {
-        kakaoMap.setGestureEnable(gestureType: gestureType, enable: enable)
+    func setGestureEnable(gestureType: GestureType, enable: Bool, onSuccess: (Any?) -> Void) {
+        kakaoMap.setGestureEnable(type: gestureType, enable: enable)
         onSuccess(nil)
     }
 
