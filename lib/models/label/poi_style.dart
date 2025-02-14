@@ -8,7 +8,7 @@ class PoiStyle with KMessageable {
   KPoint anchor;
   double padding;
   PoiTransition iconTransition;
-  int textGravity;
+  MapGravity textGravity;
   KImage? icon;
   List<PoiTextStyle> textStyle;
   PoiTransition textTransition;
@@ -24,7 +24,7 @@ class PoiStyle with KMessageable {
       this.padding = 0.0,
       this.icon,
       this.iconTransition = const PoiTransition(),
-      this.textGravity = 8,
+      this.textGravity = MapGravity.bottom,
       this.textStyle = const [],
       this.textTransition = const PoiTransition(),
       this.zoomLevel = 0})
@@ -38,7 +38,7 @@ class PoiStyle with KMessageable {
       this.padding = 0.0,
       this.icon,
       this.iconTransition = const PoiTransition(),
-      this.textGravity = 8,
+      this.textGravity = MapGravity.bottom,
       this.textStyle = const [],
       this.textTransition = const PoiTransition(),
       this.zoomLevel = 0})
@@ -61,7 +61,7 @@ class PoiStyle with KMessageable {
     double? padding,
     KImage? icon,
     PoiTransition? iconTransition,
-    int? textGravity,
+    MapGravity? textGravity,
     List<PoiTextStyle>? textStyle,
     PoiTransition? textTransition,
   }) {
@@ -98,7 +98,7 @@ class PoiStyle with KMessageable {
       "padding": padding,
       "icon": icon?.toMessageable(),
       "iconTransition": iconTransition.toMessageable(),
-      "textGravity": textGravity,
+      "textGravity": textGravity.value,
       "textStyle": textStyle.map((e) => e.toMessageable()).toList(),
       "zoomLevel": zoomLevel
     };
