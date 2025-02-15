@@ -150,6 +150,7 @@ class _KakaoMapState extends State<KakaoMap> with KakaoMapControllerHandler {
   @override
   void onMapReady() {
     _setEventHandler();
+    controller.fetchBuildingHeightScale();
     widget.onMapReady.call(controller);
   }
 
