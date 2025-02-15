@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_debug_overlay/flutter_debug_overlay.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:kakao_map_sdk/kakao_map.dart';
+import 'package:kakao_map_sdk/kakao_map_sdk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -145,7 +145,6 @@ class _MyAppState extends State<MyApp> {
         position = result.position;
       });
     });
-    return;
 
     /// 카카오 판교캠퍼스 지점에 Poi를 그린다.
     controller.labelLayer
@@ -162,6 +161,7 @@ class _MyAppState extends State<MyApp> {
                       strokeColor: Colors.white)
                 ]))
         .then((poi) => poi.changeText("KAKAO MAP LABEL"));
+    return;
 
     /// 카카오 판교캠퍼스 주변에 "휘어지는 글씨 테스트"를 그린다.
     controller.labelLayer.addPolylineText(
