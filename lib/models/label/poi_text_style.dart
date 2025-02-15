@@ -29,7 +29,7 @@ class PoiTextStyle with KMessageable {
   final Color strokeColor;
 
   const PoiTextStyle(
-      {this.aspectRatio = 0.0,
+      {this.aspectRatio = 1.0,
       this.characterSpace = 0,
       this.color = Colors.black,
       this.font = "",
