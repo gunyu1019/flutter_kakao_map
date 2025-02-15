@@ -71,6 +71,15 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
         kakaoMap.setGestureEnable(type: gestureType, enable: enable)
         onSuccess(nil)
     }
+    
+    func getBuildingHeightScale(onSuccess: (Float) -> Void) {
+        onSuccess(self.kakaoMap.buildingScale)
+    }
+    
+    func setBuildingHeightScale(scale: Float, onSuccess: (Any?) -> Void) {
+        self.kakaoMap.buildingScale = scale
+        onSuccess(nil)
+    }
 
     func onMapReady(kakaoMap: KakaoMap) {
         self.kakaoMap = kakaoMap
