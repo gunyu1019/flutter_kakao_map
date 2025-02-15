@@ -13,3 +13,15 @@
   * `moveCamera` method to control camera looking at a kakao map.
   * `getCameraPosition` method to get camera position looking at a kakao map.
 * Implement `SDKInitializer` class in iOS Platform
+
+## 0.2.0-dev.2
+* Support some feature related Poi in iOS Platform.
+* Add `setGestureEnable` method in iOS Platform.
+* Implement `onCameraMoveStart` and `onCameraMoveEnd` event handler.
+* Configure `buildingHeightScale` property to not be required awaitable.
+* Apply MapGravity at Poi.textGravity property.
+* [Fix] Invaild raw value in MapGravity enumeration
+* [Fix] Invaild keyword in transition from enterence to entrance
+* [Fix] Adjust default aspectRatio property in PoiTextStyle
+* [Fix] Adjust default clickable parameter in LabelController.addPoi and LodLabelController.addLodPoi.
+* [Fix] Setup default view name in iOS Platform
