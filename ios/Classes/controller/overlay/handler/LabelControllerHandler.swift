@@ -21,9 +21,28 @@ internal protocol LabelControllerHandler {
 
 internal extension LabelControllerHandler {
     func labelHandle(call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
+        let arguments = call.arguments
+        let layerId = castSafty(arguments?["layerId"], caster: asString)
+        if let layer: LabelLayer? = layerId {
+            labelManager.getLabelLayer(layerID: layerId)
+        }
 
-            default: result(FlutterMethodNotImplemented)
+        let poiId = castSafty(arguments?["poiId"], caster: asString)
+        if let poi: Poi? = poiId, layer {
+            layer.getPoi(poiID: poiId)
+        }
+
+        let polylineTextId = castSafty(arguments?["labelId"], caster: asString)
+        if let polylineText: WaveText? = polylineTextId, layer {
+            layer.getWaveText(poiID: poiId)
+        }
+
+        switch call.method {
+        case "createLabelLayer": createLabelLayer(option: LabelLayerOptions(payload: call.arguments!), onSuccess: result)
+        case "removeLabelLayer": removeLabelLayer(layerId: layerId!, onSuccess: result)
+        case "addPoiStyle": addPoiStyle(style: PoiStyle(payload: arguments!), onSuccess: result)
+        case "addPoi": addPoi(layer: layer!, poi: PoiOptions(payload: arguments!), position: MapPoints(payload: arguments!), onSuccess: result)
+        default: result(FlutterMethodNotImplemented)
         }
     }
 }
