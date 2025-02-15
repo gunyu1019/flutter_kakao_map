@@ -10,7 +10,7 @@ internal protocol LabelControllerHandler {
 
     func addPoiStyle(style: PoiStyle, onSuccess: (String) -> Void)
 
-    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoints, onSuccess: (String) -> Void)
+    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, onSuccess: @escaping (String) -> Void)
 
     func removePoi(layer: LabelLayer, poiId: String, onSuccess: (Any?) -> Void)
 
@@ -21,27 +21,31 @@ internal protocol LabelControllerHandler {
 
 internal extension LabelControllerHandler {
     func labelHandle(call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let arguments = call.arguments
-        let layerId = castSafty(arguments?["layerId"], caster: asString)
-        if let layer: LabelLayer? = layerId {
-            labelManager.getLabelLayer(layerID: layerId)
+        let arguments = castSafty(call.arguments, caster: asDict)
+        let layerId: String? = castSafty(arguments?["layerId"], caster: asString)
+        let layer: LabelLayer? = layerId.flatMap { key in
+            labelManager.getLabelLayer(layerID: key)
         }
 
         let poiId = castSafty(arguments?["poiId"], caster: asString)
-        if let poi: Poi? = poiId, layer {
-            layer.getPoi(poiID: poiId)
+        let poi: Poi? = poiId.flatMap { key in
+            layer!.getPoi(poiID: key)
         }
 
         let polylineTextId = castSafty(arguments?["labelId"], caster: asString)
-        if let polylineText: WaveText? = polylineTextId, layer {
-            layer.getWaveText(poiID: poiId)
+        let polylineText: WaveText? = polylineTextId.flatMap { key in
+            layer!.getWaveText(waveTextID: key)
         }
 
         switch call.method {
-        case "createLabelLayer": createLabelLayer(option: LabelLayerOptions(payload: call.arguments!), onSuccess: result)
+        case "createLabelLayer": createLabelLayer(option: LabelLayerOptions(payload: arguments!), onSuccess: result)
         case "removeLabelLayer": removeLabelLayer(layerId: layerId!, onSuccess: result)
         case "addPoiStyle": addPoiStyle(style: PoiStyle(payload: arguments!), onSuccess: result)
-        case "addPoi": addPoi(layer: layer!, poi: PoiOptions(payload: arguments!), position: MapPoints(payload: arguments!), onSuccess: result)
+        case "addPoi":
+            let poiArgument = asDict(arguments!["poi"]!)
+            let poiOption = PoiOptions(payload: poiArgument)
+            let position = MapPoint(payload: poiArgument)
+            addPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
