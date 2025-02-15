@@ -89,6 +89,8 @@ mixin OverlayManager {
         RouteController._(overlayChannel, this, RouteController.defaultId);
   }
 
+  /// 매개변수에 따라 설정된 LabelLayer([LabelController])를 추가합니다.
+  /// LabelLayer는 Poi와 PolylineText를 관리하는 단위로 새로운 Poi 또는 PolylineText를 생성하거나 삭제할 수 있습니다.
   Future<LabelController> addLabelLayer(String id,
       {CompetitionType competitionType =
           BaseLabelController.defaultCompetitionType,
@@ -97,6 +99,8 @@ mixin OverlayManager {
       OrderingType orderingType = BaseLabelController.defaultOrderingType,
       int zOrder = BaseLabelController.defaultZOrder});
 
+  /// 매개변수에 따라 설정된 LodLabelLayer([LodLabelController])를 추가합니다.
+  /// LodLabellayer는 LodPoi를 관리하는 단위로 LodPoi를 생성하거나 삭제할 수 있습니다.
   Future<LodLabelController> addLodLabelLayer(String id,
       {CompetitionType competitionType =
           BaseLabelController.defaultCompetitionType,
@@ -106,35 +110,55 @@ mixin OverlayManager {
       double radius = LodLabelController.defaultRadius,
       int zOrder = BaseLabelController.defaultZOrder});
 
+  /// 매개변수에 따라 설정된 ShapeLayer([ShapeController])를 추가합니다.
+  /// ShapeLayer는 [PolygonShape]와 [PolylineShape]를 관리하는 단위로 PolygonShape 또는 PolylineShape를 생성하거나 삭제할 수 있습니다.
   Future<ShapeController> addShapeLayer(String id,
       {ShapeLayerPass passType = ShapeController.defaultShapeLayerPass,
       int zOrder = ShapeController.defaultZOrder});
 
+  /// 매개변수에 따라 설정된 RouteLayer([RouteController])를 추가합니다.
+  /// RouteLayer는 [Route]와 [MultipleRoute]를 관리하는 단위로 Route 또는 MultipleROute를 생성하거나 삭제할 수 있습니다.
   Future<RouteController> addRouteLayer(String id,
       {int zOrder = RouteController.defaultZOrder});
 
+  /// [id]에 해당되는 LabelLayer([LabelController])를 가져옵니다.
+  /// [id]에 해당되는 LabelLayer가 없으면, [null]를 반환합니다.
   LabelController? getLabelLayer(String id);
 
+  /// [id]에 해당되는 LodLabelLayer([LodLabelController])를 가져옵니다.
+  /// [id]에 해당되는 LodLabelLayer 없으면, [null]를 반환합니다.
   LodLabelController? getLodLabelLayer(String id);
 
+  /// [id]에 해당되는 ShapeLayer([ShapeLayer])를 가져옵니다.
+  /// [id]에 해당되는 ShapeLayer 없으면, [null]를 반환합니다.
   ShapeController? getShapeLayer(String id);
 
+  /// [id]에 해당되는 RouteLayer([RouteLayer])를 가져옵니다.
+  /// [id]에 해당되는 RouteLayer 없으면, [null]를 반환합니다.
   RouteController? getRouteLayer(String id);
 
+  /// [id]에 따라 생성된 LabelLayer([LabelController])를 삭제합니다.
   Future<void> removeLabelLayer(LabelController controller);
 
+  /// [id]에 따라 생성된 LodLabelLayer([LodLabelController])를 삭제합니다.
   Future<void> removeLodLabelLayer(LodLabelController controller);
 
+  /// [id]에 따라 생성된 ShapeLayer([ShapeController])를 삭제합니다.
   Future<void> removeShapeLayer(ShapeController controller);
 
+  /// [id]에 따라 생성된 RouteLayer([RouteController])를 삭제합니다.
   Future<void> removeRouteLayer(RouteController controller);
 
+  /// 기본으로 생성된 LabelLayer([LabelController])를 가져옵니다.
   LabelController get labelLayer;
 
+  /// 기본으로 생성된 LodLabelLayer([LodLabelController])를 가져옵니다.
   LodLabelController get lodLabelLayer;
 
+  /// 기본으로 생성된 ShapeLayer([ShapeController])를 가져옵니다.
   ShapeController get shapeLayer;
 
+  /// 기본으로 생성된 RouteLayer([RouteController])를 가져옵니다.
   RouteController get routeLayer;
 
   static const String _defaultKey = 'default';
