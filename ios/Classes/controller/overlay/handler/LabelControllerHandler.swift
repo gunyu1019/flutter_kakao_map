@@ -46,6 +46,7 @@ internal extension LabelControllerHandler {
             let poiOption = PoiOptions(payload: poiArgument)
             let position = MapPoint(payload: poiArgument)
             addPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, onSuccess: result)
+        case "removePoi": remvoePoi(layer: layer!, poiId: poiId, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
