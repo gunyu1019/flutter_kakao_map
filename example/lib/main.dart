@@ -157,10 +157,11 @@ class _MyAppState extends State<MyApp> {
                   PoiTextStyle(
                       size: 28,
                       color: Colors.blue,
+                      aspectRatio: 1.0,
                       stroke: 2,
                       strokeColor: Colors.white)
-                ]))
-        .then((poi) => poi.changeText("KAKAO MAP LABEL"));
+                ]));
+        // .then((poi) => poi.changeText("KAKAO MAP LABEL"));
     return;
 
     /// 카카오 판교캠퍼스 주변에 "휘어지는 글씨 테스트"를 그린다.
