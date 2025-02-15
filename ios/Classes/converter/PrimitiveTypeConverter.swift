@@ -14,6 +14,10 @@ internal func asInt(_ v: Any) -> Int {
     v as! Int
 }
 
+internal func asUInt(_ v: Any) -> UInt {
+    v as! UInt
+}
+
 internal func asString(_ v: Any) -> String {
     v as! String
 }
