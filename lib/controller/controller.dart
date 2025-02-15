@@ -8,7 +8,6 @@ class KakaoMapController extends KakaoMapControllerSender with OverlayManager {
 
   KakaoMapController(this.channel, {required this.overlayChannel}) {
     _initalizeOverlayController();
-    fetchBuildingHeightScale();
   }
 
   /* Sender */
