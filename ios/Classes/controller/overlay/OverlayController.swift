@@ -1,15 +1,28 @@
 import KakaoMapsSDK
+import Flutter
 
 
 internal class OverlayController: LabelControllerHandler {
     private let channel: FlutterMethodChannel
     private let kakaoMap: KakaoMap
 
-    let labelManager: LabelManager = kakaoMap.getLabelManager()
+    let labelManager: LabelManager
 
     init (channel: FlutterMethodChannel, kakaoMap: KakaoMap) {
         self.channel = channel
         self.kakaoMap = kakaoMap
+        
+        self.labelManager = kakaoMap.getLabelManager()
+        
+        self.labelManager.addLabelLayer(
+            option: LabelLayerOptions(
+                layerID: "label_default_layer",
+                competitionType: .none,
+                competitionUnit: .poi,
+                orderType: .rank,
+                zOrder: 10001
+            )
+        )
 
         channel.setMethodCallHandler(handle)
     }
@@ -34,12 +47,14 @@ internal class OverlayController: LabelControllerHandler {
     }
 
     func addPoiStyle(style: PoiStyle, onSuccess: (String) -> Void) {
-        self.labelManager.addPoiStyle(style: style)
-        return style.styleID
+        self.labelManager.addPoiStyle(style)
+        onSuccess(style.styleID)
     }
 
-    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoints, onSuccess: (String) -> Void) {
-        layer.addPoi(option: poi, position: position, callback: onSuccess($0!.itemID))
+    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, onSuccess: @escaping (String) -> Void) {
+        let poiInstance = layer.addPoi(option: poi, at: position)
+        poiInstance?.show()
+        onSuccess(poiInstance!.itemID)
     }
 
     func removePoi(layer: LabelLayer, poiId: String, onSuccess: (Any?) -> Void) {
