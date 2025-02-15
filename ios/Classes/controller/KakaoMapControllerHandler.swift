@@ -15,6 +15,10 @@ internal protocol KakaoMapControllerHandler {
     func setEventHandler(event: UInt8)
 
     func setGestureEnable(gestureType: GestureType, enable: Bool, onSuccess: (Any?) -> Void)
+    
+    func getBuildingHeightScale(onSuccess: (Float) -> Void)
+    
+    func setBuildingHeightScale(scale: Float, onSuccess: (Any?) -> Void)
 }
 
 internal extension KakaoMapControllerHandler {
@@ -35,6 +39,10 @@ internal extension KakaoMapControllerHandler {
                 enable: asBool(arguments["enable"]!),
                 onSuccess: result
             )
+        case "getBuildingHeightScale": getBuildingHeightScale(onSuccess: result)
+        case "setBuildingHeightScale":
+            let arguments = asDict(call.arguments!)
+            setBuildingHeightScale(scale: asFloat(arguments["scale"]!), onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
