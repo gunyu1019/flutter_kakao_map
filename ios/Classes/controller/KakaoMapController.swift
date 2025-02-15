@@ -14,6 +14,7 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
             self.lateinitKakaoMap = value
         }
     }
+    private var overlayController: OverlayController? = nil
 
     private let cameraListener: CameraListener
 
@@ -73,6 +74,7 @@ internal class KakaoMapController : KakaoMapControllerSender, KakaoMapController
 
     func onMapReady(kakaoMap: KakaoMap) {
         self.kakaoMap = kakaoMap
+        self.overlayController = OverlayController(channel: self.overlayChannel, kakaoMap: kakaoMap)
         channel.invokeMethod("onMapReady", arguments: nil)
     }
 
