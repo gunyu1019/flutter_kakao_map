@@ -6,7 +6,7 @@ internal func asPoiTransition(payload: Dictionary<String, Any>?) -> PoiTransitio
         return PoiTransition(entrance: .none, exit: .none)
     }
     return PoiTransition(
-        entrance: castSafty(payload!["enterence"], caster: { TransitionType(rawValue: asInt($0)) ?? .none }) ?? TransitionType.none,
+        entrance: castSafty(payload!["entrance"], caster: { TransitionType(rawValue: asInt($0)) ?? .none }) ?? TransitionType.none,
         exit: castSafty(payload!["exit"], caster: { TransitionType(rawValue: asInt($0)) ?? .none }) ?? TransitionType.none
     )
 }

@@ -51,7 +51,7 @@ object LabelTypeConverter {
 
     fun Any.asLabelTransition(): LabelTransition = asMap<Any?>().let { rawPayload: Map<String, Any?> ->
         LabelTransition.from(
-            Transition.getEnum(rawPayload["enterence"]!!.asInt()),
+            Transition.getEnum(rawPayload["entrance"]!!.asInt()),
             Transition.getEnum(rawPayload["exit"]!!.asInt())
         )
     }
