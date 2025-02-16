@@ -1,5 +1,5 @@
 ## 0.1.0-dev.5
-* First Deploy
+* Initial Deployment (Implement Kakao Map to Android Platform)
 
 ## 0.2.0-dev.1
 * Implement Kakao Map View to iOS Platform
@@ -16,12 +16,15 @@
 
 ## 0.2.0-dev.2
 * Support some feature related Poi in iOS Platform.
+  * Add and remove Poi or LabelLayer.
+  * Implement Label Converter(PoiTextStyle, PoiIconStyle, PoiOptions ... etc).
 * Add `setGestureEnable` method in iOS Platform.
 * Implement `onCameraMoveStart` and `onCameraMoveEnd` event handler.
+* Implement Reference Converter(UIColor, UIImage) to cast swift instance from dart instance.
 * Configure `buildingHeightScale` property to not be required awaitable.
 * Apply MapGravity at Poi.textGravity property.
+* Rename default view name on iOS Platform for integration Android default view name
 * [Fix] Invaild raw value in MapGravity enumeration
 * [Fix] Invaild keyword in transition from enterence to entrance
 * [Fix] Adjust default aspectRatio property in PoiTextStyle
 * [Fix] Adjust default clickable parameter in LabelController.addPoi and LodLabelController.addLodPoi.
-* [Fix] Setup default view name in iOS Platform
