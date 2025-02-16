@@ -135,3 +135,17 @@ internal extension LabelLayerOptions {
         )
     }
 }
+
+
+internal extension LodLabelLayerOptions {
+    convenience init(payload: Dictionary<String, Any>) {
+        self.init(
+            layerID: asString(payload["layerId"]!),
+            competitionType: castSafty(payload["competitionType"], caster: { CompetitionType(rawValue: asInt($0))! }) ?? CompetitionType.none,
+            competitionUnit: castSafty(payload["competitionUnit"], caster: { CompetitionUnit(rawValue: asInt($0))! }) ?? CompetitionUnit.poi,
+            orderType: castSafty(payload["orderType"], caster: { OrderingType(rawValue: asInt($0))! }) ?? OrderingType.rank,
+            zOrder: castSafty(payload["zOrder"], caster: asInt) ?? 10001,
+            radius: castSafty(payload["radius"], caster: asFloat) ?? 20.0
+        )
+    }
+}
