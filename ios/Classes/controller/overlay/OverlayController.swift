@@ -76,4 +76,61 @@ internal class OverlayController: LabelControllerHandler {
         layer.removeWaveText(waveTextID: poiId)
         onSuccess(nil)
     }
+
+
+    func changePoiPixelOffset(poi: Poi, offset: CGPoint, onSuccess: (Any?) -> Unit) {
+        poi.pixelOffset = offset
+        onSuccess(nil)
+    }
+
+    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Unit) {
+        if (visible) {
+            poi.show()
+        } else {
+            poi.hide()
+        }
+    }
+
+    func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Unit) {
+        poi.changeStyle(styleID: styleId, enableTransition: transition)
+        onSuccess(nil)
+    }
+
+    func changePoiText(poi: Poi, text: String, transition: Bool, onSuccess: (Any?) -> Unit) {
+        // poi.changeTextAndStyle(styleID: ??, text: text, enableTransition: transition)
+        onSuccess(nil)
+    }
+
+    func invalidatePoi(
+        poi: Poi,
+        styleId: String,
+        text: String,
+        transition: Bool,
+        onSuccess: (Any?) -> Unit
+    ) {
+        poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
+        onSuccess(nil)
+    }
+    
+    func movePoi(poi: Poi, position: MapPoint, duration: UInt?, onSuccess: (Any?) -> Unit) {
+        if (duration is nil | duration is NSNull) {
+            poi.position = position
+        } else {
+            poi.moveAt(position: position, duration: duration!)
+        }
+    }
+
+    func rotatePoi(poi: Poi, angle: Double, duration: UInt?, onSuccess: (Any?) -> Unit) {
+        if (duration is nil | duration is NSNull) {
+            poi.orientation = angle
+        } else {
+            poi.rotateAt(roll: angle, duration: duration!)
+        }
+        onSuccess(nil)
+    }
+
+    func rankPoi(poi: Poi, rank: Int, onSuccess: (Any?) -> Unit) {
+        poi.rank = rank
+        onSuccess(nil)
+    }
 }
