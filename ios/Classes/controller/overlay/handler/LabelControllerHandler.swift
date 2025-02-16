@@ -10,7 +10,7 @@ internal protocol LabelControllerHandler {
 
     func addPoiStyle(style: PoiStyle, onSuccess: (String) -> Void)
 
-    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, onSuccess: @escaping (String) -> Void)
+    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, visible: Bool, onSuccess: @escaping (String) -> Void)
 
     func removePoi(layer: LabelLayer, poiId: String, onSuccess: (Any?) -> Void)
 
@@ -45,7 +45,8 @@ internal extension LabelControllerHandler {
             let poiArgument = asDict(arguments!["poi"]!)
             let poiOption = PoiOptions(payload: poiArgument)
             let position = MapPoint(payload: poiArgument)
-            addPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, onSuccess: result)
+            let visible = asBool(arguments!["visible"] ?? true)
+            addPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, visible: visible onSuccess: result)
         case "removePoi": remvoePoi(layer: layer!, poiId: poiId, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }

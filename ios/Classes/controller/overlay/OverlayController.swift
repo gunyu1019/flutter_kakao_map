@@ -51,9 +51,11 @@ internal class OverlayController: LabelControllerHandler {
         onSuccess(style.styleID)
     }
 
-    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, onSuccess: @escaping (String) -> Void) {
+    func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, visible: Bool, onSuccess: @escaping (String) -> Void) {
         let poiInstance = layer.addPoi(option: poi, at: position)
-        poiInstance?.show()
+        if (visible && !poiInstance.isShow) {
+            poiInstance?.show()
+        }
         onSuccess(poiInstance!.itemID)
     }
 
