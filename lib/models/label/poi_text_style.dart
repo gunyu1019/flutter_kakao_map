@@ -1,6 +1,5 @@
 part of '../../kakao_map_sdk.dart';
 
-
 /// Poi에서 사용되는 텍스트의 스타일을 정의하는 객체입니다.
 /// [Poi]와 [LodPoi]에서 사용되는 텍스트의 스타일을 정의할 때 사용됩니다.
 class PoiTextStyle with KMessageable {
@@ -15,7 +14,7 @@ class PoiTextStyle with KMessageable {
 
   /// 글씨 폰트
   final String font;
-   
+
   /// 글씨 행간
   final double lineSpace;
 

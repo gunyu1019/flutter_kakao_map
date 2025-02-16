@@ -147,21 +147,21 @@ class _MyAppState extends State<MyApp> {
     });
 
     /// 카카오 판교캠퍼스 지점에 Poi를 그린다.
-    controller.labelLayer
-        .addPoi(const LatLng(37.395763313860826, 127.11048591050786),
-            text: "KAKAO LABEL",
-            style: PoiStyle(
-                icon: KImage.fromAsset("assets/image/location.png", 68, 100),
-                anchor: const KPoint(0.5, 0.9),
-                textStyle: const [
-                  PoiTextStyle(
-                      size: 28,
-                      color: Colors.blue,
-                      aspectRatio: 1.0,
-                      stroke: 2,
-                      strokeColor: Colors.white)
-                ]));
-        // .then((poi) => poi.changeText("KAKAO MAP LABEL"));
+    controller.labelLayer.addPoi(
+        const LatLng(37.395763313860826, 127.11048591050786),
+        text: "KAKAO LABEL",
+        style: PoiStyle(
+            icon: KImage.fromAsset("assets/image/location.png", 68, 100),
+            anchor: const KPoint(0.5, 0.9),
+            textStyle: const [
+              PoiTextStyle(
+                  size: 28,
+                  color: Colors.blue,
+                  aspectRatio: 1.0,
+                  stroke: 2,
+                  strokeColor: Colors.white)
+            ]));
+    // .then((poi) => poi.changeText("KAKAO MAP LABEL"));
     return;
 
     /// 카카오 판교캠퍼스 주변에 "휘어지는 글씨 테스트"를 그린다.

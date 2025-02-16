@@ -11,6 +11,7 @@ class Poi {
   final TransformMethod? transform;
 
   LatLng _position;
+
   /// [Poi]의 위치입니다.
   LatLng get position => _position;
 
@@ -21,18 +22,22 @@ class Poi {
   bool get clickable => onClick != null;
 
   String? _text;
+
   /// [Poi]에 설정된 텍스트입니다.
   String? get text => _text;
 
   int _rank;
+
   /// [Poi]의 렌더링 우선순위입니다.
   int get rank => _rank;
 
   PoiStyle _style;
+
   /// [Poi]에 정의된 [PoiStyle] 객체입니다.
   PoiStyle get style => _style;
 
   bool _visible;
+
   /// [Poi]가 현재 지도에 그려지는지 여부를 나타냅니다.
   bool get visible => _visible;
 
