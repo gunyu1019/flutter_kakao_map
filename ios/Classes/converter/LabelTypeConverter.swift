@@ -149,3 +149,32 @@ internal extension LodLabelLayerOptions {
         )
     }
 }
+
+
+internal extension PerLevelWaveTextStyle {
+    convenience init(paylaod: Dictionary<String, Any>) {
+        self.init(
+            textStyle: TextStyle(payload: payload),
+            level:  castSafty(payload["zoomLevel"], caster: asInt) ?? 0
+        )
+    }
+}
+
+
+internal extension WaveTextStyle {
+    convenience init(payload: Dictionary<String, Any>) {
+        let styleId = castSafty(payload["styleId"], caster: asString) ?? UUID().uuidString
+        let rawStyles = asDict(payload["styles"])
+        var styles = Array<PerLevelWaveTextStyle>()
+        styles.append(PerLevelWaveTextStyle(payload: rawStyles))
+        styles.append(
+            contentsOf: asArray(rawStyles["otherStyle"] ?? [], caster: asDict).map {
+                PerLevelWaveTextStyle(payload: $0)
+            }
+        )
+        self.init(
+            styleID: styleId,
+            styles: styles
+        )
+    }
+}
