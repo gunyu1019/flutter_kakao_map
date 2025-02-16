@@ -155,7 +155,7 @@ internal extension PerLevelWaveTextStyle {
     convenience init(paylaod: Dictionary<String, Any>) {
         self.init(
             textStyle: TextStyle(payload: payload),
-            level:  castSafty(payload["zoomLevel"], caster: asInt) ?? 0
+            level: castSafty(payload["zoomLevel"], caster: asInt) ?? 0
         )
     }
 }
@@ -176,5 +176,31 @@ internal extension WaveTextStyle {
             styleID: styleId,
             styles: styles
         )
+    }
+}
+
+internal extension WaveTextOptions {
+    convenience init(payload: Dictionary<String, Any>,  styleId: String) {
+        if !(payload["id"] is nil | payload["id"] is NSNull) {
+            self.init(styleID: styleId, waveTextID: asString(waveTextID))
+        } else {
+            self.init(styleID: styleId)
+        }
+
+        if let rank = payload["rank"] {
+            if (!(rank is NSNull)) {
+                self.rank = asInt(rank)
+            }
+        }
+        if let text = payload["text"] {
+            if (!(text is NSNull)) {
+                self.text = asString(text)
+            }
+        }
+        if let points = payload["position"] {
+            if (!(points is NSNull)) {
+                self.points = asArray(points, caster: { MapPoint(payload: $0) })
+            }
+        }
     }
 }
