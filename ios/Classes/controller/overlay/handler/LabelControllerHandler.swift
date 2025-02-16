@@ -14,9 +14,9 @@ internal protocol LabelControllerHandler {
 
     func removePoi(layer: LabelLayer, poiId: String, onSuccess: (Any?) -> Void)
 
-    // func addPolylineText(layer: LabelLayer, label: WaveTextOptions, onSuccess: (String) -> Void)
+    func addPolylineText(layer: LabelLayer, label: WaveTextOptions, visible: Bool, onSuccess: (String) -> Void)
 
-    // func removePolylineText(layer: LabelLayer, labelId: String, onSuccess: (Any?) -> Void)
+    func removePolylineText(layer: LabelLayer, labelId: String, onSuccess: (Any?) -> Void)
 }
 
 internal extension LabelControllerHandler {
@@ -46,8 +46,16 @@ internal extension LabelControllerHandler {
             let poiOption = PoiOptions(payload: poiArgument)
             let position = MapPoint(payload: poiArgument)
             let visible = asBool(arguments!["visible"] ?? true)
-            addPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, visible: visible onSuccess: result)
+            addPoi(layer: layer!, poi: poiOption, position: position, visible: visible, onSuccess: result)
         case "removePoi": remvoePoi(layer: layer!, poiId: poiId, onSuccess: result)
+        case "addPolylineText":
+            let waveTextArgument = asDict(arguments!["poi"]!)
+            let waveTextStyle = WaveTextStyle(payload: waveTextArgument["style"]!)
+            labelManager.addWaveTextStyle(style: waveTextStyle)
+            let waveTextOption = WaveTextOptions(payload: waveTextArgument, styleId: waveTextStyle.styleID)
+            let visible = asBool(arguments!["visible"] ?? true)
+            addPolylineText(layer: layer!, label: waveTextOption, visible: visible, onSuccess: result)
+        case "removePolylineText": removePolylineText(layer: layer!, labelId: poiId, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }

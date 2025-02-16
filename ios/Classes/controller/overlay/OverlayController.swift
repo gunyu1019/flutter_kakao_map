@@ -63,4 +63,17 @@ internal class OverlayController: LabelControllerHandler {
         layer.removePoi(poiID: poiId)
         onSuccess(nil)
     }
+
+    func addPolylineText(layer: LabelLayer, label: WaveTextOptions, visible: Bool, onSuccess: (String) -> Void) {
+        let waveTextInstance = layer.addWaveText(option: label, at: position)
+        if (visible && !waveTextInstance.isShow) {
+            waveTextInstance?.show()
+        }
+        onSuccess(waveTextInstance!.itemID)
+    }
+
+    func removePolylineText(layer: LabelLayer, labelId: String, onSuccess: (Any?) -> Void) {
+        layer.removeWaveText(waveTextID: poiId)
+        onSuccess(nil)
+    }
 }
