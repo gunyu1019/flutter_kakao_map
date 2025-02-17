@@ -79,6 +79,26 @@ internal extension LabelControllerHandler {
             addPolylineText(layer: layer!, label: waveTextOption, visible: visible, onSuccess: result)
         case "removePolylineText": removePolylineText(layer: layer!, labelId: poiId, onSuccess: result)
         // poi Handler  
+        case "changePoiPixelOffset":
+            let rawPayload = ["x": asFloat(arguments!["x"]!), "y": asFloat(arguments!["y"]!)]
+            let offset = CGPoint(payload: rawPayload)
+            changePoiPixelOffset(poi: poi!, offset: offset, onSuccess: result)
+        case "changePoiVisible":
+            let visible = asBool(arguments!["visible"]!)
+            changePoiVisible(poi: poi!, visible: visible, onSuccess: result)
+        case "changePoiStyle":
+            let styleId = asString(arguments!["styleId"]!)
+            let transition = asBool(arguments!["transition"] ?? false)
+            changePoiStyle(poi: poi!, styleId: styleId, transition: transition, onSuccess: result)
+        case "changePoiText":
+            let text = asString(arguments!["text"]!)
+            let transition = asBool(arguments!["transition"] ?? false)
+            changePoiStyle(poi: poi!, text: text, transition: transition, onSuccess: result)
+        case "invalidatePoi":
+            let styleId = asString(arguments!["styleId"]!)
+            let text = asString(arguments!["text"]!)
+            let transition = asBool(arguments!["transition"] ?? false)
+            invalidatePoi(poi: poi!, styleId: styleId, text: text, transition: transition, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
