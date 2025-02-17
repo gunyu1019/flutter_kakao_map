@@ -11,6 +11,14 @@ internal protocol LodLabelControllerHandler {
     func addLodPoi(layer: LodLabelLayer, poi: PoiOptions, position: MapPoint, visible: Bool, onSuccess: @escaping (String) -> Void)
 
     func removeLodPoi(layer: LodLabelLayer, poiId: String, onSuccess: (Any?) -> Void)
+    
+    func changeLodPoiVisible(poi: LodPoi, visible: Bool, onSuccess: (Any?) -> Unit)
+
+    func changeLodPoiStyle(poi: LodPoi, styleId: String, transition: Bool, onSuccess: (Any?) -> Unit)
+
+    func changeLodPoiText(poi: LodPoi, text: String, transition: Bool, onSuccess: (Any?) -> Unit)
+
+    func rankLodPoi(poi: LodPoi, rank: Int, onSuccess: (Any?) -> Unit)
 }
 
 internal extension LodLabelControllerHandler {
