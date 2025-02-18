@@ -46,9 +46,9 @@ class LodPoi {
     _style = style;
   }
 
-  Future<void> changeText(String text) async {
+  Future<void> changeText(String text, [bool transition = false]) async {
     _text = text;
-    await _controller._changePoiText(id, text);
+    await _controller._changePoiText(id, text, _style.id!, transition);
   }
 
   Future<void> remove() async {
@@ -60,8 +60,9 @@ class LodPoi {
     _visible = false;
   }
 
-  Future<void> show() async {
-    await _controller._changePoiVisible(id, true);
+  Future<void> show([bool? autoMove, int? duration]) async {
+    await _controller._changePoiVisible(id, true,
+        autoMove: autoMove, duration: duration);
     _visible = true;
   }
 }
