@@ -48,11 +48,13 @@ interface LodLabelControllerHandler {
             }
             "changePoiStyle" -> {
                 val styleId = arguments["styleId"]?.asString()!!
-                changeLodPoiStyle(poi!!, styleId, result::success)
+                val transition = arguments["transition"]?.asBoolean() ?: false
+                changeLodPoiStyle(poi!!, styleId, transition, result::success)
             }
             "changePoiText" -> {
                 val text = arguments["text"]?.asString()!!
-                changeLodPoiStyle(poi!!, text, result::success)
+                val transition = arguments["transition"]?.asBoolean() ?: false
+                changeLodPoiStyle(poi!!, text, transition, result::success)
             }
             "rankPoi" -> {
                 val rank = arguments["x"]?.asLong()!!
@@ -73,9 +75,9 @@ interface LodLabelControllerHandler {
     // Lod-Poi Controller
     fun changeLodPoiVisible(poi: LodLabel, visible: Boolean, onSuccess: (Any?) -> Unit)
 
-    fun changeLodPoiStyle(poi: LodLabel, styleId: String, onSuccess: (Any?) -> Unit)
+    fun changeLodPoiStyle(poi: LodLabel, styleId: String, transition: Boolean, onSuccess: (Any?) -> Unit)
 
-    fun changeLodPoiText(poi: LodLabel, text: String, onSuccess: (Any?) -> Unit)
+    fun changeLodPoiText(poi: LodLabel, text: String, transition: Boolean, onSuccess: (Any?) -> Unit)
 
     fun rankLodPoi(poi: LodLabel, rank: Long, onSuccess: (Any?) -> Unit)
 }

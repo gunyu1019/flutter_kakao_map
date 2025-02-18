@@ -75,11 +75,13 @@ interface LabelControllerHandler {
             }
             "changePoiStyle" -> {
                 val styleId = arguments["styleId"]?.asString()!!
-                changePoiStyle(poi!!, styleId, result::success)
+                val transition = arguments["transition"]?.asBoolean() ?: false
+                changePoiStyle(poi!!, styleId, transition, result::success)
             }
             "changePoiText" -> {
                 val text = arguments["text"]?.asString()!!
-                changePoiText(poi!!, text, result::success)
+                val transition = arguments["transition"]?.asBoolean() ?: false
+                changePoiText(poi!!, text, transition, result::success)
             }
             "invalidatePoi" -> {
                 val styleId = arguments["styleId"]?.asString()!!
@@ -144,11 +146,11 @@ interface LabelControllerHandler {
             onSuccess: (Any?) -> Unit
     )
 
-    fun changePoiVisible(poi: Label, visible: Boolean, onSuccess: (Any?) -> Unit)
+    fun changePoiVisible(poi: Label, visible: Boolean, autoMove: Boolean?, duration: Int?, onSuccess: (Any?) -> Unit)
 
-    fun changePoiStyle(poi: Label, styleId: String, onSuccess: (Any?) -> Unit)
+    fun changePoiStyle(poi: Label, styleId: String, transition: Boolean, onSuccess: (Any?) -> Unit)
 
-    fun changePoiText(poi: Label, text: String, onSuccess: (Any?) -> Unit)
+    fun changePoiText(poi: Label, text: String, transition: Boolean, onSuccess: (Any?) -> Unit)
 
     fun invalidatePoi(
             poi: Label,

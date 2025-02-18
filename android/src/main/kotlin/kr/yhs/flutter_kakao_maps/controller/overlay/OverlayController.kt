@@ -101,23 +101,23 @@ class OverlayController(
         onSuccess.invoke(null)
     }
 
-    override fun changePoiVisible(poi: Label, visible: Boolean, onSuccess: Function1<Any?, Unit>) { 
+    override fun changePoiVisible(poi: Label, visible: Boolean, autoMove: Boolean?, duration: Int?, onSuccess: Function1<Any?, Unit>) { 
         if (visible) {
-            poi.show()
+            poi.show(autoMove ?: false, duration ?: 300)
         } else {
             poi.hide()
         }
         onSuccess.invoke(null)
     }
 
-    override fun changePoiStyle(poi: Label, styleId: String, onSuccess: Function1<Any?, Unit>) { 
+    override fun changePoiStyle(poi: Label, styleId: String, transition: Boolean, onSuccess: Function1<Any?, Unit>) { 
         val poiStyle = labelManager!!.getLabelStyles(styleId)
-        poi.changeStyles(poiStyle)
+        poi.changeStyles(poiStyle, transition)
         onSuccess.invoke(null)
      }
 
-    override fun changePoiText(poi: Label, text: String, onSuccess: Function1<Any?, Unit>) {
-        poi.changeText(text.asLabelTextBuilder())
+    override fun changePoiText(poi: Label, text: String, transition: Boolean, onSuccess: Function1<Any?, Unit>) {
+        poi.changeText(text.asLabelTextBuilder(), transition)
         onSuccess.invoke(null)
     }
 
@@ -194,14 +194,14 @@ class OverlayController(
         onSuccess.invoke(null)
     }
 
-    override fun changeLodPoiStyle(poi: LodLabel, styleId: String, onSuccess: (Any?) -> Unit) {
+    override fun changeLodPoiStyle(poi: LodLabel, styleId: String, transition: Boolean, onSuccess: (Any?) -> Unit) {
         val poiStyle = labelManager!!.getLabelStyles(styleId)
-        poi.changeStyles(poiStyle)
+        poi.changeStyles(poiStyle, transition)
         onSuccess.invoke(null)
     }
 
-    override fun changeLodPoiText(poi: LodLabel, text: String, onSuccess: (Any?) -> Unit) {
-        poi.changeText(text.asLabelTextBuilder())
+    override fun changeLodPoiText(poi: LodLabel, text: String, transition: Boolean, onSuccess: (Any?) -> Unit) {
+        poi.changeText(text.asLabelTextBuilder(), transition)
         onSuccess.invoke(null)
     }
 
