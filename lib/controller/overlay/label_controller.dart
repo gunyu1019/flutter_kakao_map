@@ -47,17 +47,30 @@ class LabelController extends BaseLabelController {
         {"poiId": poiId, "x": x, "y": y, "forceDpScale": forceDpScale});
   }
 
-  Future<void> _changePoiVisible(String poiId, bool visible) async {
-    await _invokeMethod(
-        "changePoiVisible", {"poiId": poiId, "visible": visible});
+  Future<void> _changePoiVisible(String poiId, bool visible,
+      {bool? autoMove, int? duration}) async {
+    await _invokeMethod("changePoiVisible", {
+      "poiId": poiId,
+      "visible": visible,
+      "autoMove": autoMove,
+      "duration": duration
+    });
   }
 
-  Future<void> _changePoiStyle(String poiId, String styleId) async {
-    await _invokeMethod("changePoiStyle", {"poiId": poiId, "styleId": styleId});
+  Future<void> _changePoiStyle(String poiId, String styleId,
+      [bool transition = false]) async {
+    await _invokeMethod("changePoiStyle",
+        {"poiId": poiId, "styleId": styleId, "transition": transition});
   }
 
-  Future<void> _changePoiText(String poiId, String text) async {
-    await _invokeMethod("changePoiText", {"poiId": poiId, "text": text});
+  Future<void> _changePoiText(String poiId, String text, String styleId,
+      [bool transition = false]) async {
+    await _invokeMethod("changePoiText", {
+      "poiId": poiId,
+      "text": text,
+      "styleId": styleId,
+      "transition": transition
+    });
   }
 
   Future<void> _invalidatePoi(String poiId, String styleId, String? text,

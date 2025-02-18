@@ -79,7 +79,7 @@ class Poi {
   /// [transition] 매개변수에 따라 [PoiStyle.iconTransition]과 [PoiStyle.textTransition]를 적용할 지 설정합니다.
   Future<void> changeStyles(PoiStyle style, [bool transition = false]) async {
     final styleId = style.id ?? await _controller.manager.addPoiStyle(style);
-    await _controller._changePoiStyle(id, styleId);
+    await _controller._changePoiStyle(id, styleId, transition);
     _style = style;
   }
 
@@ -87,7 +87,7 @@ class Poi {
   /// [transition] 매개변수에 따라 [PoiStyle.textTransition]를 적용할 지 설정합니다.
   Future<void> changeText(String text, [bool transition = false]) async {
     _text = text;
-    await _controller._changePoiText(id, text);
+    await _controller._changePoiText(id, text, _style.id!, transition);
   }
 
   /// [Poi]를 지도에서 노출되지 않도록 합니다.
@@ -147,8 +147,8 @@ class Poi {
   /// [Poi]를 지도에서 보이도록 합니다.
   /// [autoMove] 매개변수가 [true] 값이면 해당 위치로 카메라를 이동합니다.
   /// (Android 한정) [autoMove]가 참이고, [duration]이 부여되면 지정된 시간 이내로 카메라를 이동시킵니다.
-  Future<void> show([bool? autoMove, double? duration]) async {
+  Future<void> show([bool? autoMove, int? duration]) async {
     _visible = true;
-    await _controller._changePoiVisible(id, true);
+    await _controller._changePoiVisible(id, true, autoMove: autoMove, duration: duration);
   }
 }
