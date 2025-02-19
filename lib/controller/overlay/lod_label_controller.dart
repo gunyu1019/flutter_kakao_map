@@ -48,12 +48,11 @@ class LodLabelController extends BaseLabelController {
   }
 
   Future<void> _changePoiVisible(String poiId, bool visible,
-      {bool? autoMove, int? duration}) async {
+      {bool? autoMove}) async {
     await _invokeMethod("changePoiVisible", {
       "poiId": poiId,
       "visible": visible,
-      "autoMove": autoMove,
-      "duration": duration
+      "autoMove": autoMove
     });
   }
 
