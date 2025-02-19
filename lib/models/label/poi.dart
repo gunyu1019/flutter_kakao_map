@@ -18,7 +18,7 @@ class Poi {
   /// [Poi]를 클릭하였을 때, 호출되는 함수입니다.
   void Function()? onClick;
 
-  /// [Poi]를 클릭할 수 있는지 설정합니다.
+  /// [Poi]의 [onClick]이 정의되어 클릭할 수 있는지 반환합니다.
   bool get clickable => onClick != null;
 
   String? _text;
