@@ -99,6 +99,17 @@ internal extension LabelControllerHandler {
             let text = asString(arguments!["text"]!)
             let transition = asBool(arguments!["transition"] ?? false)
             invalidatePoi(poi: poi!, styleId: styleId, text: text, transition: transition, onSuccess: result)
+        case "movePoi":
+            let position = MapPoint(payload: arguments!))
+            let duration = asUInt(arguments!["millis"]!)
+            movePoi(poi: poi!, position: position, duration: duration, onSuccess: result)
+        case "rotatePoi":
+            let angle = asFloat(arguments["angle"]!)
+            let duration = asUInt(arguments!["millis"]!)
+            rotatePoi(poi: poi!, angle: angle, onSuccess: result)
+        case "rankPoi":
+            let rank = asUInt(arguments!["rank"]!)
+            rankPoi(poi: poi!, rank: rank, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
