@@ -106,7 +106,7 @@ interface LabelControllerHandler {
                 scalePoi(poi!!, x, y, millis, result::success)
             }
             "rankPoi" -> {
-                val rank = arguments["x"]?.asLong()!!
+                val rank = arguments["rank"]?.asLong()!!
                 rankPoi(poi!!, rank, result::success)
             }
             // polyline text handler
