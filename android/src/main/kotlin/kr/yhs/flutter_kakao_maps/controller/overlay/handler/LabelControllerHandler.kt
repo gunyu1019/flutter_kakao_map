@@ -71,7 +71,9 @@ interface LabelControllerHandler {
             }
             "changePoiVisible" -> {
                 val visible = arguments["visible"]?.asBoolean()!!
-                changePoiVisible(poi!!, visible, result::success)
+                val autoMove = arguments["autoMove"]?.asBoolean()
+                val duration = arguments["millis"]?.asInt()
+                changePoiVisible(poi!!, visible, autoMove, duration, result::success)
             }
             "changePoiStyle" -> {
                 val styleId = arguments["styleId"]?.asString()!!
