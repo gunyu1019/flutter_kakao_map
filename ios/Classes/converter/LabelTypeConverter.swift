@@ -152,7 +152,7 @@ internal extension LodLabelLayerOptions {
 
 
 internal extension PerLevelWaveTextStyle {
-    convenience init(paylaod: Dictionary<String, Any>) {
+    convenience init(payload: Dictionary<String, Any>) {
         self.init(
             textStyle: TextStyle(payload: payload),
             level: castSafty(payload["zoomLevel"], caster: asInt) ?? 0
@@ -164,11 +164,10 @@ internal extension PerLevelWaveTextStyle {
 internal extension WaveTextStyle {
     convenience init(payload: Dictionary<String, Any>) {
         let styleId = castSafty(payload["styleId"], caster: asString) ?? UUID().uuidString
-        let rawStyles = asDict(payload["styles"])
         var styles = Array<PerLevelWaveTextStyle>()
-        styles.append(PerLevelWaveTextStyle(payload: rawStyles))
+        styles.append(PerLevelWaveTextStyle(payload: payload))
         styles.append(
-            contentsOf: asArray(rawStyles["otherStyle"] ?? [], caster: asDict).map {
+            contentsOf: asArray(payload["otherStyle"] ?? [], caster: asDict).map {
                 PerLevelWaveTextStyle(payload: $0)
             }
         )
@@ -181,15 +180,15 @@ internal extension WaveTextStyle {
 
 internal extension WaveTextOptions {
     convenience init(payload: Dictionary<String, Any>,  styleId: String) {
-        if !(payload["id"] is nil | payload["id"] is NSNull) {
-            self.init(styleID: styleId, waveTextID: asString(waveTextID))
+        if !(payload["id"] == nil || payload["id"] is NSNull) {
+            self.init(styleID: styleId, waveTextID: asString(payload["id"]!))
         } else {
             self.init(styleID: styleId)
         }
 
         if let rank = payload["rank"] {
             if (!(rank is NSNull)) {
-                self.rank = asInt(rank)
+                self.rank = asUInt(rank)
             }
         }
         if let text = payload["text"] {
@@ -199,7 +198,7 @@ internal extension WaveTextOptions {
         }
         if let points = payload["position"] {
             if (!(points is NSNull)) {
-                self.points = asArray(points, caster: { MapPoint(payload: $0) })
+                self.points = asArray(points, caster: { MapPoint(payload: asDict($0)) })
             }
         }
     }
