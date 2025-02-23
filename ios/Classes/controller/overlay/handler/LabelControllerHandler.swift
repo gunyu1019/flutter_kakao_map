@@ -20,7 +20,7 @@ internal protocol LabelControllerHandler {
 
     func changePoiPixelOffset(poi: Poi, offset: CGPoint, onSuccess: (Any?) -> Void)
 
-    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Void)
+    func changePoiVisible(poi: Poi, visible: Bool, autoMove: Bool, onSuccess: (Any?) -> Void)
 
     func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void)
 
@@ -85,7 +85,8 @@ internal extension LabelControllerHandler {
             changePoiPixelOffset(poi: poi!, offset: offset, onSuccess: result)
         case "changePoiVisible":
             let visible = asBool(arguments!["visible"]!)
-            changePoiVisible(poi: poi!, visible: visible, onSuccess: result)
+            let autoMove = castSafty(arguments!["autoMove"], caster: asBool) ?? false
+            changePoiVisible(poi: poi!, visible: visible, autoMove: autoMove, onSuccess: result)
         case "changePoiStyle":
             let styleId = asString(arguments!["styleId"]!)
             let transition = asBool(arguments!["transition"] ?? false)
