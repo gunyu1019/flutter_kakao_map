@@ -4,7 +4,7 @@ import Flutter
 internal protocol LodLabelControllerHandler {
     var labelManager: LabelManager { get };
 
-    func createLodLabelLayer(option: LabelLayerOptions, onSuccess: (Any?) -> Void)
+    func createLodLabelLayer(option: LodLabelLayerOptions, onSuccess: (Any?) -> Void)
 
     func removeLodLabelLayer(layerId: String, onSuccess: (Any?) -> Void)
 
@@ -12,13 +12,13 @@ internal protocol LodLabelControllerHandler {
 
     func removeLodPoi(layer: LodLabelLayer, poiId: String, onSuccess: (Any?) -> Void)
     
-    func changeLodPoiVisible(poi: LodPoi, visible: Bool, onSuccess: (Any?) -> Unit)
+    func changeLodPoiVisible(poi: LodPoi, visible: Bool, onSuccess: (Any?) -> Void)
 
-    func changeLodPoiStyle(poi: LodPoi, styleId: String, transition: Bool, onSuccess: (Any?) -> Unit)
+    func changeLodPoiStyle(poi: LodPoi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void)
 
-    func changeLodPoiText(poi: LodPoi, text: String, transition: Bool, onSuccess: (Any?) -> Unit)
+    func changeLodPoiText(poi: LodPoi, text: String, transition: Bool, onSuccess: (Any?) -> Void)
 
-    func rankLodPoi(poi: LodPoi, rank: Int, onSuccess: (Any?) -> Unit)
+    func rankLodPoi(poi: LodPoi, rank: Int, onSuccess: (Any?) -> Void)
 }
 
 internal extension LodLabelControllerHandler {
@@ -42,8 +42,8 @@ internal extension LodLabelControllerHandler {
             let poiOption = PoiOptions(payload: poiArgument)
             let position = MapPoint(payload: poiArgument)
             let visible = asBool(arguments!["visible"] ?? true)
-            addLodPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, visible: visible onSuccess: result)
-        case "removeLodPoi": removeLodPoi(layer: layer!, poiId: poiId, onSuccess: result)
+            addLodPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, visible: visible, onSuccess: result)
+        case "removeLodPoi": removeLodPoi(layer: layer!, poiId: poiId!, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
