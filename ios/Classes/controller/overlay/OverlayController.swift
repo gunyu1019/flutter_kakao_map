@@ -2,7 +2,7 @@ import KakaoMapsSDK
 import Flutter
 
 
-internal class OverlayController: LabelControllerHandler {
+internal class OverlayController: LabelControllerHandler, LodLabelControllerHandler {
     private let channel: FlutterMethodChannel
     private let kakaoMap: KakaoMap
 
@@ -13,7 +13,12 @@ internal class OverlayController: LabelControllerHandler {
         self.kakaoMap = kakaoMap
         
         self.labelManager = kakaoMap.getLabelManager()
-        
+
+        setupInitLayer()
+        channel.setMethodCallHandler(handle)
+    }
+
+    func setupInitLayer() {
         self.labelManager.addLabelLayer(
             option: LabelLayerOptions(
                 layerID: "label_default_layer",
@@ -23,8 +28,16 @@ internal class OverlayController: LabelControllerHandler {
                 zOrder: 10001
             )
         )
-
-        channel.setMethodCallHandler(handle)
+        self.labelManager.addLodLabelLayer(
+            option: LodLabelLayerOptions(
+                layerID: "lodLabel_default_layer",
+                competitionType: .none,
+                competitionUnit: .poi,
+                orderType: .rank,
+                zOrder: 10001,
+                radius: 20.0
+            )
+        )
     }
 
     func handle(call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -83,12 +96,15 @@ internal class OverlayController: LabelControllerHandler {
         onSuccess(nil)
     }
 
-    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Void) {
-        if (visible) {
+    func changePoiVisible(poi: Poi, visible: Bool, autoMove: Bool, onSuccess: (Any?) -> Void) {
+        if (visible && autoMove) {
+            poi.showWithAutoMove()
+        } else if (visible) {
             poi.show()
         } else {
             poi.hide()
         }
+        onSuccess(nil)
     }
 
     func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void) {
@@ -97,7 +113,7 @@ internal class OverlayController: LabelControllerHandler {
     }
 
     func changePoiText(poi: Poi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void) {
-        // poi.changeTextAndStyle(styleID: ??, text: text, enableTransition: transition)
+        // poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
         onSuccess(nil)
     }
 
@@ -118,6 +134,7 @@ internal class OverlayController: LabelControllerHandler {
         } else {
             poi.moveAt(position, duration: duration!)
         }
+        onSuccess(nil)
     }
 
     func rotatePoi(poi: Poi, angle: Double, duration: UInt?, onSuccess: (Any?) -> Void) {
@@ -130,6 +147,55 @@ internal class OverlayController: LabelControllerHandler {
     }
 
     func rankPoi(poi: Poi, rank: Int, onSuccess: (Any?) -> Void) {
+        poi.rank = rank
+        onSuccess(nil)
+    }
+
+    func createLodLabelLayer(option: LodLabelLayerOptions, onSuccess: (Any?) -> Void) {
+        self.labelManager.addLodLabelLayer(option: option)
+        onSuccess(nil)
+    }
+    
+    func removeLodLabelLayer(layerId: String, onSuccess: (Any?) -> Void) {
+        self.labelManager.removeLodLabelLayer(layerID: layerId)
+        onSuccess(nil)
+    }
+    
+    func addLodPoi(layer: LodLabelLayer, poi: PoiOptions, position: MapPoint, visible: Bool, onSuccess: @escaping (String) -> Void) {
+        let poiInstance = layer.addLodPoi(option: poi, at: position)
+        if (visible && !(poiInstance?.isShow ?? false)) {
+            poiInstance?.show()
+        }
+        onSuccess(poiInstance!.itemID)
+    }
+    
+    func removeLodPoi(layer: LodLabelLayer, poiId: String, onSuccess: (Any?) -> Void) {
+        layer.removeLodPoi(poiID: poiId)
+        onSuccess(nil)
+    }
+    
+    func changeLodPoiVisible(poi: LodPoi, visible: Bool, autoMove: Bool, onSuccess: (Any?) -> Void) {
+        if (visible && autoMove) {
+            poi.showWithAutoMove()
+        else if (visible) {
+            poi.show()
+        } else {
+            poi.hide()
+        }
+        onSuccess(nil)
+    }
+    
+    func changeLodPoiStyle(poi: LodPoi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void) {
+        poi.changeStyle(styleID: styleId, enableTransition: transition)
+        onSuccess(nil)
+    }
+    
+    func changeLodPoiText(poi: LodPoi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void) {
+        // poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
+        onSuccess(nil)
+    }
+    
+    func rankLodPoi(poi: LodPoi, rank: Int, onSuccess: (Any?) -> Void) {
         poi.rank = rank
         onSuccess(nil)
     }
