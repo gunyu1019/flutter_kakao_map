@@ -53,7 +53,7 @@ internal class OverlayController: LabelControllerHandler {
 
     func addPoi(layer: LabelLayer, poi: PoiOptions, position: MapPoint, visible: Bool, onSuccess: @escaping (String) -> Void) {
         let poiInstance = layer.addPoi(option: poi, at: position)
-        if (visible && !poiInstance.isShow) {
+        if (visible && !(poiInstance?.isShow ?? false)) {
             poiInstance?.show()
         }
         onSuccess(poiInstance!.itemID)
@@ -65,25 +65,25 @@ internal class OverlayController: LabelControllerHandler {
     }
 
     func addPolylineText(layer: LabelLayer, label: WaveTextOptions, visible: Bool, onSuccess: (String) -> Void) {
-        let waveTextInstance = layer.addWaveText(option: label, at: position)
-        if (visible && !waveTextInstance.isShow) {
+        let waveTextInstance = layer.addWaveText(label)
+        if (visible && !(waveTextInstance?.isShow ?? false)) {
             waveTextInstance?.show()
         }
         onSuccess(waveTextInstance!.itemID)
     }
 
     func removePolylineText(layer: LabelLayer, labelId: String, onSuccess: (Any?) -> Void) {
-        layer.removeWaveText(waveTextID: poiId)
+        layer.removeWaveText(waveTextID: labelId)
         onSuccess(nil)
     }
 
 
-    func changePoiPixelOffset(poi: Poi, offset: CGPoint, onSuccess: (Any?) -> Unit) {
+    func changePoiPixelOffset(poi: Poi, offset: CGPoint, onSuccess: (Any?) -> Void) {
         poi.pixelOffset = offset
         onSuccess(nil)
     }
 
-    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Unit) {
+    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Void) {
         if (visible) {
             poi.show()
         } else {
@@ -91,12 +91,12 @@ internal class OverlayController: LabelControllerHandler {
         }
     }
 
-    func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Unit) {
+    func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void) {
         poi.changeStyle(styleID: styleId, enableTransition: transition)
         onSuccess(nil)
     }
 
-    func changePoiText(poi: Poi, text: String, transition: Bool, onSuccess: (Any?) -> Unit) {
+    func changePoiText(poi: Poi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void) {
         // poi.changeTextAndStyle(styleID: ??, text: text, enableTransition: transition)
         onSuccess(nil)
     }
@@ -106,30 +106,30 @@ internal class OverlayController: LabelControllerHandler {
         styleId: String,
         text: String,
         transition: Bool,
-        onSuccess: (Any?) -> Unit
+        onSuccess: (Any?) -> Void
     ) {
-        poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
+        // poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
         onSuccess(nil)
     }
     
-    func movePoi(poi: Poi, position: MapPoint, duration: UInt?, onSuccess: (Any?) -> Unit) {
-        if (duration is nil | duration is NSNull) {
+    func movePoi(poi: Poi, position: MapPoint, duration: UInt?, onSuccess: (Any?) -> Void) {
+        if (duration == nil || duration is NSNull) {
             poi.position = position
         } else {
-            poi.moveAt(position: position, duration: duration!)
+            poi.moveAt(position, duration: duration!)
         }
     }
 
-    func rotatePoi(poi: Poi, angle: Double, duration: UInt?, onSuccess: (Any?) -> Unit) {
-        if (duration is nil | duration is NSNull) {
+    func rotatePoi(poi: Poi, angle: Double, duration: UInt?, onSuccess: (Any?) -> Void) {
+        if (duration == nil || duration is NSNull) {
             poi.orientation = angle
         } else {
-            poi.rotateAt(roll: angle, duration: duration!)
+            poi.rotateAt(angle, duration: duration!)
         }
         onSuccess(nil)
     }
 
-    func rankPoi(poi: Poi, rank: Int, onSuccess: (Any?) -> Unit) {
+    func rankPoi(poi: Poi, rank: Int, onSuccess: (Any?) -> Void) {
         poi.rank = rank
         onSuccess(nil)
     }
