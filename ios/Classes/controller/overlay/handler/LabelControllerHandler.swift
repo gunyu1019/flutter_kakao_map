@@ -18,27 +18,27 @@ internal protocol LabelControllerHandler {
 
     func removePolylineText(layer: LabelLayer, labelId: String, onSuccess: (Any?) -> Void)
 
-    func changePoiPixelOffset(poi: Poi, offset: CGPoint, onSuccess: (Any?) -> Unit)
+    func changePoiPixelOffset(poi: Poi, offset: CGPoint, onSuccess: (Any?) -> Void)
 
-    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Unit)
+    func changePoiVisible(poi: Poi, visible: Bool, onSuccess: (Any?) -> Void)
 
-    func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Unit)
+    func changePoiStyle(poi: Poi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void)
 
-    func changePoiText(poi: Poi, text: String, transition: Bool, onSuccess: (Any?) -> Unit)
+    func changePoiText(poi: Poi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void)
 
     func invalidatePoi(
         poi: Poi,
         styleId: String,
         text: String,
         transition: Bool,
-        onSuccess: (Any?) -> Unit
+        onSuccess: (Any?) -> Void
     )
     
-    func movePoi(poi: Poi, position: MapPoint, duration: UInt, onSuccess: (Any?) -> Unit)
+    func movePoi(poi: Poi, position: MapPoint, duration: UInt?, onSuccess: (Any?) -> Void)
 
-    func rotatePoi(poi: Poi, angle: Double, duration: UInt, onSuccess: (Any?) -> Unit)
+    func rotatePoi(poi: Poi, angle: Double, duration: UInt?, onSuccess: (Any?) -> Void)
 
-    func rankPoi(poi: Poi, rank: Int, onSuccess: (Any?) -> Unit)
+    func rankPoi(poi: Poi, rank: Int, onSuccess: (Any?) -> Void)
 }
 
 internal extension LabelControllerHandler {
@@ -69,18 +69,18 @@ internal extension LabelControllerHandler {
             let position = MapPoint(payload: poiArgument)
             let visible = asBool(arguments!["visible"] ?? true)
             addPoi(layer: layer!, poi: poiOption, position: position, visible: visible, onSuccess: result)
-        case "removePoi": remvoePoi(layer: layer!, poiId: poiId, onSuccess: result)
+        case "removePoi": removePoi(layer: layer!, poiId: poiId!, onSuccess: result)
         case "addPolylineText":
-            let waveTextArgument = asDict(arguments!["poi"]!)
-            let waveTextStyle = WaveTextStyle(payload: waveTextArgument["style"]!)
-            labelManager.addWaveTextStyle(style: waveTextStyle)
+            let waveTextArgument = asDict(arguments!["label"]!)
+            let waveTextStyle = WaveTextStyle(payload: asDict(waveTextArgument["style"]!))
+            labelManager.addWaveTextStyle(waveTextStyle)
             let waveTextOption = WaveTextOptions(payload: waveTextArgument, styleId: waveTextStyle.styleID)
             let visible = asBool(arguments!["visible"] ?? true)
             addPolylineText(layer: layer!, label: waveTextOption, visible: visible, onSuccess: result)
-        case "removePolylineText": removePolylineText(layer: layer!, labelId: poiId, onSuccess: result)
-        // poi Handler  
+        case "removePolylineText": removePolylineText(layer: layer!, labelId: poiId!, onSuccess: result)
+        // poi Handler
         case "changePoiPixelOffset":
-            let rawPayload = ["x": asFloat(arguments!["x"]!), "y": asFloat(arguments!["y"]!)]
+            let rawPayload: Dictionary<String, Double> = ["x": asDouble(arguments!["x"]!), "y": asDouble(arguments!["y"]!)]
             let offset = CGPoint(payload: rawPayload)
             changePoiPixelOffset(poi: poi!, offset: offset, onSuccess: result)
         case "changePoiVisible":
@@ -93,22 +93,23 @@ internal extension LabelControllerHandler {
         case "changePoiText":
             let text = asString(arguments!["text"]!)
             let transition = asBool(arguments!["transition"] ?? false)
-            changePoiStyle(poi: poi!, text: text, transition: transition, onSuccess: result)
+            let styleId = asString(arguments!["styleId"]!)
+            changePoiText(poi: poi!, styleId: styleId, text: text, transition: transition, onSuccess: result)
         case "invalidatePoi":
             let styleId = asString(arguments!["styleId"]!)
             let text = asString(arguments!["text"]!)
             let transition = asBool(arguments!["transition"] ?? false)
             invalidatePoi(poi: poi!, styleId: styleId, text: text, transition: transition, onSuccess: result)
         case "movePoi":
-            let position = MapPoint(payload: arguments!))
-            let duration = asUInt(arguments!["millis"]!)
+            let position = MapPoint(payload: arguments!)
+            let duration = castSafty(arguments!["millis"], caster: asUInt)
             movePoi(poi: poi!, position: position, duration: duration, onSuccess: result)
         case "rotatePoi":
-            let angle = asFloat(arguments["angle"]!)
-            let duration = asUInt(arguments!["millis"]!)
-            rotatePoi(poi: poi!, angle: angle, onSuccess: result)
+            let angle = asDouble(arguments!["angle"]!)
+            let duration = castSafty(arguments!["millis"], caster: asUInt)
+            rotatePoi(poi: poi!, angle: angle, duration: duration, onSuccess: result)
         case "rankPoi":
-            let rank = asUInt(arguments!["rank"]!)
+            let rank = asInt(arguments!["rank"]!)
             rankPoi(poi: poi!, rank: rank, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
