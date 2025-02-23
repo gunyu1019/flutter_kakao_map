@@ -12,11 +12,11 @@ internal protocol LodLabelControllerHandler {
 
     func removeLodPoi(layer: LodLabelLayer, poiId: String, onSuccess: (Any?) -> Void)
     
-    func changeLodPoiVisible(poi: LodPoi, visible: Bool, onSuccess: (Any?) -> Void)
+    func changeLodPoiVisible(poi: LodPoi, visible: Bool, autoMove: Bool, onSuccess: (Any?) -> Void)
 
     func changeLodPoiStyle(poi: LodPoi, styleId: String, transition: Bool, onSuccess: (Any?) -> Void)
 
-    func changeLodPoiText(poi: LodPoi, text: String, transition: Bool, onSuccess: (Any?) -> Void)
+    func changeLodPoiText(poi: LodPoi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void)
 
     func rankLodPoi(poi: LodPoi, rank: Int, onSuccess: (Any?) -> Void)
 }
