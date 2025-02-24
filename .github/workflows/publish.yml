@@ -61,7 +61,7 @@ jobs:
       - name: Install dependencies
         run: .flutter/bin/flutter pub get
       - name: Publish - dry run
-        run: .flutter/bin/dart pub publish --dry-runs
+        run: .flutter/bin/dart pub publish --dry-run
       - name: Publish to pub.dev
         run: .flutter/bin/dart pub publish -f
   deploy:
