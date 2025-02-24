@@ -45,6 +45,7 @@ internal class OverlayController: LabelControllerHandler, LodLabelControllerHand
         let overlayType = OverlayType(rawValue: asInt(arguments["type"]!))
         switch overlayType {
         case .label: labelHandle(call: call, result: result)
+        case .lodLabel: lodLabelHandle(call: call, result: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
@@ -113,7 +114,10 @@ internal class OverlayController: LabelControllerHandler, LodLabelControllerHand
     }
 
     func changePoiText(poi: Poi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void) {
-        // poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
+        let poiText = asString(text).components(separatedBy: "\n").enumerated().map {
+            (index, element) in PoiText(text: element, styleIndex: UInt(index))
+        }
+        poi.changeTextAndStyle(texts: poiText, styleID: styleId, enableTransition: transition)
         onSuccess(nil)
     }
 
@@ -124,7 +128,10 @@ internal class OverlayController: LabelControllerHandler, LodLabelControllerHand
         transition: Bool,
         onSuccess: (Any?) -> Void
     ) {
-        // poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
+        let poiText = asString(text).components(separatedBy: "\n").enumerated().map {
+            (index, element) in PoiText(text: element, styleIndex: UInt(index))
+        }
+        poi.changeTextAndStyle(texts: poiText, styleID: styleId, enableTransition: transition)
         onSuccess(nil)
     }
     
@@ -177,7 +184,7 @@ internal class OverlayController: LabelControllerHandler, LodLabelControllerHand
     func changeLodPoiVisible(poi: LodPoi, visible: Bool, autoMove: Bool, onSuccess: (Any?) -> Void) {
         if (visible && autoMove) {
             poi.showWithAutoMove()
-        else if (visible) {
+        } else if (visible) {
             poi.show()
         } else {
             poi.hide()
@@ -191,7 +198,10 @@ internal class OverlayController: LabelControllerHandler, LodLabelControllerHand
     }
     
     func changeLodPoiText(poi: LodPoi, styleId: String, text: String, transition: Bool, onSuccess: (Any?) -> Void) {
-        // poi.changeTextAndStyle(styleID: styleId, text: text, enableTransition: transition)
+        let poiText = asString(text).components(separatedBy: "\n").enumerated().map {
+            (index, element) in PoiText(text: element, styleIndex: UInt(index))
+        }
+        poi.changeTextAndStyle(texts: poiText, styleID: styleId, enableTransition: transition)
         onSuccess(nil)
     }
     

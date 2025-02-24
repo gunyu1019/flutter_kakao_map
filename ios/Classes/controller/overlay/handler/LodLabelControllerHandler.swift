@@ -44,6 +44,22 @@ internal extension LodLabelControllerHandler {
             let visible = asBool(arguments!["visible"] ?? true)
             addLodPoi(layer: layer!, poi: PoiOptions(payload: poiArgument), position: position, visible: visible, onSuccess: result)
         case "removeLodPoi": removeLodPoi(layer: layer!, poiId: poiId!, onSuccess: result)
+        case "changePoiVisible":
+            let visible = asBool(arguments!["visible"]!)
+            let autoMove = castSafty(arguments!["autoMove"], caster: asBool) ?? false
+            changeLodPoiVisible(poi: poi!, visible: visible, autoMove: autoMove, onSuccess: result)
+        case "changePoiStyle":
+            let styleId = asString(arguments!["styleId"]!)
+            let transition = asBool(arguments!["transition"] ?? false)
+            changeLodPoiStyle(poi: poi!, styleId: styleId, transition: transition, onSuccess: result)
+        case "changePoiText":
+            let text = asString(arguments!["text"]!)
+            let transition = asBool(arguments!["transition"] ?? false)
+            let styleId = asString(arguments!["styleId"]!)
+            changeLodPoiText(poi: poi!, styleId: styleId, text: text, transition: transition, onSuccess: result)
+        case "rankPoi":
+            let rank = asInt(arguments!["rank"]!)
+            rankLodPoi(poi: poi!, rank: rank, onSuccess: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
