@@ -149,6 +149,7 @@ class Poi {
   /// (Android 한정) [autoMove]가 참이고, [duration]이 부여되면 지정된 시간 이내로 카메라를 이동시킵니다.
   Future<void> show([bool? autoMove, int? duration]) async {
     _visible = true;
-    await _controller._changePoiVisible(id, true, autoMove: autoMove, duration: duration);
+    await _controller._changePoiVisible(id, true,
+        autoMove: autoMove, duration: duration);
   }
 }

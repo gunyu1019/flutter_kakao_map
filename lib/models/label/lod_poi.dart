@@ -5,13 +5,13 @@ part of '../../kakao_map_sdk.dart';
 /// [LodPoi]에는 이동 또는 회전 기능이 없습니다.
 class LodPoi {
   final LodLabelController _controller;
-  
+
   /// [LodPoi]의 고유 ID입니다.
   final String id;
 
   /// [LodPoi]가 나타나거나 사라질 때 적용되는 애니메이션입니다.
   final TransformMethod? transform;
-  
+
   /// [LodPoi]의 위치입니다.
   final LatLng position;
 
@@ -89,8 +89,7 @@ class LodPoi {
   /// [LodPoi]를 지도에서 보이도록 합니다.
   /// (iOS 한정) [autoMove] 매개변수가 [true] 값이면 해당 위치로 카메라를 이동합니다.
   Future<void> show([bool? autoMove, int? duration]) async {
-    await _controller._changePoiVisible(id, true,
-        autoMove: autoMove);
+    await _controller._changePoiVisible(id, true, autoMove: autoMove);
     _visible = true;
   }
 }
