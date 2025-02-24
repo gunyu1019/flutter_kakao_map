@@ -1,11 +1,11 @@
-name: Example Test Build
+name: Publish to pub.dev (with example build)
 
 on:
   release:
     types: [ published ]
     
 jobs:
-  build:
+  example_build:
     env:
       working-directory: ./example
     runs-on: ubuntu-latest
@@ -45,6 +45,25 @@ jobs:
         with:
           name: application
           path: example/build/app/outputs/apk/release/app-release.apk
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Flutter SDK
+        run: |
+          /usr/bin/git clone https://github.com/flutter/flutter.git .flutter -b stable 
+      - name: Reformatting with `dart format`
+        run: .flutter/bin/dart format .
+      - name: Install dependencies
+        run: .flutter/bin/flutter pub get
+      - name: Publish - dry run
+        run: .flutter/bin/dart pub publish --dry-runs
+      - name: Publish to pub.dev
+        run: .flutter/bin/dart pub publish -f
   deploy:
     needs: build
     runs-on: ubuntu-latest
