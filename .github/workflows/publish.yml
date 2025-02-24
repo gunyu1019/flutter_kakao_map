@@ -46,7 +46,7 @@ jobs:
           name: application
           path: example/build/app/outputs/apk/release/app-release.apk
   publish:
-    needs: build
+    needs: example_build
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -65,7 +65,7 @@ jobs:
       - name: Publish to pub.dev
         run: .flutter/bin/dart pub publish -f
   deploy:
-    needs: build
+    needs: example_build
     runs-on: ubuntu-latest
     permissions:
       contents: write
